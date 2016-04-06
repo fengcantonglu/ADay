@@ -19,7 +19,7 @@
            
         </activity>
         <!-- 视频的界面 -->
-        <activity android:name="com.example.aday.VideoClassifyActivity">
+        <activity android:name="com.can.aday.VideoClassifyActivity">
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
