@@ -1,8 +1,8 @@
-package com.example.aday.view;
+package com.can.aday.view;
 
 import java.util.Date;
 
-import com.example.aday.R;
+import com.can.aday.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

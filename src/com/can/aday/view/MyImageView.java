@@ -1,6 +1,6 @@
-package com.example.aday.view;
+package com.can.aday.view;
 
-import com.example.aday.R;
+import com.can.aday.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
