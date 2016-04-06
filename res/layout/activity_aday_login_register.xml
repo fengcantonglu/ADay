@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/login_and_register_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <com.example.aday.view.MyImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/head_circles_icon" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="96.6dp"
+            android:contentDescription="@drawable/head_image"
+            android:src="@drawable/head_image" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/login_register_line_white"
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginTop="268dp"
+        android:background="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/login_register_image_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="49dp"
+        android:contentDescription="@drawable/account_icon"
+        android:src="@drawable/account_icon" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/login_register_image_account"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/login_register_image_account"
+        android:layout_toRightOf="@+id/login_register_image_account"
+        android:background="@null"
+        android:hint="@string/enter_the_account_number"
+        android:textColor="#9F9F9F"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/login_register_line2_white"
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/login_register_line_white"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginTop="36dp"
+        android:background="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/login_register_image_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_register_line_white"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="17dp"
+        android:contentDescription="@drawable/password_icon"
+        android:src="@drawable/password_icon" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/login_register_image_password"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/login_register_image_password"
+        android:layout_toRightOf="@+id/login_register_image_password"
+        android:background="@null"
+        android:hint="@string/enter_password"
+        android:textColor="#9F9F9F"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:id="@+id/login_register_relation_login"
+        android:layout_width="116dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/login_register_line2_white"
+        android:layout_marginLeft="42dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="36dp"
+        android:background="#13B5B1" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/login"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_register_relation_register"
+        android:layout_width="114dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/login_register_line2_white"
+        android:layout_marginEnd="42dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="36dp"
+        android:layout_toEndOf="@id/login_register_relation_login"
+        android:layout_toRightOf="@id/login_register_relation_login"
+        android:background="@drawable/shape_white_linear_stroke" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/register"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/login_register_linear_quick"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_register_relation_login"
+        android:layout_marginTop="36dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="1px"
+            android:layout_marginLeft="42dp"
+            android:layout_marginStart="42dp"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/quick_login"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="1px"
+            android:layout_marginEnd="42dp"
+            android:layout_marginRight="42dp"
+            android:background="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_register_linear_quick"
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="92.6dp"
+            android:layout_marginStart="92.6dp"
+            android:contentDescription="@drawable/wei_xin_icon"
+            android:src="@drawable/wei_xin_icon" />
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="33dp"
+            android:layout_marginRight="33dp"
+            android:contentDescription="@drawable/qq"
+            android:src="@drawable/qq" />
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="@drawable/sina_weibo_icon"
+            android:src="@drawable/sina_weibo_icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="79.3dp" >
+    </LinearLayout>
+
+</LinearLayout>
