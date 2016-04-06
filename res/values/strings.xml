@@ -9,5 +9,6 @@
     <string name="login">登陆</string>
     <string name="register">注册</string>
     <string name="quick_login">快捷登录</string>
-
+	<string name="over">完成注册，表示你已阅读并同意</string>
+	<string name="clause">Aday用户协议</string>
 </resources>
