@@ -6,7 +6,7 @@
     <!-- 分类子页面的布局 -->
     <RelativeLayout 
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="178dp">
         <ImageView 
             android:id="@+id/video_classify_details_image"
             android:layout_width="match_parent"

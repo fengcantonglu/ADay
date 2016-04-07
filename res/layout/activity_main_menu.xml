@@ -17,19 +17,7 @@
             android:id="@+id/main_menu"
             layout="@layout/activity_menu" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/gray_line_background"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:onClick="toggleMenu"
-                android:text="@string/hello_world" />
-        </LinearLayout>
+        <include layout="@layout/activity_main" />
     </LinearLayout>
 
 </com.can.aday.SlidingMenu>

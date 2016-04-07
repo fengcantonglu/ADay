@@ -16,7 +16,6 @@
         <activity
             android:name="com.can.aday.MainActivity"
             android:label="@string/app_name" >
-
         </activity>
         <!-- 视频的界面 -->
         <activity android:name="com.can.aday.VideoClassifyActivity" >
@@ -25,10 +24,11 @@
         </activity>
         <activity android:name="com.can.aday.VideoOrderActivity" >
         </activity>
-
+        <!-- 评论界面 -->
+        <activity android:name="com.can.aday.CommentActivity" >
+        </activity>
         <!-- 登陆注册页面 -->
         <activity android:name="com.can.aday.LoginAndRegisteredActivity" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,14 +37,11 @@
         </activity>
 
         <!-- 注册界面 -->
-      <activity android:name="com.can.aday.RegisterActivity" >
+        <activity android:name="com.can.aday.RegisterActivity" >
         </activity>
-      
 
         <!-- 读者模块 -->
 
-
-        
     </application>
 
 </manifest>

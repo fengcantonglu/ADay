@@ -128,7 +128,6 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_main_menu);
 		findView();
 		findMenuView();
@@ -145,10 +144,10 @@ public class MainActivity extends FragmentActivity {
 		titleRight = (ImageView) findViewById(R.id.title_right_btn);
 
 		findViewById(R.id.title_right_layout).setVisibility(View.GONE);
-		// bottomGroup = (RadioGroup) findViewById(R.id.main_bottom_group);
-		// bottomBtns[0] = (RadioButton) findViewById(R.id.book_btn);
-		// bottomBtns[1] = (RadioButton) findViewById(R.id.music_btn);
-		// bottomBtns[2] = (RadioButton) findViewById(R.id.video_btn);
+		bottomGroup = (RadioGroup) findViewById(R.id.main_bottom_group);
+		bottomBtns[0] = (RadioButton) findViewById(R.id.book_btn);
+		bottomBtns[1] = (RadioButton) findViewById(R.id.music_btn);
+		bottomBtns[2] = (RadioButton) findViewById(R.id.video_btn);
 	}
 
 	/**
@@ -188,7 +187,7 @@ public class MainActivity extends FragmentActivity {
 		manager = getSupportFragmentManager();
 		FragmentTransaction transaction = manager.beginTransaction();
 		mVieoPager = new VideoFragment();
-		// transaction.add(R.id.main_layout, mVieoPager);
+		transaction.add(R.id.main_layout, mVieoPager);
 		transaction.commit();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
