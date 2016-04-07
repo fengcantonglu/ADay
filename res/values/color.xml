@@ -3,5 +3,9 @@
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="bottom_group_backgroud">#F5DBBF</color>
+    <color name="bottom_text_selet_color">#13b5b1</color>
+    <color name="bottom_text_not_selet_color">#525252</color>
+    <color name="main_text_color">#12b5b1</color>
 
 </resources>
