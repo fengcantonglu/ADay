@@ -18,4 +18,18 @@ public class VideoFragment extends Fragment {
 		View view = inflater.inflate(R.layout.video_fragment_main, lay);
 		return view;
 	}
+
+	/**
+	 * 点击分类
+	 */
+	public void seleteType() {
+
+	}
+
+	/**
+	 * 点击排行
+	 */
+	public void seletePaihang() {
+
+	}
 }

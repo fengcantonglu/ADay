@@ -14,5 +14,8 @@
     <string name="book">读物</string>
     <string name="music">音乐</string>
     <string name="video">视频</string>
+    <string name="story">故事</string>
+    <string name="lyric">歌词</string>
+    <string name="details">详情</string>
 
 </resources>
