@@ -7,5 +7,6 @@
     <color name="bottom_text_selet_color">#13b5b1</color>
     <color name="bottom_text_not_selet_color">#525252</color>
     <color name="main_text_color">#12b5b1</color>
+    <color name="drive_line_color">#CAB59E</color>
 
 </resources>

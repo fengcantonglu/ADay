@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <View
+            android:id="@+id/book_content_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/book_flower_image" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="58dp" >
+
+            <TextView
+                android:id="@+id/article_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
+                <View
+                    android:layout_width="27dp"
+                    android:layout_height="1.5dp"
+                    android:background="@color/drive_line_color" />
+
+                <TextView
+                    android:id="@+id/article_athor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12.5sp" />
+
+                <View
+                    android:layout_width="27dp"
+                    android:layout_height="1.5dp"
+                    android:background="@color/drive_line_color" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/article_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="38dp"
+                android:layout_marginRight="38dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                android:typeface="serif" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" >
+
+                <TextView
+                    android:id="@+id/reader_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="阅读数 0"
+                    android:textColor="@color/black"
+                    android:textSize="9sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/like_icon"
+                        android:drawablePadding="3dp"
+                        android:padding="10dp"
+                        android:text="0"
+                        android:textSize="9sp" />
+
+                    <TextView
+                        android:id="@+id/comment_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/comment_icon"
+                        android:drawablePadding="3dp"
+                        android:padding="10dp"
+                        android:text="0"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/book_image_date"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@drawable/date_image"
+        android:src="@drawable/date_image" />
+
+</RelativeLayout>
