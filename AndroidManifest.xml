@@ -17,15 +17,16 @@
             android:name="com.can.aday.MainActivity"
             android:label="@string/app_name" >
         </activity>
-        <!-- 视频的界面 -->
-        <activity android:name="com.can.aday.VideoClassifyActivity" >
-        </activity>
-        <activity android:name="com.can.aday.LoginAndRegistered" >
+        <!-- 登陆界面 -->
+          <activity android:name="com.can.aday.LoginAndRegistered" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <!-- 视频的界面 -->
+        <activity android:name="com.can.aday.VideoClassifyActivity" >
         </activity>
         <activity android:name="com.can.aday.VideoClassifyDetailsActivity"></activity>
         <activity android:name="com.can.aday.VideoOrderActivity"></activity>
