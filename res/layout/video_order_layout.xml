@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <!-- 视频分类排行的布局 -->
+    <ImageView 
+        android:id="@+id/video_order_backimage"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:src="@drawable/aday_video_order"
+        android:contentDescription="@drawable/aday_video_order"/>
+	<TextView 
+	    android:id="@+id/video_order_name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="60dp"
+	    android:layout_centerHorizontal="true"
+	    android:text="你所遗忘的童年"
+	    android:textColor="#ffffff"
+	    android:textSize="20sp"/>
+	<TextView 
+	    android:id="@+id/video_order_time"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="93dp"
+	    android:layout_centerHorizontal="true"
+	    android:text="#记录/10‘18’"
+	    android:textColor="#ffffff"
+	    android:textSize="13sp"/>
+	<RelativeLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="124dp">
+	    <ImageView 
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:src="@drawable/aday_video_order_wire"
+	    	android:contentDescription="@drawable/aday_video_order_wire"/>
+		<TextView 
+	    	android:id="@+id/video_order_number"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_centerInParent="true"
+	    	android:text="1"
+	    	android:textColor="#ffffff"
+	    	android:textSize="20sp"/>
+	</RelativeLayout>
+
+</RelativeLayout>
