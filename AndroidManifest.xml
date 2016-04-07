@@ -22,10 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 登陆界面 -->
+        <activity android:name="com.can.aday.LoginAndRegistered" >
+        </activity>
         <!-- 视频的界面 -->
         <activity android:name="com.can.aday.VideoClassifyActivity" >
-        </activity>
-        <activity android:name="com.can.aday.LoginAndRegistered" >
         </activity>
         <activity android:name="com.can.aday.VideoClassifyDetailsActivity" >
         </activity>

@@ -15,18 +15,25 @@
             android:contentDescription="@drawable/aday_surfing_icon"/>
         <ImageView 
             android:id="@+id/video_classify_details_player"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/aday_surfing_play_icon"
-            android:contentDescription="@drawable/aday_surfing_play_icon"/>
+            android:layout_width="60dp"
+	    	android:layout_height="60dp"
+	    	android:paddingLeft="18dp"
+	    	android:paddingStart="18dp"
+	    	android:paddingRight="10dp"
+	    	android:paddingEnd="10dp"
+	    	android:paddingTop="10dp"
+	    	android:paddingBottom="10dp"
+	    	android:background="@drawable/play_video_circle"
+	   	 	android:layout_centerInParent="true"
+	    	android:src="@drawable/music_play_icon_in"
+	    	android:contentDescription="@drawable/music_play_icon_in"/>
         <TextView 
             android:id="@+id/video_classify_details_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:text="#游泳"
             android:textColor="#ffffff"
             android:textSize="20sp"/>
