@@ -16,19 +16,22 @@ public class VideoOrderBaseAdapter extends BaseAdapter {
 	ArrayList<String> list;
 	Context context;
 	LayoutInflater inflater;
-	
+
 	public VideoOrderBaseAdapter() {
-		
+
 	}
-	public VideoOrderBaseAdapter(ArrayList<String> list,Context context) {
-		this.list=list;
-		this.context=context;
-		inflater=LayoutInflater.from(context);
+
+	public VideoOrderBaseAdapter(ArrayList<String> list, Context context) {
+		this.list = list;
+		this.context = context;
+		inflater = LayoutInflater.from(context);
 	}
-	public void setData(ArrayList<String> list){
-		this.list=list;
+
+	public void setData(ArrayList<String> list) {
+		this.list = list;
 		notifyDataSetChanged();
 	}
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -52,24 +55,25 @@ public class VideoOrderBaseAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ViewHolder holder;
-		if(convertView==null){
-			convertView=inflater.inflate(R.layout.video_order_layout,null);
-			holder=new ViewHolder();
-			holder.backImage=(ImageView)convertView.findViewById(R.id.video_order_backimage);
-			holder.name=(TextView)convertView.findViewById(R.id.video_order_name);
-			holder.time=(TextView)convertView.findViewById(R.id.video_order_time);
-			holder.number=(TextView)convertView.findViewById(R.id.video_order_number);
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.video_order_layout, null);
+			holder = new ViewHolder();
+			holder.backImage = (ImageView) convertView.findViewById(R.id.video_order_backimage);
+			holder.name = (TextView) convertView.findViewById(R.id.video_order_name);
+			holder.time = (TextView) convertView.findViewById(R.id.video_order_time);
+			holder.number = (TextView) convertView.findViewById(R.id.video_order_number);
 			convertView.setTag(holder);
-		}else{
-			holder=(ViewHolder)convertView.getTag();
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
 		return convertView;
 	}
-	class ViewHolder{
-		ImageView backImage;//背景图
-		TextView name;//名字
-		TextView time;//时间
-		TextView number;//顺序数
-		
+
+	class ViewHolder {
+		ImageView backImage;// 背景图
+		TextView name;// 名字
+		TextView time;// 时间
+		TextView number;// 顺序数
+
 	}
 }

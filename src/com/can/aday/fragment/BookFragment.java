@@ -3,7 +3,6 @@ package com.can.aday.fragment;
 import com.can.aday.R;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import android.widget.TextView;
  * @author 王科
  *
  */
-public class BookFragment extends Fragment {
+public class BookFragment extends AdayFragment {
 	View mView;
 	/**
 	 * 正文图片
