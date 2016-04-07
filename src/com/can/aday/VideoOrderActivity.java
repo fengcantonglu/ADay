@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -22,6 +24,7 @@ public class VideoOrderActivity extends Activity {
 	TextView titleName;//标题
 	ImageView backimage;//返回
 	RadioGroup radioGroup;
+	View vInclude;
 	
 	VideoOrderBaseAdapter vOBaseAdapter;
 	ArrayList<String> list;
@@ -36,6 +39,18 @@ public class VideoOrderActivity extends Activity {
 		vOBaseAdapter=new VideoOrderBaseAdapter(list,this);
 		listview.setAdapter(vOBaseAdapter);
 	}
+	/**
+	 * listview的点击事件
+	 */
+	OnItemClickListener itemClickListener=new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			// TODO Auto-generated method stub
+			listview.setVisibility(View.GONE);
+			vInclude.setVisibility(View.VISIBLE);
+		}
+	};
 	/**
 	 * 添加数据
 	 */
@@ -53,10 +68,12 @@ public class VideoOrderActivity extends Activity {
 		radioGroup=(RadioGroup)findViewById(R.id.viseo_order_radiogroup);
 		backimage=(ImageView)findViewById(R.id.title_bar_back_icon);
 		titleName=(TextView)findViewById(R.id.title_bar_title_text);
+		vInclude=findViewById(R.id.viseo_order_include);
 		
 		titleName.setText("排行");
 		
 		backimage.setOnClickListener(clickListener);
+		listview.setOnItemClickListener(itemClickListener);
 		
 	}
 	/**
@@ -68,7 +85,9 @@ public class VideoOrderActivity extends Activity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.title_bar_back_icon:
-				finish();
+				vInclude.setVisibility(View.GONE);
+				listview.setVisibility(View.VISIBLE);
+				//finish();
 				break;
 
 			default:
