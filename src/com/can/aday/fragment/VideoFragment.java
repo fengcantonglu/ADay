@@ -24,7 +24,7 @@ public class VideoFragment extends AdayFragment {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.title_right_btn:
+			case R.id.title_right_btn:// 左边标题栏点击效果
 				showImageBox();
 				break;
 

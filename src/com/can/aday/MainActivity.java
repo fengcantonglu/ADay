@@ -136,7 +136,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	/**
-	 * 初始化底部栏
+	 * 初始化底部栏,与底部栏变化效果事件的处理
 	 */
 	@SuppressLint("InflateParams")
 	@SuppressWarnings("deprecation")
@@ -227,4 +227,16 @@ public class MainActivity extends FragmentActivity {
 		mMenu.toggle();
 	}
 
+	@Override
+	public void finish() {
+		int i = 0;
+		for (AdayFragment f : pagers) {
+			if (f.finish()) {
+				i++;
+			}
+		}
+		if (i > 0) {
+			super.finish();
+		}
+	}
 }
