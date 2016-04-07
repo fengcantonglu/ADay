@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <!-- 视频排行的界面 -->
+    <include 
+        layout="@layout/title_bar_main"/>
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#343434"/>
+	<RadioGroup 
+	    android:id="@+id/viseo_order_radiogroup"
+	    android:layout_width="match_parent"
+	    android:layout_height="40dp"
+	    android:orientation="horizontal">
+	    <RadioButton 
+	        android:id="@+id/viseo_order_week"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:button="@null"
+	        android:gravity="center"
+	        android:text="周排行"
+	        android:textSize="15sp"/>
+	    <RadioButton
+	        android:id="@+id/viseo_order_month"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:button="@null"
+	        android:gravity="center"
+	        android:text="月排行"
+	        android:textSize="15sp"/>
+	    <RadioButton 
+	        android:id="@+id/viseo_order_total"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:button="@null"
+	        android:gravity="center"
+	        android:text="总排行"
+	        android:textSize="15sp"/>
+	</RadioGroup>
+	<ListView 
+	    android:id="@+id/viseo_order_listview"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"/>
+</LinearLayout>

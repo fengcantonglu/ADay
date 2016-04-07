@@ -8,6 +8,7 @@ import java.util.Map;
 import com.can.aday.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -68,8 +69,8 @@ public class VideoClassifyActivity extends Activity {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			// TODO Auto-generated method stub
-			
+			Intent intent=new Intent(VideoClassifyActivity.this,VideoClassifyDetailsActivity.class);
+			startActivity(intent);
 		}
 	};
 }
