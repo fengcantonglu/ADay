@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -32,10 +33,10 @@ public class MainActivity extends FragmentActivity {
 	/**
 	 * 标题栏左的两次点击事件
 	 */
-	boolean titleRightUD=true;
-	PopupWindow popupWindow;//自定义PopupWindow
-	TextView classify;//分类
-	TextView number;//排第几
+	boolean titleRightUD = true;
+	PopupWindow popupWindow;// 自定义PopupWindow
+	TextView classify;// 分类
+	TextView number;// 排第几
 	/**
 	 * 底部radioGroup
 	 */
@@ -64,13 +65,13 @@ public class MainActivity extends FragmentActivity {
 
 				break;
 			case R.id.title_right_btn:
-				if(titleRightUD){
+				if (titleRightUD) {
 					popupwindow(v);
 					titleRight.setImageResource(R.drawable.pack_up_icon);
-					titleRightUD=false;
-				}else{
+					titleRightUD = false;
+				} else {
 					titleRight.setImageResource(R.drawable.pack_down_icon);
-					titleRightUD=true;
+					titleRightUD = true;
 					popupWindow.dismiss();
 				}
 				break;
@@ -80,16 +81,16 @@ public class MainActivity extends FragmentActivity {
 
 		}
 	};
-	
+
 	/**
 	 * 自定义PopupWindow
 	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("InflateParams")
 	private void popupwindow(View view) {
-		View v=LayoutInflater.from(this).inflate(R.layout.video_fragment_layout, null);
-		classify=(TextView)v.findViewById(R.id.video_fragment_classify);
-		number=(TextView)v.findViewById(R.id.video_fragment_number);
+		View v = LayoutInflater.from(this).inflate(R.layout.video_fragment_layout, null);
+		classify = (TextView) v.findViewById(R.id.video_fragment_classify);
+		number = (TextView) v.findViewById(R.id.video_fragment_number);
 		popupWindow = new PopupWindow(v, 180, LayoutParams.WRAP_CONTENT, true);
 		popupWindow.setFocusable(false);
 		popupWindow.setTouchable(true);
@@ -97,7 +98,7 @@ public class MainActivity extends FragmentActivity {
 		popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		popupWindow.showAsDropDown(view);
 	}
-	
+
 	private OnCheckedChangeListener btnChange = new OnCheckedChangeListener() {
 
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -105,26 +106,49 @@ public class MainActivity extends FragmentActivity {
 		}
 	};
 
+	private SlidingMenu mMenu;
+	View set;// 设置
+	View back;// 返回
+	ImageView head;// 头像
+	TextView nickName;// 昵称
+	TextView collection;// 收藏
+	TextView comments;// 评论
+	TextView contribute;// 我要投稿
+	TextView more;// 更多应用
+	TextView agreement;// 用户协议
+	TextView feedback;// 意见反馈
+	TextView report;// 版权举报
+	TextView video;// 视频功能声明
+	TextView score;// 前往评分
+
+	View menu;
+	View menu_set;
+
+	@SuppressLint("WrongCall")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+
+		setContentView(R.layout.activity_main_menu);
 		findView();
+		findMenuView();
 		initBottomView();
 		initView();
 		initFragment();
 	}
-    /**
-     * 控件ID
-     */
+
+	/**
+	 * 控件ID
+	 */
 	private void findView() {
 		titleMenu = findViewById(R.id.title_left);
-		titleRight=(ImageView)findViewById(R.id.title_right_btn);
+		titleRight = (ImageView) findViewById(R.id.title_right_btn);
+
 		findViewById(R.id.title_right_layout).setVisibility(View.GONE);
-		bottomGroup = (RadioGroup) findViewById(R.id.main_bottom_group);
-		bottomBtns[0] = (RadioButton) findViewById(R.id.book_btn);
-		bottomBtns[1] = (RadioButton) findViewById(R.id.music_btn);
-		bottomBtns[2] = (RadioButton) findViewById(R.id.video_btn);
+		// bottomGroup = (RadioGroup) findViewById(R.id.main_bottom_group);
+		// bottomBtns[0] = (RadioButton) findViewById(R.id.book_btn);
+		// bottomBtns[1] = (RadioButton) findViewById(R.id.music_btn);
+		// bottomBtns[2] = (RadioButton) findViewById(R.id.video_btn);
 	}
 
 	/**
@@ -135,12 +159,12 @@ public class MainActivity extends FragmentActivity {
 		for (int i = 0; i < bottomBtns.length; i++) {
 			if (bottomBtns[i].isChecked()) {
 				bottomBtns[i].setTextColor(getResources().getColor(R.color.bottom_text_selet_color));
-				if(i==2){
+				if (i == 2) {
 					findViewById(R.id.title_right_layout).setVisibility(View.VISIBLE);
 					titleRight.setOnClickListener(click);
 					titleRight.setImageResource(R.drawable.pack_down_icon);
-					titleRightUD=true;
-				}else{
+					titleRightUD = true;
+				} else {
 					findViewById(R.id.title_right_layout).setVisibility(View.GONE);
 				}
 			} else {
@@ -164,7 +188,57 @@ public class MainActivity extends FragmentActivity {
 		manager = getSupportFragmentManager();
 		FragmentTransaction transaction = manager.beginTransaction();
 		mVieoPager = new VideoFragment();
-		transaction.add(R.id.main_layout, mVieoPager);
+		// transaction.add(R.id.main_layout, mVieoPager);
 		transaction.commit();
+
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_main_menu);
+		mMenu = (SlidingMenu) findViewById(R.id.id_menu);
+		findView();
 	}
+
+	private void findMenuView() {
+		set = findViewById(R.id.menu_image_set_icon);
+		back = findViewById(R.id.menu_title_bar_back_icon);
+		head = (ImageView) findViewById(R.id.login_register_image_head);
+		nickName = (TextView) findViewById(R.id.menu_text_nick_name);
+		collection = (TextView) findViewById(R.id.menu_text_my_collection);
+		comments = (TextView) findViewById(R.id.menu_text_my_comments);
+		contribute = (TextView) findViewById(R.id.menu_text_contribute);
+		more = (TextView) findViewById(R.id.menu_text_more_application);
+		agreement = (TextView) findViewById(R.id.menu_text_user_apreement);
+		feedback = (TextView) findViewById(R.id.menu_text_feedback);
+		report = (TextView) findViewById(R.id.menu_text_copyright);
+		video = (TextView) findViewById(R.id.menu_text_video_function);
+		score = (TextView) findViewById(R.id.menu_text_to_score);
+		menu = findViewById(R.id.menu);
+		menu_set = findViewById(R.id.menu_set);
+
+		back.setOnClickListener(clickListener);
+		set.setOnClickListener(clickListener);
+	}
+
+	OnClickListener clickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.menu_title_bar_back_icon:
+				menu.setVisibility(View.VISIBLE);
+				menu_set.setVisibility(View.GONE);
+				break;
+			case R.id.menu_image_set_icon:
+				menu_set.setVisibility(View.VISIBLE);
+				menu.setVisibility(View.GONE);
+				break;
+			default:
+				break;
+			}
+		}
+	};
+
+	public void toggleMenu(View view) {
+		mMenu.toggle();
+	}
+
 }
