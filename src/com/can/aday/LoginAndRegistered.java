@@ -1,5 +1,6 @@
 package com.can.aday;
 
+import com.can.aday.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;

@@ -27,8 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.can.aday.VideoClassifyDetailsActivity"></activity>
-        <activity android:name="com.can.aday.VideoOrderActivity"></activity>
+        <activity android:name="com.can.aday.VideoClassifyDetailsActivity" >
+        </activity>
+        <activity android:name="com.can.aday.VideoOrderActivity" >
+        </activity>
     </application>
 
 </manifest>
