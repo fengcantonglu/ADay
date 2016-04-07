@@ -4,11 +4,8 @@ import com.can.aday.fragment.AdayFragment;
 import com.can.aday.fragment.BookFragment;
 import com.can.aday.fragment.MusicFragment;
 import com.can.aday.fragment.VideoFragment;
-import com.can.aday.tools.DensityUtil;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -18,8 +15,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -75,9 +70,7 @@ public class MainActivity extends FragmentActivity {
 			case R.id.title_left:// 标题菜单按钮
 
 				break;
-			case R.id.title_right_btn:
-				showImageBox();
-				break;
+
 			default:
 				break;
 			}
@@ -153,18 +146,11 @@ public class MainActivity extends FragmentActivity {
 			transaction.hide(pagers[i]);
 			if (bottomBtns[i].isChecked()) {
 				bottomBtns[i].setTextColor(getResources().getColor(R.color.bottom_text_selet_color));
-				if (i == 2) {
-					titleRight.setOnClickListener(click);
-					titleRightLayout.setVisibility(View.VISIBLE);
-				} else {
-					titleRightLayout.setVisibility(View.GONE);
-				}
 				pagers[i].onShow();
 				transaction.show(pagers[i]);
 			} else {
 				pagers[i].onDismiss();
 				bottomBtns[i].setTextColor(getResources().getColor(R.color.bottom_text_not_selet_color));
-
 			}
 		}
 		transaction.commit();
@@ -184,7 +170,7 @@ public class MainActivity extends FragmentActivity {
 	private void initFragment() {
 
 		FragmentTransaction transaction = manager.beginTransaction();
-		mVieoPager = new VideoFragment();
+		mVieoPager = new VideoFragment(findViewById(R.id.include1));
 		mBookPager = new BookFragment();
 		mMusicPager = new MusicFragment(findViewById(R.id.include1));
 		pagers[0] = mBookPager;
@@ -241,59 +227,4 @@ public class MainActivity extends FragmentActivity {
 		mMenu.toggle();
 	}
 
-	PopupWindow pop;
-
-	/**
-	 * 视频下拉window的切换效果
-	 */
-	private void showImageBox() {
-		if (pop == null || !pop.isShowing()) {
-			titleRight.setImageResource(R.drawable.pack_up_icon);
-			titleRight.setBackgroundColor(Color.parseColor("#10000000"));
-			showPopwindow();
-		} else {
-			titleRight.setImageResource(R.drawable.pack_down_icon);
-			titleRight.setBackgroundColor(0);
-			pop = null;
-		}
-	}
-
-	/**
-	 * 视频页面下拉popwindow的显示
-	 */
-	@SuppressWarnings("deprecation")
-	@SuppressLint("InflateParams")
-	private void showPopwindow() {
-		View pupView = getLayoutInflater().inflate(R.layout.video_fragment_layout, null);
-		OnClickListener l = new OnClickListener() {
-
-			public void onClick(View v) {
-				switch (v.getId()) {
-				case R.id.video_fragment_classify:
-					mVieoPager.seleteType();
-					break;
-				default:
-					mVieoPager.seletePaihang();
-					break;
-				}
-			}
-		};
-		pupView.findViewById(R.id.video_fragment_classify).setOnClickListener(l);
-		pupView.findViewById(R.id.video_fragment_number).setOnClickListener(l);
-		pop = new PopupWindow(pupView, DensityUtil.dip2px(this, 52), -2);
-		pop.setOutsideTouchable(true);
-		pop.setTouchable(true);
-		pop.setFocusable(true);
-		pop.setBackgroundDrawable(new BitmapDrawable());
-		OnDismissListener onDismissListener = new OnDismissListener() {
-
-			@Override
-			public void onDismiss() {
-				titleRight.setImageResource(R.drawable.pack_down_icon);
-
-			}
-		};
-		pop.setOnDismissListener(onDismissListener);
-		pop.showAsDropDown(titleRightLayout);
-	}
 }
