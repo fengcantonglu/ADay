@@ -64,6 +64,7 @@ public class VideoOrderActivity extends Activity {
 	 */
 	OnClickListener clickListener=new OnClickListener() {
 		
+		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.title_bar_back_icon:

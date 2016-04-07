@@ -22,6 +22,7 @@ public class LoginAndRegistered extends Activity {
 	View qq;// qq登录
 	TextView clause;// 服务条款
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
