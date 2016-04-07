@@ -20,15 +20,21 @@
         <!-- 视频的界面 -->
         <activity android:name="com.can.aday.VideoClassifyActivity" >
         </activity>
-        <activity android:name="com.can.aday.LoginAndRegistered" >
+        <activity android:name="com.can.aday.VideoClassifyDetailsActivity" >
+        </activity>
+        <activity android:name="com.can.aday.VideoOrderActivity" >
+        </activity>
+
+        <!-- 登陆注册页面 -->
+        <activity android:name="com.can.aday.LoginAndRegisteredActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.can.aday.VideoClassifyDetailsActivity"></activity>
-        <activity android:name="com.can.aday.VideoOrderActivity"></activity>
+        <activity android:name="com.can.aday.RegisterActivity" >
+        </activity>
     </application>
 
 </manifest>

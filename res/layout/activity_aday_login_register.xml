@@ -3,18 +3,23 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@drawable/login_and_register_background"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical" >
+
+    <!-- 导入头文件 -->
 
     <include
         android:id="@+id/login_register_title_bar"
         layout="@layout/title_bar_main" />
+    <!-- 头像视图 -->
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="20dp" >
+        android:paddingBottom="30dp" >
 
         <LinearLayout
             android:layout_width="120dp"
@@ -35,7 +40,9 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.1"
+        android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:paddingBottom="20dp" >
 
         <ImageView
@@ -47,6 +54,8 @@
             android:layout_marginStart="45dp"
             android:contentDescription="@drawable/account_icon"
             android:src="@drawable/account_icon" />
+
+        <!-- 账号输入 -->
 
         <EditText
             android:id="@+id/login_register_edit_account"
@@ -83,6 +92,8 @@
             android:contentDescription="@drawable/password_icon"
             android:src="@drawable/password_icon" />
 
+        <!-- 密码输入 -->
+
         <EditText
             android:id="@+id/login_register_edit_password"
             android:layout_width="wrap_content"
@@ -108,67 +119,71 @@
             android:layout_marginTop="36dp"
             android:background="@android:color/white" />
 
-        <RelativeLayout
-            android:id="@+id/login_register_relation_login"
-            android:layout_width="116dp"
-            android:layout_height="30dp"
-            android:layout_below="@id/login_register_line2_white"
-            android:layout_marginLeft="42dp"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="36dp"
-            android:background="#13B5B1" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/login"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/login_register_relation_register"
-            android:layout_width="114dp"
-            android:layout_height="30dp"
-            android:layout_below="@id/login_register_line2_white"
-            android:layout_marginEnd="42dp"
-            android:layout_marginLeft="44dp"
-            android:layout_marginRight="42dp"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="36dp"
-            android:layout_toEndOf="@id/login_register_relation_login"
-            android:layout_toRightOf="@id/login_register_relation_login"
-            android:background="@drawable/shape_white_linear_stroke" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/register"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-        </RelativeLayout>
-
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/login_register_line2_white"
+            android:layout_alignLeft="@id/login_register_line2_white"
+            android:layout_alignRight="@id/login_register_line2_white"
+            android:layout_alignStart="@id/login_register_line2_white"
+            android:layout_below="@id/login_register_line2_white"
+            android:layout_marginTop="36dp"
+            android:baselineAligned="false" >
+
+            <!-- 登陆 -->
+
+            <RelativeLayout
+                android:id="@+id/login_register_relation_login"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_weight="1"
+                android:background="#13B5B1" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/login"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <!-- 注册 -->
+
+            <RelativeLayout
+                android:id="@+id/login_register_relation_register"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_white_linear_stroke" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/register"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </LinearLayout>
+        <!-- 快捷登陆 -->
+
+        <RelativeLayout
             android:id="@+id/login_register_linear_quick"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="36dp"
-            android:gravity="center_vertical"
             android:orientation="horizontal" >
 
-            <View
-                android:layout_width="100dp"
-                android:layout_height="1px"
-                android:layout_marginLeft="42dp"
-                android:layout_marginStart="42dp"
-                android:background="@android:color/white" />
-
             <TextView
+                android:id="@+id/login_register_text_quick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:text="@string/quick_login"
@@ -178,10 +193,23 @@
             <View
                 android:layout_width="100dp"
                 android:layout_height="1px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="42dp"
+                android:layout_marginStart="42dp"
+                android:layout_toLeftOf="@id/login_register_text_quick"
+                android:layout_toStartOf="@id/login_register_text_quick"
+                android:background="@android:color/white" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1px"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="42dp"
                 android:layout_marginRight="42dp"
+                android:layout_toEndOf="@id/login_register_text_quick"
+                android:layout_toRightOf="@id/login_register_text_quick"
                 android:background="@android:color/white" />
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -190,48 +218,57 @@
         android:layout_weight="1" >
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:orientation="horizontal" >
+
+            <!-- 微信登陆 -->
 
             <ImageView
                 android:id="@+id/login_register_image_wei_xin"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="92.6dp"
-                android:layout_marginStart="92.6dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
                 android:contentDescription="@drawable/wei_xin_icon"
+                android:padding="5dp"
                 android:src="@drawable/wei_xin_icon" />
+
+            <!-- QQ登陆 -->
 
             <ImageView
                 android:id="@+id/login_register_image_qq"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="33dp"
-                android:layout_marginRight="33dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
                 android:contentDescription="@drawable/qq"
+                android:padding="5dp"
                 android:src="@drawable/qq" />
+
+            <!-- 微博登陆 -->
 
             <ImageView
                 android:id="@+id/login_register_image_wei_bo"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
                 android:contentDescription="@drawable/sina_weibo_icon"
+                android:padding="5dp"
                 android:src="@drawable/sina_weibo_icon" />
         </LinearLayout>
+
+        <!-- 服务条款 -->
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="79.3dp"
-                android:layout_marginStart="79.3dp"
                 android:text="@string/over"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp" />

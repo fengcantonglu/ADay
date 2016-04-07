@@ -1,14 +1,16 @@
 package com.can.aday;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class LoginAndRegistered extends Activity {
+public class LoginAndRegisteredActivity extends Activity {
 	View titleBar;// 标题
 	ImageView toReturn;
 	TextView title;
@@ -21,6 +23,7 @@ public class LoginAndRegistered extends Activity {
 	View weiBo;// 微博登录
 	View qq;// qq登录
 	TextView clause;// 服务条款
+	Intent intent;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -47,6 +50,28 @@ public class LoginAndRegistered extends Activity {
 		title.setText(R.string.login);
 		title.setTextColor(Color.WHITE);
 		titleBar.setBackgroundColor(Color.parseColor("#40000000"));
-		toReturn.setImageResource(R.drawable.backtrack_icon);
+		toReturn.setVisibility(View.GONE);
+
+		register.setOnClickListener(clickListener);
+		login.setOnClickListener(clickListener);
 	}
+
+	OnClickListener clickListener = new OnClickListener() {
+
+		public void onClick(View v) {
+			intent = new Intent();
+			switch (v.getId()) {
+			case R.id.login_register_relation_register:
+				intent.setClass(LoginAndRegisteredActivity.this, RegisterActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.login_register_relation_login:
+				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
+				startActivity(intent);
+				break;
+			default:
+				break;
+			}
+		}
+	};
 }
