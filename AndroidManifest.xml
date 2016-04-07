@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="23" />
 
     <application
         android:allowBackup="true"
@@ -31,6 +31,9 @@
         </activity>
         <activity android:name="com.can.aday.VideoOrderActivity" >
         </activity>
+        
+        <!-- 读者模块 -->
+
     </application>
 
 </manifest>
