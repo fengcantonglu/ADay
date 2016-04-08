@@ -42,7 +42,8 @@
             </intent-filter>
         </activity>
         <!-- 读者模块 -->
-
+        <activity android:name="com.can.aday.BookActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/content_image_layout"
+                android:layout_width="match_parent"
+                android:layout_height="228dp"
+                android:background="@drawable/book_music_backgroup_image" >
+
+                <RelativeLayout
+                    android:id="@+id/progress_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp" >
+
+                    <ImageView
+                        android:id="@+id/progress_image"
+                        android:layout_width="235dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:padding="6dp"
+                        android:src="@drawable/progress_line" />
+
+                    <TextView
+                        android:id="@+id/currut_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/progress_image"
+                        android:text="01:44"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/music_time_length"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/progress_image"
+                        android:text="04:35"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/play_or_pause"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@drawable/music_pause_image"
+                    android:src="@drawable/music_pause_image" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/date_image"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:layout_marginTop="-48.5dp"
+                android:contentDescription="@drawable/date_image"
+                android:src="@drawable/date_image" />
+
+            <TextView
+                android:id="@+id/arc_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="面包匠的狂欢节"
+                android:textColor="@color/bottom_text_selet_color"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
+                <View
+                    android:layout_width="27dp"
+                    android:layout_height="1dp"
+                    android:background="@color/drive_line_color" />
+
+                <TextView
+                    android:id="@+id/article_athor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="安德鲁·林赛"
+                    android:textColor="@color/black"
+                    android:textSize="12.5sp" />
+
+                <View
+                    android:layout_width="27dp"
+                    android:layout_height="1dp"
+                    android:background="@color/drive_line_color" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/athor_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:padding="10dp"
+                android:text="\t\t周杰伦1979年1月18日出生于台湾省台北县（现新北市）[28]  ，祖籍福建省永春县[29]  。父亲周耀中是淡江中学的物理老师，母亲叶惠美是淡江中学的美术老师，周杰伦读初中二年级时，周耀中和叶惠美办理了离婚手续，并协议商定周杰伦归叶惠美抚养。"
+                android:textColor="@color/text_color_black_434343"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/drive_line_color" />
+
+            <LinearLayout
+                android:id="@+id/article_centent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/main_title_layout" />
+
+</RelativeLayout>

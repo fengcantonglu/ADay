@@ -1,10 +1,13 @@
 package com.can.aday.fragment;
 
+import com.can.aday.BookActivity;
 import com.can.aday.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
@@ -51,11 +54,31 @@ public class BookFragment extends AdayFragment {
 	 */
 	TextView commentCount;
 
+	Intent intent;
+	private OnClickListener click = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.article_title:
+			case R.id.article_content:
+				intent.setClass(getActivity(), BookActivity.class);
+				getActivity().startActivity(intent);
+				break;
+
+			default:
+				break;
+			}
+
+		}
+	};
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		LinearLayout lay = new LinearLayout(getActivity());
 		lay.setLayoutParams(new LayoutParams(-1, -1));
 		mView = inflater.inflate(R.layout.book_layout, lay);
+		intent = getActivity().getIntent();
 		findView();
 		initView();
 		loadData();
@@ -77,7 +100,8 @@ public class BookFragment extends AdayFragment {
 	 * 点击绑定
 	 */
 	private void initView() {
-
+		artTitle.setOnClickListener(click);
+		artContent.setOnClickListener(click);
 	}
 
 	/**

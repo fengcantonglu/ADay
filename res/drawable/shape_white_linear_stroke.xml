@@ -5,4 +5,6 @@
         android:width="1px"
         android:color="@android:color/white" />
 
+    <solid android:color="@null" />
+
 </shape>
