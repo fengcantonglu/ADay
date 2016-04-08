@@ -1,15 +1,17 @@
 package com.can.aday;
 
-import com.can.aday.R;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginAndRegisteredActivity extends Activity {
 	View titleBar;// 标题
@@ -32,9 +34,16 @@ public class LoginAndRegisteredActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_aday_login_register);
 		findView();
-
+		new Handler().postDelayed(new Runnable() {
+			public void run() {
+				isShowWelcome();
+			}
+		}, 3000);
 	}
 
+	/**
+	 * 查找控件id与设置初始值
+	 */
 	private void findView() {
 		titleBar = findViewById(R.id.login_register_title_bar);
 		toReturn = (ImageView) findViewById(R.id.title_bar_back_icon);
@@ -56,8 +65,12 @@ public class LoginAndRegisteredActivity extends Activity {
 
 		register.setOnClickListener(clickListener);
 		login.setOnClickListener(clickListener);
+
 	}
 
+	/**
+	 * 点击事件监听
+	 */
 	OnClickListener clickListener = new OnClickListener() {
 
 		public void onClick(View v) {
@@ -68,12 +81,61 @@ public class LoginAndRegisteredActivity extends Activity {
 				startActivity(intent);
 				break;
 			case R.id.login_register_relation_login:
-				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
-				startActivity(intent);
+				singUP();
+
 				break;
 			default:
 				break;
 			}
 		}
 	};
+
+	/**
+	 * 登陆验证账户密码是否为空
+	 */
+	private void singUP() {
+
+		String acc = account.getText().toString();
+		String pass = password.getText().toString();
+		if (acc!=null &&!acc .equals("")) {
+			if (pass!=null && !pass .equals("")) {
+				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
+				startActivity(intent);
+				cachedPageGuide(account.getText().toString(), password.getText().toString());
+				finish();
+			} else {
+				Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			Toast.makeText(getApplicationContext(), "账号不能为空", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	/**
+	 * 判断缓存是否存在
+	 */
+	public void isShowWelcome() {
+		Intent intent = new Intent();
+		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
+		String userName = sharedPreferences.getString("account", "");
+		String pass = sharedPreferences.getString("password", "");
+		if (userName.equals(null) && userName != "") {
+			if (pass.equals(null) && pass != "") {
+				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		}
+	}
+
+	/**
+	 * 缓存登录信息
+	 */
+	public void cachedPageGuide(String account, String password) {
+		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString("account", account);
+		editor.putString("password", password);
+		editor.commit();
+	}
 }

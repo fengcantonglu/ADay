@@ -29,6 +29,14 @@
     <string name="story">故事</string>
     <string name="lyric">歌词</string>
     <string name="details">详情</string>
+
     <string name="video_story">故事介绍</string>
+
+
+	<string name="experience_immediately">立即体验</string>
+    <string name="look_at_the">L O O K\nA T\nT H E\nW O R L D</string>
+	<string name="hear_all">H E A R\nA L L\nT H E\nP O S S I B L E</string>
+	<string name="to_enjoy">T O\nE N J O Y\nT H E\nW O R L D</string>
+	
 
 </resources>
