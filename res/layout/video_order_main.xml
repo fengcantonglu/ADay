@@ -46,7 +46,8 @@
 	<ListView 
 	    android:id="@+id/viseo_order_listview"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"/>
+	    android:layout_height="wrap_content"
+	    android:divider="@null"/>
 	<include 
 	    android:id="@+id/viseo_order_include"
 	    layout="@layout/video_order_details_layout"

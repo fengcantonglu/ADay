@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.can.aday.adapter.VideoOrderBaseAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +27,7 @@ public class VideoOrderActivity extends Activity {
 	TextView titleName;// 标题
 	ImageView backimage;// 返回
 	RadioGroup radioGroup;
+	ImageView commentIcon;
 
 	View vInclude;
 
@@ -77,10 +79,12 @@ public class VideoOrderActivity extends Activity {
 		backimage = (ImageView) findViewById(R.id.title_bar_back_icon);
 		titleName = (TextView) findViewById(R.id.title_bar_title_text);
 		vInclude = findViewById(R.id.viseo_order_include);
+		commentIcon=(ImageView)findViewById(R.id.video_order_details_comment);
 
 		titleName.setText("排行");
 
 		backimage.setOnClickListener(clickListener);
+		commentIcon.setOnClickListener(clickListener);
 
 		listview.setOnItemClickListener(itemClickListener);
 
@@ -99,7 +103,10 @@ public class VideoOrderActivity extends Activity {
 				listview.setVisibility(View.VISIBLE);
 				// finish();
 				break;
-
+			case R.id.video_order_details_comment:
+				Intent intent=new Intent(VideoOrderActivity.this,CommentActivity.class);
+				startActivity(intent);
+				break;
 			default:
 				break;
 			}
