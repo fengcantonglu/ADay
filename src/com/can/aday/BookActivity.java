@@ -1,11 +1,18 @@
 package com.can.aday;
 
+import com.can.aday.tools.DensityUtil;
+import com.can.aday.view.BookMusicView;
+import com.can.aday.view.BookView;
+import com.can.aday.view.MyImageView;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 /**
@@ -75,12 +82,38 @@ public class BookActivity extends Activity {
 	 */
 	LinearLayout contentLayout;
 
+	/**
+	 * 喜欢图标
+	 */
+	View likeBtn;
+
+	/**
+	 * 喜欢板块布局
+	 */
+	LinearLayout likeLayout;
+
+	/**
+	 * 评论日期标签
+	 */
+	TextView commentDate;
+	/**
+	 * 查看更多评论
+	 */
+	View moreComment;
+
+	/**
+	 * 评论布局
+	 */
+	LinearLayout commentLayout;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_book);
 		initTitleView();
 		findView();
+		initView();
+		loadData();
 
 	}
 
@@ -111,5 +144,92 @@ public class BookActivity extends Activity {
 		artAthor = (TextView) findViewById(R.id.article_athor);
 		athorDetail = (TextView) findViewById(R.id.athor_details);
 		contentLayout = (LinearLayout) findViewById(R.id.article_centent_layout);
+		likeBtn = findViewById(R.id.like_btn);
+		likeLayout = (LinearLayout) findViewById(R.id.like_layout);
+		commentDate = (TextView) findViewById(R.id.comment_date);
+		moreComment = findViewById(R.id.more_comment);
+		commentLayout = (LinearLayout) findViewById(R.id.comment_layout);
 	}
+
+	private void initView() {
+
+	}
+
+	private void loadData() {
+		LayoutParams params = new LayoutParams(DensityUtil.dip2px(this, 45), DensityUtil.dip2px(this, 45));
+		params.setMargins(0, 0, DensityUtil.dip2px(this, 11.5f), 0);
+
+		MyImageView v = new MyImageView(this);
+		v.setImageResource(R.drawable.user_header_1);
+		likeLayout.addView(v, params);
+		v = new MyImageView(this);
+		v.setImageResource(R.drawable.user_header_2);
+		likeLayout.addView(v, params);
+		v = new MyImageView(this);
+		v.setImageResource(R.drawable.user_header_3);
+		likeLayout.addView(v, params);
+		v = new MyImageView(this);
+		v.setImageResource(R.drawable.user_header_4);
+		likeLayout.addView(v, params);
+		v = new MyImageView(this);
+		v.setImageResource(R.drawable.user_header_5);
+		likeLayout.addView(v, params);
+
+		// >>>>>>>
+		loadBookData();
+	}
+
+	/**
+	 * 普通读物杂志加载模块
+	 */
+	public void loadBookData() {
+		progressLayout.setVisibility(View.GONE);
+		playOrPause.setVisibility(View.GONE);
+		BookView bv = new BookView(this);
+		bv.setData(
+				new String[] {
+						"好女人的爱情字典里容不得沙子，所以好女人的爱情世界里一般不会和金钱权势搭上关系。许多的“好”男人以为凭金钱和权势就能打动好女人的芳心，结果总是事与愿违，因为好女人最反感最看不起这种世俗的铜臭味，好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……" },
+				"在对待女人的态度上，好男人通常表现的清高，清高的男人总是射不中春天里的美。",
+				BitmapFactory.decodeResource(getResources(), R.drawable.content_image_1));
+		contentLayout.addView(bv.getView());
+		bv = new BookView(this);
+		bv.setData(
+				new String[] {
+						"好女人的爱情字典里容不得沙子，所以好女人的爱情世界里一般不会和金钱权势搭上关系。许多的“好”男人以为凭金钱和权势就能打动好女人的芳心，结果总是事与愿违，因为好女人最反感最看不起这种世俗的铜臭味，好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……" },
+				null, BitmapFactory.decodeResource(getResources(), R.drawable.content_image_2));
+		contentLayout.addView(bv.getView());
+
+		bv = new BookView(this);
+		bv.setData(
+				new String[] {
+						"好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……" },
+				null, null);
+		contentLayout.addView(bv.getView());
+	}
+
+	/**
+	 * 音乐杂志的加载模块
+	 */
+	public void loadBookMusicData() {
+		progressLayout.setVisibility(View.VISIBLE);
+		playOrPause.setVisibility(View.VISIBLE);
+		BookMusicView cv = new BookMusicView(this);
+		cv.setData("选取音乐:大幻想取《诺玛的回忆》节选", null, null);
+		contentLayout.addView(cv.getView());
+		cv = new BookMusicView(this);
+		cv.setData("内容介绍:",
+				new String[] {
+						"2002年9月28日周杰伦于台北市立体育场举办《THEONE演唱会》，创下了台湾演唱会近十年的优质纪录。[33]  2003年7月16日，全亚洲超过五十家电台同步首播新专辑《叶惠美》中的主打歌曲《以父之名》，据统计有八亿人收听，因此将每年的7月16日定为“周杰伦日”。[34]  同年因《东风破》而被华语音乐传媒大赏评为最佳作曲人。[35]  同年，荣登美国《时代》周刊亚洲版封面人物”[3]  。周杰伦是继王菲、张惠妹之后，第3位出现在《时代》杂志封面的华人歌手。",
+						"2004年周杰伦以《龙拳》亮相春晚[37]  ；2005年6月23日主演处女作《头文字D》上映，同年获得香港电影金像奖最佳新人奖；[38-39]  2007年11月24日周杰伦在上海八万人体育场开唱。" },
+				BitmapFactory.decodeResource(getResources(), R.drawable.book_music_cotent_image));
+		contentLayout.addView(cv.getView());
+		cv = new BookMusicView(this);
+		cv.setData("内容截取:",
+				new String[] {
+						"2009年7月，周杰伦澳洲巡演，悉尼演唱会票房空降美国公告牌（Billboard）第二，力压碧昂斯，成为当年全球单场演唱会票房收入第二的好成绩，打破了华人在澳洲开唱的票房纪录；[50]  2009年12月，美国CNN评选\"亚洲最具影响力的25位人物”，周杰伦入选，并被CNN网站形容为“非凡艺人”。" },
+				null);
+		contentLayout.addView(cv.getView());
+		cv = new BookMusicView(this);
+	}
+
 }

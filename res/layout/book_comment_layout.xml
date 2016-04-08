@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/user_head_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/com_content_layout"
+        android:layout_marginBottom="-23dp" >
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@color/bottom_text_selet_color" />
+
+        <com.can.aday.view.MyImageView
+            android:id="@+id/user_head_image"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/comment_user_header_1" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/like_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="11dp"
+        android:drawableLeft="@drawable/like_icon"
+        android:drawablePadding="4dp"
+        android:text="140" />
+
+    <LinearLayout
+        android:id="@+id/com_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/user_head_layout"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingTop="10dp"
+            android:text="落月月"
+            android:textColor="@color/text_color_black_434343"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/com_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:text="5分钟前"
+            android:textColor="@color/bottom_text_selet_color"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/com_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="一种作者写自己经历见闻中的真情实感的灵活精干的文学体裁。而“散文”一词大概出现在北宋太平兴国（976年十二月—984年十一月）时期。"
+            android:textColor="@color/text_color_black_434343"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="20dp"
+            android:background="#FFE8CB" />
+    </LinearLayout>
+
+</RelativeLayout>
