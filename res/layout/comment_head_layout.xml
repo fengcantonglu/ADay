@@ -23,24 +23,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <ImageView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
-             android:layout_marginLeft="12dp"
-        	android:layout_marginStart="12dp"
-            android:src="@drawable/like_icon"
-            android:contentDescription="@drawable/like_icon"/>
         <TextView 
+            android:id="@+id/comment_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/like_icon"
+            android:drawableStart="@drawable/like_icon"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginStart="1dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:text="23"
             android:textColor="#13b5b1"
             android:textSize="8sp"/>
-        <ImageView 
+        <com.can.aday.view.MyImageView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -48,7 +43,7 @@
             android:layout_marginStart="18dp"
             android:src="@drawable/comment_user_header_1"
             android:contentDescription="@drawable/comment_user_header_1"/>
-        <ImageView 
+        <com.can.aday.view.MyImageView  
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -56,7 +51,7 @@
             android:layout_marginStart="14dp"
             android:src="@drawable/comment_user_header_1"
             android:contentDescription="@drawable/comment_user_header_1"/>
-        <ImageView 
+        <com.can.aday.view.MyImageView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -64,7 +59,7 @@
             android:layout_marginStart="14dp"
             android:src="@drawable/comment_user_header_1"
             android:contentDescription="@drawable/comment_user_header_1"/>
-        <ImageView 
+        <com.can.aday.view.MyImageView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -72,7 +67,7 @@
             android:layout_marginStart="14dp"
             android:src="@drawable/comment_user_header_1"
             android:contentDescription="@drawable/comment_user_header_1"/>
-        <ImageView 
+        <com.can.aday.view.MyImageView  
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"

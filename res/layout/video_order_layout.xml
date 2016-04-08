@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="185dp" >
     <!-- 视频分类排行的布局 -->
-    <ImageView 
+     <ImageView 
         android:id="@+id/video_order_backimage"
         android:layout_width="match_parent"
         android:layout_height="185dp"
-        android:src="@drawable/aday_video_order"
-        android:contentDescription="@drawable/aday_video_order"/>
+        android:background="@drawable/aday_video_order"
+        android:contentDescription="@drawable/aday_video_order"/> 
 	<TextView 
 	    android:id="@+id/video_order_name"
 	    android:layout_width="wrap_content"
