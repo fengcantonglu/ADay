@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/welcom_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:id="@+id/welcom_text"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/shape_line_blue_stroke"
+        android:gravity="center"
+        android:text="立即体验"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp" >
+
+        <RadioGroup
+            android:id="@+id/welocm_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/welcom_radio_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/welcom_radio_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/welcom_radio_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null" />
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/welcom_image_view"
+            android:layout_width="84dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@drawable/welcome_progress_1"
+            android:src="@drawable/welcome_progress_1" />
+    </RelativeLayout>
+
+</RelativeLayout>
