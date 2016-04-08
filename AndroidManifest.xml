@@ -29,17 +29,18 @@
         </activity>
         <!-- 登陆注册页面 -->
         <activity android:name="com.can.aday.LoginAndRegisteredActivity" >
+        </activity>
+
+        <!-- 注册界面 -->
+        <activity android:name="com.can.aday.RegisterActivity" >
+        </activity>
+        <activity android:name="com.can.aday.ViewPagerActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- 注册界面 -->
-        <activity android:name="com.can.aday.RegisterActivity" >
-        </activity>
-
         <!-- 读者模块 -->
 
     </application>

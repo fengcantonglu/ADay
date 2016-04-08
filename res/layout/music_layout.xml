@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/music_backgroud_image"
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2.6"
@@ -14,8 +14,9 @@
         <ImageView
             android:id="@+id/content_image"
             android:layout_width="280dp"
-            android:layout_centerHorizontal="true"
             android:layout_height="280dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:src="@drawable/music_center_image" />
 
         <LinearLayout
@@ -31,19 +32,41 @@
                 android:id="@+id/music_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nan Vernon"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
             <ScrollView
+                android:id="@+id/contentScroll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="21dp" >
 
-                <TextView
-                    android:id="@+id/content_text"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" 
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/content_text_frist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginRight="22dp"
+                        android:gravity="center_horizontal"
+                        android:lineSpacingMultiplier="1.2"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/content_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="58dp"
+                        android:layout_marginRight="58dp"
+                        android:gravity="center_horizontal"
+                        android:lineSpacingMultiplier="1.2"
+                        android:textColor="@color/white" />
+                </LinearLayout>
             </ScrollView>
         </LinearLayout>
 
@@ -54,6 +77,12 @@
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/music_default"
+                android:checked="true"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
 
             <RadioButton
                 android:id="@+id/music_story"
@@ -114,6 +143,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/function_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
