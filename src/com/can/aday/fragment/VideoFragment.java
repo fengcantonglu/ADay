@@ -1,9 +1,12 @@
 package com.can.aday.fragment;
 
 import com.can.aday.R;
+import com.can.aday.VideoClassifyActivity;
+import com.can.aday.VideoOrderActivity;
 import com.can.aday.tools.DensityUtil;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -52,14 +55,16 @@ public class VideoFragment extends AdayFragment {
 	 * 点击分类
 	 */
 	public void seleteType() {
-
+		Intent intent=new Intent(getActivity(),VideoClassifyActivity.class);
+		startActivity(intent);
 	}
 
 	/**
 	 * 点击排行
 	 */
 	public void seletePaihang() {
-
+		Intent intent=new Intent(getActivity(),VideoOrderActivity.class);
+		startActivity(intent);
 	}
 
 	public void onShow() {
