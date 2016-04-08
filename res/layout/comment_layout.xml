@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <ImageView
+        <com.can.aday.view.MyImageView
             android:id="@+id/comment_comuser_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

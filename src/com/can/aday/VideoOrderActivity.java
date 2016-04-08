@@ -23,15 +23,41 @@ import android.widget.TextView;
  *
  */
 public class VideoOrderActivity extends Activity {
+	/**
+	 * 该页面添加视频的listView
+	 */
 	ListView listview;
-	TextView titleName;// 标题
-	ImageView backimage;// 返回
+	/**
+	 * 该页面的标题
+	 */
+	TextView titleName;
+	/**
+	 * 一个返回按钮
+	 */
+	ImageView backimage;
+	/**
+	 * 为了点击两次backimage设置的
+	 */
+	boolean backnumber=true;
+	/**
+	 * RadioGroup的控件
+	 */
 	RadioGroup radioGroup;
+	/**
+	 * 评论的图标
+	 */
 	ImageView commentIcon;
-
+	/**
+	 * 该页面添加include
+	 */
 	View vInclude;
-
+	/**
+	 * listview的Adapter
+	 */
 	VideoOrderBaseAdapter vOBaseAdapter;
+	/**
+	 * 用来装listView所需的数据
+	 */
 	ArrayList<String> list;
 
 	@Override
@@ -56,6 +82,7 @@ public class VideoOrderActivity extends Activity {
 			// TODO Auto-generated method stub
 			listview.setVisibility(View.GONE);
 			vInclude.setVisibility(View.VISIBLE);
+			backnumber=false;
 		}
 	};
 
@@ -99,9 +126,13 @@ public class VideoOrderActivity extends Activity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.title_bar_back_icon:
-				vInclude.setVisibility(View.GONE);
-				listview.setVisibility(View.VISIBLE);
-				// finish();
+				if(backnumber){
+					finish();
+				}else{
+					vInclude.setVisibility(View.GONE);
+					listview.setVisibility(View.VISIBLE); 
+					backnumber=true;
+				}
 				break;
 			case R.id.video_order_details_comment:
 				Intent intent=new Intent(VideoOrderActivity.this,CommentActivity.class);

@@ -20,10 +20,25 @@ import android.widget.TextView;
  *
  */
 public class VideoClassifyDetailsActivity extends Activity {
-	TextView titleName;// 标题
-	ImageView backImage;// 返回图标
+	/**
+	 * 该页面的名字
+	 */
+	TextView titleName;
+	/**
+	 * 该页面的返回按钮
+	 */
+	ImageView backImage;
+	/**
+	 * 该页面添加视频的listview
+	 */
 	ListView listview;
+	/**
+	 * listview的Adapter
+	 */
 	VideoClassifyDetailsBaseAdapter vCDBaseAdapter;
+	/**
+	 * 用来装listView所需的数据
+	 */
 	ArrayList<String> list;
 
 	@Override
@@ -73,7 +88,6 @@ public class VideoClassifyDetailsActivity extends Activity {
 			case R.id.title_bar_back_icon:
 				finish();
 				break;
-
 			default:
 				break;
 			}

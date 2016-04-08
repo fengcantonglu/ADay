@@ -6,11 +6,10 @@
 
     <ImageView
         android:id="@+id/title_bar_back_icon"
-        android:layout_width="11dp"
-        android:layout_height="21dp"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+		android:padding="12dp"
         android:contentDescription="@drawable/aday_back_icon"
         android:src="@drawable/aday_back_icon" />
 

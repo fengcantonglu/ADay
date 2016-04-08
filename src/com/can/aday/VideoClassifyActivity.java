@@ -13,10 +13,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 /**
  * 视频分类的页面
@@ -25,9 +28,29 @@ import android.widget.SimpleAdapter;
  *
  */
 public class VideoClassifyActivity extends Activity {
+	/**
+	 * 该页面的名字
+	 */
+	TextView titleName;
+	/**
+	 * 退出该页面的按钮
+	 */
+	ImageView backImage;
+	/**
+	 * GridView控件
+	 */
 	GridView videoGV;
+	/**
+	 * GridView的Adapter
+	 */
 	SimpleAdapter spAdapter;
+	/**
+	 * 装GridView所需的数据
+	 */
 	List<Map<String, Object>> videoList;
+	/**
+	 * 自定义字符数组
+	 */
 	String videoName[] = { "#创意", "#旅行", "#剧情", "#美食", "#动漫", "#时尚", "#运动", "#动物" };
 
 	@Override
@@ -42,6 +65,8 @@ public class VideoClassifyActivity extends Activity {
 	 * 控件ID
 	 */
 	private void findView() {
+		titleName=(TextView)findViewById(R.id.title_bar_title_text);
+		backImage=(ImageView)findViewById(R.id.title_bar_back_icon);
 		videoGV = (GridView) findViewById(R.id.video_classify_GridView);
 
 		videoGV.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -54,6 +79,8 @@ public class VideoClassifyActivity extends Activity {
 		spAdapter = new SimpleAdapter(this, videoList, R.layout.video_classify_layout, from, to);
 		videoGV.setAdapter(spAdapter);
 		videoGV.setOnItemClickListener(clickListener);
+		
+		backImage.setOnClickListener(listener);
 	}
 
 	/**
@@ -77,6 +104,22 @@ public class VideoClassifyActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Intent intent = new Intent(VideoClassifyActivity.this, VideoClassifyDetailsActivity.class);
 			startActivity(intent);
+		}
+	};
+	/**
+	 * 点击事件
+	 */
+	OnClickListener listener=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.title_bar_back_icon:
+				finish();
+				break;
+			default:
+				break;
+			}
 		}
 	};
 }
