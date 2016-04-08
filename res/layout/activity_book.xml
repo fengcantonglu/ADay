@@ -130,9 +130,136 @@
                 android:id="@+id/article_centent_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingTop="8dp" >
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="-3dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:text="@string/like"
+                android:textColor="@color/main_text_color"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:background="@color/bottom_text_selet_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="3.5dp" >
+
+                <ImageView
+                    android:id="@+id/like_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="13dp"
+                    android:contentDescription="@drawable/like_icon"
+                    android:padding="16dp"
+                    android:src="@drawable/like_icon" />
+
+                <LinearLayout
+                    android:id="@+id/like_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp" >
+
+                    <com.can.aday.view.MyImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginRight="12dp"
+                        android:src="@drawable/user_header_1" />
+
+                    <com.can.aday.view.MyImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginRight="12dp"
+                        android:src="@drawable/user_header_2" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:background="#FFE8CB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="-3dp"
+                android:layout_marginTop="25dp"
+                android:padding="11dp"
+                android:text="@string/newcomment"
+                android:textColor="@color/main_text_color"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:background="@color/bottom_text_selet_color" />
+
+            <TextView
+                android:id="@+id/comment_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_margin="13dp"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingTop="3dp"
+                android:text="2016\r\nMar.6."
+                android:textColor="#AE9C88"
+                android:textSize="8sp" />
+
+            <LinearLayout
+                android:id="@+id/comment_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <include layout="@layout/book_comment_layout" />
+
+                <include layout="@layout/book_comment_layout" />
+
+                <include layout="@layout/book_comment_layout" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="33dp"
+                android:background="@color/bottom_text_selet_color" />
+
+            <TextView
+                android:id="@+id/more_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bottom_group_backgroud"
+                android:gravity="center"
+                android:padding="13dp"
+                android:text="@string/show_more_comment"
+                android:textColor="@color/text_color_black_434343"
+                android:textSize="12sp" />
         </LinearLayout>
     </ScrollView>
 

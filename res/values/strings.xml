@@ -31,6 +31,9 @@
     <string name="details">详情</string>
 
     <string name="video_story">故事介绍</string>
+    <string name="like">喜欢</string>
+    <string name="newcomment">最新评论</string>
+    <string name="show_more_comment">查看更多评论.......</string>
 
 
 	<string name="experience_immediately">立即体验</string>
