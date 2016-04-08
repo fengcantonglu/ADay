@@ -14,6 +14,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * 分类子页面
+ * @author Administrator
+ *
+ */
 public class VideoClassifyDetailsActivity extends Activity {
 	TextView titleName;// 标题
 	ImageView backImage;// 返回图标
