@@ -35,8 +35,8 @@
             android:id="@+id/title_right_btn"
             android:layout_width="52dp"
             android:layout_height="match_parent"
-            android:contentDescription="@drawable/return_icon"
             android:background="@drawable/button_touch_selector"
+            android:contentDescription="@drawable/return_icon"
             android:padding="14dp"
             android:src="@drawable/pack_down_icon" />
     </LinearLayout>

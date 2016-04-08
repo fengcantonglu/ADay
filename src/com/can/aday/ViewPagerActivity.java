@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 
 public class ViewPagerActivity extends Activity {
 
@@ -24,9 +25,11 @@ public class ViewPagerActivity extends Activity {
 			R.drawable.welcome_progress_3 };
 	private int[] pics = { R.drawable.welcome_image_1, R.drawable.welcome_image_2, R.drawable.welcome_image_4 };
 	RadioButton[] radioButton;
+	private int[] texts = { R.string.look_at_the, R.string.hear_all, R.string.to_enjoy };
 	RadioGroup radioGroup;
 	ImageView image;
 	View text;
+	TextView instructions;
 
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,6 +38,7 @@ public class ViewPagerActivity extends Activity {
 		mView = (ViewPager) findViewById(R.id.welcom_view_pager);
 		image = (ImageView) findViewById(R.id.welcom_image_view);
 		text = findViewById(R.id.welcom_text);
+		instructions = (TextView) findViewById(R.id.welcom_text_instructions);
 		pager = new PagerAdapter();
 		radioButton = new RadioButton[] { (RadioButton) findViewById(R.id.welcom_radio_1),
 				(RadioButton) findViewById(R.id.welcom_radio_2), (RadioButton) findViewById(R.id.welcom_radio_3) };
@@ -69,6 +73,7 @@ public class ViewPagerActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(ViewPagerActivity.this, LoginAndRegisteredActivity.class);
 				startActivity(intent);
+				finish();
 			}
 		};
 
@@ -76,6 +81,7 @@ public class ViewPagerActivity extends Activity {
 			for (int i = 0; i < radioButton.length; i++) {
 				if (radioButton[i].isChecked()) {
 					image.setImageResource(dots[i]);
+					instructions.setText(texts[i]);
 					mView.setCurrentItem(i);
 					if (i == radioButton.length - 1) {
 						text.setVisibility(View.VISIBLE);

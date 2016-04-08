@@ -28,7 +28,7 @@ public class SlidingMenu extends HorizontalScrollView {
 	private int mMenuWidth;
 	private int mHalfMenuWidth;
 
-	private boolean isOpen;
+	public boolean isOpen;
 
 	private boolean once;
 
@@ -131,6 +131,7 @@ public class SlidingMenu extends HorizontalScrollView {
 			this.smoothScrollTo(mMenuWidth, 0);
 			isOpen = false;
 		}
+
 	}
 
 	/**
@@ -149,7 +150,7 @@ public class SlidingMenu extends HorizontalScrollView {
 		super.onScrollChanged(l, t, oldl, oldt);
 		float scale = l * 1.0f / mMenuWidth;
 
-		ViewHelper.setTranslationX(mMenu, mMenuWidth * scale * 0.7f);
+		ViewHelper.setTranslationX(mMenu, mMenuWidth * scale * 0.4f);
 
 	}
 

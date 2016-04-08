@@ -7,11 +7,14 @@ import com.can.aday.fragment.VideoFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -100,11 +103,11 @@ public class MainActivity extends FragmentActivity {
 	TextView report;// 版权举报
 	TextView video;// 视频功能声明
 	TextView score;// 前往评分
-
 	View menu;
 	View menu_set;
+	boolean isMenu;
 
-	@SuppressLint("WrongCall")
+	@SuppressLint({ "WrongCall", "ClickableViewAccessibility" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -116,8 +119,20 @@ public class MainActivity extends FragmentActivity {
 		initView();
 		findMenuView();
 		initFragment();
-
+		mMenu.setOnTouchListener(onTouch);
 	}
+
+	private OnTouchListener onTouch = new OnTouchListener() {
+
+		@SuppressLint("ClickableViewAccessibility")
+		public boolean onTouch(View v, MotionEvent event) {
+			if (!mMenu.isOpen) {
+				isMenu = true;
+				setMenuState();
+			}
+			return false;
+		}
+	};
 
 	/**
 	 * 控件ID
@@ -180,9 +195,11 @@ public class MainActivity extends FragmentActivity {
 		transaction.add(R.id.main_layout, pagers[1]);
 		transaction.add(R.id.main_layout, pagers[2]);
 		initBottomView(transaction);
-
 	}
 
+	/**
+	 * 菜单id
+	 */
 	private void findMenuView() {
 		set = findViewById(R.id.menu_image_set_icon);
 		back = findViewById(R.id.menu_title_bar_back_icon);
@@ -200,22 +217,42 @@ public class MainActivity extends FragmentActivity {
 		menu = findViewById(R.id.menu);
 		menu_set = findViewById(R.id.menu_set);
 
+		titleMenu.setOnClickListener(clickListener);
 		back.setOnClickListener(clickListener);
 		set.setOnClickListener(clickListener);
+		isMenu = true;
 	}
 
-	OnClickListener clickListener = new OnClickListener() {
+	/**
+	 * 菜单内容的点击事件
+	 */
+	private OnClickListener clickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.menu_title_bar_back_icon:
-				menu.setVisibility(View.VISIBLE);
-				menu_set.setVisibility(View.GONE);
+				isMenu = true;
+				setMenuState();
 				break;
 			case R.id.menu_image_set_icon:
-				menu_set.setVisibility(View.VISIBLE);
-				menu.setVisibility(View.GONE);
+				isMenu = false;
+				setMenuState();
+				break;
+			case R.id.title_left:
+				mMenu.toggle();
+				isMenu = true;
+				if (!mMenu.isOpen) {
+					new Handler().postDelayed(new Runnable() {
+
+						@Override
+						public void run() {
+							setMenuState();
+						}
+					}, 500);
+				} else {
+					setMenuState();
+				}
 				break;
 			default:
 				break;
@@ -223,13 +260,25 @@ public class MainActivity extends FragmentActivity {
 		}
 	};
 
-	public void toggleMenu(View view) {
-		mMenu.toggle();
+	/**
+	 * 设置菜单显示内容
+	 */
+	public void setMenuState() {
+		if (isMenu) {
+			menu.setVisibility(View.VISIBLE);
+			menu_set.setVisibility(View.GONE);
+		} else {
+			menu_set.setVisibility(View.VISIBLE);
+			menu.setVisibility(View.GONE);
+		}
 	}
 
-	@Override
+	/**
+	 * 重写系统的finish方法
+	 */
 	public void finish() {
 		int i = 0;
+		mMenu.closeMenu();
 		for (AdayFragment f : pagers) {
 			if (f.finish()) {
 				i++;
