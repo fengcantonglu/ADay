@@ -1,5 +1,5 @@
 package com.can.aday;
-
+import com.can.aday.R;
 import com.can.aday.fragment.AdayFragment;
 import com.can.aday.fragment.BookFragment;
 import com.can.aday.fragment.MusicFragment;
@@ -87,6 +87,7 @@ public class MainActivity extends FragmentActivity {
 
 	private OnCheckedChangeListener btnChange = new OnCheckedChangeListener() {
 
+		@Override
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			FragmentTransaction transaction = manager.beginTransaction();
 			initBottomView(transaction);
@@ -267,6 +268,7 @@ public class MainActivity extends FragmentActivity {
 		View pupView = getLayoutInflater().inflate(R.layout.video_fragment_layout, null);
 		OnClickListener l = new OnClickListener() {
 
+			@Override
 			public void onClick(View v) {
 				switch (v.getId()) {
 				case R.id.video_fragment_classify:
