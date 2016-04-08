@@ -22,6 +22,6 @@ public class AdayFragment extends Fragment {
 	 * @return
 	 */
 	public boolean finish() {
-		return false;
+		return true;
 	}
 }

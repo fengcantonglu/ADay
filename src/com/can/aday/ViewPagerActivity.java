@@ -1,5 +1,6 @@
 package com.can.aday;
 
+import com.can.aday.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;

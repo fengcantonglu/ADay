@@ -229,14 +229,15 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public void finish() {
-		int i = 0;
+
 		for (AdayFragment f : pagers) {
-			if (f.finish()) {
-				i++;
+			if (f.isVisible()) {
+				if (f.finish()) {
+					super.finish();
+				}
+				return;
 			}
 		}
-		if (i > 0) {
-			super.finish();
-		}
+		super.finish();
 	}
 }

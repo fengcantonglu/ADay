@@ -80,6 +80,7 @@
 
             <RadioButton
                 android:id="@+id/music_default"
+                android:checked="true"
                 android:layout_width="0dp"
                 android:layout_height="0dp" />
 
