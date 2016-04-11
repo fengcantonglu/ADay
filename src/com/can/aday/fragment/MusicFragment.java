@@ -283,7 +283,7 @@ public class MusicFragment extends AdayFragment {
 	@SuppressWarnings("deprecation")
 	private void setBackGroud(Bitmap bkg) {
 		int w = bkg.getWidth();
-		int mBh = (int) (bkg.getHeight() * 2.6f / 3.6f);
+		int mBh = (int) (bkg.getHeight() * 3.4f / 4.4f);
 		int fBh = bkg.getHeight() - mBh;
 		mainBkg = Bitmap.createBitmap(bkg, 0, 0, w, mBh);
 		Bitmap fBkg = Bitmap.createBitmap(bkg, 0, mBh, w, fBh);

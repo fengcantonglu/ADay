@@ -41,6 +41,7 @@ public class WelcomeActivity extends Activity {
 		} else {
 			intent.setClass(WelcomeActivity.this, LoginAndRegisteredActivity.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			finish();
 		}
 	}
