@@ -131,7 +131,7 @@ public class VideoFragment extends AdayFragment {
 	@SuppressWarnings("deprecation")
 	public void setBackgroud(Bitmap bkg) {
 		int w = bkg.getWidth();
-		int mBh = (int) (bkg.getHeight() * 2.2f / 3.2f);
+		int mBh = (int) (bkg.getHeight() * 2.8f / 3.8f);
 		int bBh = bkg.getHeight() - mBh;
 		topBkg = Bitmap.createBitmap(bkg, 0, 0, w, mBh);
 		Bitmap bBkg = Bitmap.createBitmap(bkg, 0, mBh, w, bBh);
