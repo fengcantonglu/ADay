@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -97,8 +98,8 @@ public class LoginAndRegisteredActivity extends Activity {
 
 		String acc = account.getText().toString();
 		String pass = password.getText().toString();
-		if (acc!=null &&!acc .equals("")) {
-			if (pass!=null && !pass .equals("")) {
+		if (TextUtils.isEmpty(acc)) {
+			if (TextUtils.isEmpty(pass)) {
 				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 				startActivity(intent);
 				cachedPageGuide(account.getText().toString(), password.getText().toString());
@@ -119,8 +120,8 @@ public class LoginAndRegisteredActivity extends Activity {
 		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
 		String userName = sharedPreferences.getString("account", "");
 		String pass = sharedPreferences.getString("password", "");
-		if (userName.equals(null) && userName != "") {
-			if (pass.equals(null) && pass != "") {
+		if (TextUtils.isEmpty(userName)) {
+			if (TextUtils.isEmpty(pass)) {
 				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 				startActivity(intent);
 				finish();
