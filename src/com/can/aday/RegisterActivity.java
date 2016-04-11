@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -71,13 +72,13 @@ public class RegisterActivity extends Activity {
 		String acc = account.getText().toString();
 		String pass = password.getText().toString();
 		String passTwo = passwordTwo.getText().toString();
-		if (acc.equals(null) && acc != "") {
-			if (pass.equals(null) && pass != "") {
-				if (passTwo.equals(null) && pass.equals(passTwo) && passTwo != "") {
+		if (!TextUtils.isEmpty(acc)) {
+			if (!TextUtils.isEmpty(pass)) {
+				if (!TextUtils.isEmpty(passTwo) && passTwo.equals(pass)) {
 					Intent intent = getIntent();
 					intent.setClass(RegisterActivity.this, MainActivity.class);
 					startActivity(intent);
-
+					cachedPageGuide(acc, pass);
 					finish();
 				} else {
 					Toast.makeText(getApplicationContext(), "密码为空或两次密码输入不一致", Toast.LENGTH_SHORT).show();

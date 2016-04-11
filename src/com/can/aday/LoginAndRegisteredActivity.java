@@ -98,8 +98,8 @@ public class LoginAndRegisteredActivity extends Activity {
 
 		String acc = account.getText().toString();
 		String pass = password.getText().toString();
-		if (TextUtils.isEmpty(acc)) {
-			if (TextUtils.isEmpty(pass)) {
+		if (!TextUtils.isEmpty(acc)) {
+			if (!TextUtils.isEmpty(pass)) {
 				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 				startActivity(intent);
 				cachedPageGuide(account.getText().toString(), password.getText().toString());
@@ -120,8 +120,8 @@ public class LoginAndRegisteredActivity extends Activity {
 		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
 		String userName = sharedPreferences.getString("account", "");
 		String pass = sharedPreferences.getString("password", "");
-		if (TextUtils.isEmpty(userName)) {
-			if (TextUtils.isEmpty(pass)) {
+		if (!TextUtils.isEmpty(userName)) {
+			if (!TextUtils.isEmpty(pass)) {
 				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 				startActivity(intent);
 				finish();

@@ -60,10 +60,12 @@
 
         <EditText
             android:id="@+id/login_register_edit_account"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/login_register_image_account"
+            android:layout_marginEnd="42dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="42dp"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/login_register_image_account"
             android:layout_toRightOf="@+id/login_register_image_account"
@@ -73,6 +75,7 @@
             android:paddingRight="5dp"
             android:paddingTop="5dp"
             android:textColor="#9F9F9F"
+            android:textColorHint="#9F9F9F"
             android:textSize="12sp" />
 
         <View
@@ -100,10 +103,12 @@
 
         <EditText
             android:id="@+id/login_register_edit_password"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/login_register_image_password"
+            android:layout_marginEnd="42dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="42dp"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/login_register_image_password"
             android:layout_toRightOf="@+id/login_register_image_password"
@@ -114,6 +119,7 @@
             android:paddingRight="5dp"
             android:paddingTop="5dp"
             android:textColor="#9F9F9F"
+            android:textColorHint="#9F9F9F"
             android:textSize="12sp" />
 
         <View
