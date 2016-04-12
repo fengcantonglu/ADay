@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/like_icon"
             android:drawableStart="@drawable/like_icon"
+            android:drawablePadding="3dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="12dp"
             android:layout_marginStart="12dp"
