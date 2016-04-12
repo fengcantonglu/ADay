@@ -37,7 +37,7 @@
             android:layout_marginLeft="18dp"
             android:layout_marginStart="18dp"
             android:text="你所遗忘秤童年"
-            android:textColor="#343434"
+            android:textColor="#000000"
             android:textSize="17sp"/>
         <TextView 
             android:id="@+id/video_order_details_time"
