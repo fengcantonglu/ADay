@@ -7,9 +7,11 @@ import com.can.aday.view.MyImageView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -106,10 +108,32 @@ public class BookActivity extends Activity {
 	 */
 	LinearLayout commentLayout;
 
+	Intent intent;
+
+	private OnClickListener click = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.more_comment:
+				intent.setClass(BookActivity.this, CommentActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.title_left:
+				finish();
+				break;
+			default:
+				break;
+			}
+
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_book);
+		intent = getIntent();
 		initTitleView();
 		findView();
 		initView();
@@ -152,6 +176,8 @@ public class BookActivity extends Activity {
 	}
 
 	private void initView() {
+		moreComment.setOnClickListener(click);
+		toReturn.setOnClickListener(click);
 
 	}
 

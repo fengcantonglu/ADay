@@ -163,7 +163,7 @@ public class VideoFragment extends AdayFragment {
 		dayText.setText(day + "");
 		nameText.setText(name);
 		timeText.setText("#" + type + "/" + time);
-		storyText.setText("\t\t"+content);
+		storyText.setText("\t\t" + content);
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class VideoFragment extends AdayFragment {
 			@Override
 			public void onDismiss() {
 				titleRight.setImageResource(R.drawable.pack_down_icon);
-
+				titleRight.setBackgroundColor(0);
 			}
 		};
 		pop.setOnDismissListener(onDismissListener);

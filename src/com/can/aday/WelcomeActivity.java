@@ -1,5 +1,7 @@
 package com.can.aday;
 
+import com.can.aday.utils.CacheTools;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +12,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 
 public class WelcomeActivity extends Activity {
+	private boolean isLogin;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		RelativeLayout layout = new RelativeLayout(this);
@@ -19,6 +23,7 @@ public class WelcomeActivity extends Activity {
 		mView.setBackgroundResource(R.drawable.welcome_image_1);
 		layout.addView(mView);
 		setContentView(layout);
+		isLogin = CacheTools.getLoginState(this);
 		new Handler().postDelayed(new Runnable() {
 			public void run() {
 				isShowWelcome();
@@ -39,7 +44,10 @@ public class WelcomeActivity extends Activity {
 			startActivity(intent);
 			finish();
 		} else {
-			intent.setClass(WelcomeActivity.this, LoginAndRegisteredActivity.class);
+			if (!isLogin)
+				intent.setClass(WelcomeActivity.this, LoginAndRegisteredActivity.class);
+			else
+				intent.setClass(WelcomeActivity.this, MainActivity.class);
 			startActivity(intent);
 			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			finish();

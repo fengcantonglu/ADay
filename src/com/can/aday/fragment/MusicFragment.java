@@ -291,7 +291,12 @@ public class MusicFragment extends AdayFragment {
 		mainBlugBkg = FastBlur.doBlur(mainBkg, 18, false);
 		fBkg.recycle();
 		bkg.recycle();
-		mainLayout.setBackgroundDrawable(new BitmapDrawable(mainBkg));
+		if(musicDefBtn.isChecked()){
+			mainLayout.setBackgroundDrawable(new BitmapDrawable(mainBlugBkg));
+		}else{
+			mainLayout.setBackgroundDrawable(new BitmapDrawable(mainBkg));
+		}
+		
 		functionLayout.setBackgroundDrawable(new BitmapDrawable(bottomBkg));
 	}
 

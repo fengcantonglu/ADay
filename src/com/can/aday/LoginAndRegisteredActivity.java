@@ -1,11 +1,11 @@
 package com.can.aday;
 
+import com.can.aday.utils.CacheTools;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,15 +31,13 @@ public class LoginAndRegisteredActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_aday_login_register);
 		findView();
-		new Handler().postDelayed(new Runnable() {
-			public void run() {
-				isShowWelcome();
-			}
-		}, 3000);
+
+		isShowWelcome();
+
 	}
 
 	/**
@@ -102,7 +100,7 @@ public class LoginAndRegisteredActivity extends Activity {
 			if (!TextUtils.isEmpty(pass)) {
 				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 				startActivity(intent);
-				cachedPageGuide(account.getText().toString(), password.getText().toString());
+				CacheTools.cachedPageGuide(account.getText().toString(), password.getText().toString(), this);
 				finish();
 			} else {
 				Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
@@ -116,27 +114,10 @@ public class LoginAndRegisteredActivity extends Activity {
 	 * 判断缓存是否存在
 	 */
 	public void isShowWelcome() {
-		Intent intent = new Intent();
-		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
-		String userName = sharedPreferences.getString("account", "");
-		String pass = sharedPreferences.getString("password", "");
-		if (!TextUtils.isEmpty(userName)) {
-			if (!TextUtils.isEmpty(pass)) {
-				intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
-				startActivity(intent);
-				finish();
-			}
-		}
+		String[] ap = new String[2];
+		CacheTools.getAccountCache(this, ap);
+		account.setText(ap[0]);
+		password.setText(ap[1]);
 	}
 
-	/**
-	 * 缓存登录信息
-	 */
-	public void cachedPageGuide(String account, String password) {
-		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putString("account", account);
-		editor.putString("password", password);
-		editor.commit();
-	}
 }
