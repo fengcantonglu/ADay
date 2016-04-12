@@ -36,8 +36,6 @@
         </activity>
 
         <!-- 引导页面 -->
-        <activity android:name="com.can.aday.ViewPagerActivity" >
-        </activity>
         <activity android:name="com.can.aday.WelcomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

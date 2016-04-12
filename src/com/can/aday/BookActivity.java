@@ -255,7 +255,6 @@ public class BookActivity extends Activity {
 						"2009年7月，周杰伦澳洲巡演，悉尼演唱会票房空降美国公告牌（Billboard）第二，力压碧昂斯，成为当年全球单场演唱会票房收入第二的好成绩，打破了华人在澳洲开唱的票房纪录；[50]  2009年12月，美国CNN评选\"亚洲最具影响力的25位人物”，周杰伦入选，并被CNN网站形容为“非凡艺人”。" },
 				null);
 		contentLayout.addView(cv.getView());
-		cv = new BookMusicView(this);
 	}
 
 }

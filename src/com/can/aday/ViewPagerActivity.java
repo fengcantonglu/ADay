@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 public class ViewPagerActivity extends Activity {
 
+	private Activity mPoxy;
 	private ViewPager mView;
 	PagerAdapter pager;
 	// 底部小店图片
@@ -33,7 +34,6 @@ public class ViewPagerActivity extends Activity {
 	TextView instructions;
 
 	protected void onCreate(android.os.Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_pager);
 		radioGroup = (RadioGroup) findViewById(R.id.welocm_radio_group);
 		mView = (ViewPager) findViewById(R.id.welcom_view_pager);
@@ -48,6 +48,18 @@ public class ViewPagerActivity extends Activity {
 		radioGroup.setOnCheckedChangeListener(change);
 		handler.postDelayed(run, 5000);
 	}
+
+	public void setProxy(Activity activity) {
+		this.mPoxy = activity;
+	}
+
+	public void setContentView(int layoutResID) {
+		mPoxy.setContentView(layoutResID);
+	};
+
+	public View findViewById(int id) {
+		return mPoxy.findViewById(id);
+	};
 
 	Runnable run = new Runnable() {
 
@@ -66,13 +78,22 @@ public class ViewPagerActivity extends Activity {
 		};
 	};
 
+	public void startActivity(Intent intent) {
+		mPoxy.startActivity(intent);
+	};
+
+	@Override
+	public void finish() {
+		mPoxy.finish();
+	}
+
 	private OnCheckedChangeListener change = new OnCheckedChangeListener() {
 
 		private OnClickListener oncl = new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ViewPagerActivity.this, LoginAndRegisteredActivity.class);
+				Intent intent = new Intent(mPoxy, LoginAndRegisteredActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -109,7 +130,7 @@ public class ViewPagerActivity extends Activity {
 		}
 
 		public Object instantiateItem(ViewGroup container, int position) {
-			View view = new View(getApplicationContext());
+			View view = new View(mPoxy);
 			view.setBackgroundResource(pics[position]);
 			container.addView(view, -1, -1);
 			view.setId(1000 + position);
