@@ -3,7 +3,6 @@ package com.can.aday;
 import com.can.aday.tools.DensityUtil;
 import com.can.aday.view.BookMusicView;
 import com.can.aday.view.BookView;
-import com.can.aday.view.MyImageView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -185,24 +184,25 @@ public class BookActivity extends Activity {
 		LayoutParams params = new LayoutParams(DensityUtil.dip2px(this, 45), DensityUtil.dip2px(this, 45));
 		params.setMargins(0, 0, DensityUtil.dip2px(this, 11.5f), 0);
 
-		MyImageView v = new MyImageView(this);
+		ImageView v = new ImageView(this);
 		v.setImageResource(R.drawable.user_header_1);
 		likeLayout.addView(v, params);
-		v = new MyImageView(this);
+		v = new ImageView(this);
 		v.setImageResource(R.drawable.user_header_2);
 		likeLayout.addView(v, params);
-		v = new MyImageView(this);
+		v = new ImageView(this);
 		v.setImageResource(R.drawable.user_header_3);
 		likeLayout.addView(v, params);
-		v = new MyImageView(this);
+		v = new ImageView(this);
 		v.setImageResource(R.drawable.user_header_4);
 		likeLayout.addView(v, params);
-		v = new MyImageView(this);
+		v = new ImageView(this);
 		v.setImageResource(R.drawable.user_header_5);
 		likeLayout.addView(v, params);
 
 		// >>>>>>>
 		loadBookData();
+		setCommentData();
 	}
 
 	/**
@@ -255,6 +255,34 @@ public class BookActivity extends Activity {
 						"2009年7月，周杰伦澳洲巡演，悉尼演唱会票房空降美国公告牌（Billboard）第二，力压碧昂斯，成为当年全球单场演唱会票房收入第二的好成绩，打破了华人在澳洲开唱的票房纪录；[50]  2009年12月，美国CNN评选\"亚洲最具影响力的25位人物”，周杰伦入选，并被CNN网站形容为“非凡艺人”。" },
 				null);
 		contentLayout.addView(cv.getView());
+	}
+
+	/**
+	 * 添加评论数据
+	 */
+	@SuppressLint("InflateParams")
+	public void setCommentData() {
+		for (int i = 0; i < 3; i++) {
+			View view = getLayoutInflater().inflate(R.layout.book_comment_layout, null);
+			commentLayout.addView(view);
+			ImageView v = (ImageView) view.findViewById(R.id.user_head_image);
+			TextView name = (TextView) view.findViewById(R.id.user_name);
+			TextView likeCount = (TextView) view.findViewById(R.id.like_count);
+			TextView comTime = (TextView) view.findViewById(R.id.com_time);
+			TextView content = (TextView) view.findViewById(R.id.com_content);
+			if (i == 0)
+				v.setImageResource(R.drawable.head_image);
+			else if (i == 1)
+				v.setImageResource(R.drawable.comment_comuser_header);
+			else
+				v.setImageResource(R.drawable.comment_user_header_3);
+			name.setText("大傻哥");
+			likeCount.setText("" + 134+i);
+			comTime.setText("3分钟前");
+			content.setText("一栏，就可以找到Windows保存的用户凭据了。单击小箭头就可以展开或合起用户凭据信息。");
+
+		}
+
 	}
 
 }

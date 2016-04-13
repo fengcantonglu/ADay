@@ -13,9 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal" >
 
-        <include
-            android:id="@+id/main_menu"
-            layout="@layout/activity_menu" />
+        <include layout="@layout/activity_menu" />
 
         <include layout="@layout/activity_main" />
     </LinearLayout>

@@ -1,17 +1,21 @@
 package com.can.aday;
 
-import com.can.aday.R;
 import com.can.aday.fragment.AdayFragment;
 import com.can.aday.fragment.BookFragment;
 import com.can.aday.fragment.MusicFragment;
 import com.can.aday.fragment.VideoFragment;
 
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -94,6 +98,7 @@ public class MainActivity extends FragmentActivity {
 	private SlidingMenu mMenu;
 	View set;// 设置
 	View back;// 返回
+	View mainMenu;// 整个菜单布局
 	ImageView head;// 头像
 	TextView nickName;// 昵称
 	TextView collection;// 收藏
@@ -116,6 +121,7 @@ public class MainActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main_menu);
 		mMenu = (SlidingMenu) findViewById(R.id.id_menu);
+		mainMenu = findViewById(R.id.main_menu);
 		manager = getSupportFragmentManager();
 		findView();
 		initView();
@@ -126,11 +132,13 @@ public class MainActivity extends FragmentActivity {
 
 	private OnTouchListener onTouch = new OnTouchListener() {
 
-		@SuppressLint("ClickableViewAccessibility")
+		@SuppressLint({ "ClickableViewAccessibility", "NewApi" })
 		public boolean onTouch(View v, MotionEvent event) {
 			if (!mMenu.isOpen) {
 				isMenu = true;
-				setMenuState();
+				menu.setVisibility(View.VISIBLE);
+				menu.setAlpha(1f);
+				menu_set.setVisibility(View.GONE);
 			}
 			return false;
 		}
@@ -235,10 +243,12 @@ public class MainActivity extends FragmentActivity {
 			switch (v.getId()) {
 			case R.id.menu_title_bar_back_icon:
 				isMenu = true;
+				Log.i("MainActivity", "back");
 				setMenuState();
 				break;
 			case R.id.menu_image_set_icon:
 				isMenu = false;
+				Log.i("MainActivity", "set");
 				setMenuState();
 				break;
 			case R.id.title_left:
@@ -265,14 +275,126 @@ public class MainActivity extends FragmentActivity {
 	/**
 	 * 设置菜单显示内容
 	 */
+	@SuppressLint("NewApi")
 	public void setMenuState() {
+
+		ObjectAnimator oa1;
+		ObjectAnimator oa2;
+
 		if (isMenu) {
-			menu.setVisibility(View.VISIBLE);
-			menu_set.setVisibility(View.GONE);
+
+			oa1 = ObjectAnimator.ofFloat(menu, "alpha", 0f, 1f);
+			oa1.addListener(new AnimatorListener() {
+
+				@Override
+				public void onAnimationStart(Animator animation) {
+					menu.setVisibility(View.VISIBLE);
+				}
+
+				@Override
+				public void onAnimationRepeat(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationCancel(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			oa2 = ObjectAnimator.ofFloat(menu_set, "alpha", 1f, 0f);
+			oa2.addListener(new AnimatorListener() {
+
+				@Override
+				public void onAnimationStart(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationRepeat(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					menu_set.setVisibility(View.GONE);
+				}
+
+				@Override
+				public void onAnimationCancel(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
 		} else {
-			menu_set.setVisibility(View.VISIBLE);
-			menu.setVisibility(View.GONE);
+
+			oa1 = ObjectAnimator.ofFloat(menu_set, "alpha", 0f, 1f);
+			oa2 = ObjectAnimator.ofFloat(menu, "alpha", 1f, 0f);
+			oa1.addListener(new AnimatorListener() {
+
+				@Override
+				public void onAnimationStart(Animator animation) {
+					menu_set.setVisibility(View.VISIBLE);
+				}
+
+				@Override
+				public void onAnimationRepeat(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationCancel(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			oa2.addListener(new AnimatorListener() {
+
+				@Override
+				public void onAnimationStart(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationRepeat(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					menu.setVisibility(View.GONE);
+				}
+
+				@Override
+				public void onAnimationCancel(Animator animation) {
+					// TODO Auto-generated method stub
+
+				}
+			});
 		}
+		AnimatorSet as = new AnimatorSet();
+		as.playTogether(oa1, oa2);
+		as.setDuration(500);
+		as.start();
 	}
 
 	/**
