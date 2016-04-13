@@ -9,7 +9,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"
-        android:text="点赞"
+        android:text="@string/liked"
         android:textColor="#343434"
         android:textSize="17sp"/>
     <View 
@@ -35,7 +35,7 @@
             android:layout_marginStart="12dp"
             android:text="23"
             android:textColor="#13b5b1"
-            android:textSize="8sp"/>
+            android:textSize="12sp"/>
         <com.can.aday.view.MyImageView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
