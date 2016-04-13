@@ -27,8 +27,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
+	/**
+	 * 第一次按返回键的时间
+	 */
+	long touchFinishTime;
+	/**
+	 * 是否直接finish此app
+	 */
+	boolean isDoFinish;
+
 	/**
 	 * 标题栏菜单按钮
 	 */
@@ -401,15 +411,34 @@ public class MainActivity extends FragmentActivity {
 	 * 重写系统的finish方法
 	 */
 	public void finish() {
-		mMenu.closeMenu();
+		if (isDoFinish) {
+			super.finish();
+			return;
+		}
+		if (mMenu.isOpen) {
+			mMenu.closeMenu();
+			return;
+		}
 		for (AdayFragment f : pagers) {
 			if (f.isVisible()) {
 				if (f.finish()) {
-					super.finish();
+					long time = System.currentTimeMillis();
+					if ((time - touchFinishTime) < 2000) {
+						super.finish();
+					} else {
+						Toast.makeText(getApplicationContext(), "再按一次返回退出您的Aday", Toast.LENGTH_SHORT).show();
+						touchFinishTime = time;
+					}
 				}
 				return;
 			}
 		}
-		super.finish();
+		long time = System.currentTimeMillis();
+		if ((time - touchFinishTime) < 2000) {
+			super.finish();
+		} else {
+			Toast.makeText(getApplicationContext(), "再按一次返回退出您的Aday", Toast.LENGTH_SHORT).show();
+			touchFinishTime = time;
+		}
 	}
 }
