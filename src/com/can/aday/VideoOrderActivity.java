@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 /**
@@ -114,9 +115,40 @@ public class VideoOrderActivity extends Activity {
 		commentIcon.setOnClickListener(clickListener);
 
 		listview.setOnItemClickListener(itemClickListener);
+		
+		radioGroup.setOnCheckedChangeListener(listener);
 
 	}
+	/**
+	 * RadioGroup的点击事件
+	 */
+	OnCheckedChangeListener listener=new OnCheckedChangeListener() {
+		
+		@Override
+		public void onCheckedChanged(RadioGroup group, int checkedId) {
+			switch (checkedId) {
+			case R.id.viseo_order_week:
+				vInclude.setVisibility(View.GONE);
+				listview.setVisibility(View.VISIBLE); 
+				backnumber=true;
+				break;
+			case R.id.viseo_order_month:
+				vInclude.setVisibility(View.GONE);
+				listview.setVisibility(View.VISIBLE); 
+				backnumber=true;
+				break;
+			case R.id.viseo_order_total:
+				vInclude.setVisibility(View.GONE);
+				listview.setVisibility(View.VISIBLE); 
+				backnumber=true;
+				break;
+			default:
 
+				break;
+			}
+			
+		}
+	};
 	/**
 	 * 简单的点击事件
 	 */
