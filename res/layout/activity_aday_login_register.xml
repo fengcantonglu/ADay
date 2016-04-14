@@ -76,6 +76,7 @@
             android:paddingTop="5dp"
             android:textColor="#9F9F9F"
             android:textColorHint="#9F9F9F"
+            android:text=""
             android:textSize="12sp" />
 
         <View

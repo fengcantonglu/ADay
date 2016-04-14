@@ -29,6 +29,7 @@
     <string name="story">故事</string>
     <string name="lyric">歌词</string>
     <string name="details">详情</string>
+    <string name="login_out">退出登录</string>
 
     <string name="video_story">故事介绍</string>
     <string name="like">喜欢</string>

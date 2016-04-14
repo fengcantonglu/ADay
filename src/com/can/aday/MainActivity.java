@@ -4,12 +4,14 @@ import com.can.aday.fragment.AdayFragment;
 import com.can.aday.fragment.BookFragment;
 import com.can.aday.fragment.MusicFragment;
 import com.can.aday.fragment.VideoFragment;
+import com.can.aday.utils.CacheTools;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -122,6 +124,7 @@ public class MainActivity extends FragmentActivity {
 	TextView score;// 前往评分
 	View menu;
 	View menu_set;
+	View loginOut;// 退出登陆
 	boolean isMenu;
 
 	@SuppressLint({ "WrongCall", "ClickableViewAccessibility" })
@@ -137,6 +140,7 @@ public class MainActivity extends FragmentActivity {
 		initView();
 		findMenuView();
 		initFragment();
+
 		mMenu.setOnTouchListener(onTouch);
 	}
 
@@ -236,7 +240,9 @@ public class MainActivity extends FragmentActivity {
 		score = (TextView) findViewById(R.id.menu_text_to_score);
 		menu = findViewById(R.id.menu);
 		menu_set = findViewById(R.id.menu_set);
+		loginOut = findViewById(R.id.menu_text_login_out);
 
+		loginOut.setOnClickListener(clickListener);
 		titleMenu.setOnClickListener(clickListener);
 		back.setOnClickListener(clickListener);
 		set.setOnClickListener(clickListener);
@@ -275,6 +281,9 @@ public class MainActivity extends FragmentActivity {
 				} else {
 					setMenuState();
 				}
+				break;
+			case R.id.menu_text_login_out:
+				loginOut();
 				break;
 			default:
 				break;
@@ -430,7 +439,7 @@ public class MainActivity extends FragmentActivity {
 						touchFinishTime = time;
 					}
 				}
-				return;
+				return; 
 			}
 		}
 		long time = System.currentTimeMillis();
@@ -440,5 +449,13 @@ public class MainActivity extends FragmentActivity {
 			Toast.makeText(getApplicationContext(), "再按一次返回退出您的Aday", Toast.LENGTH_SHORT).show();
 			touchFinishTime = time;
 		}
+	}
+
+	private void loginOut() {
+		CacheTools.loginStateSave(this, false);
+		Intent intent=getIntent();
+		intent.setClass(this, LoginAndRegisteredActivity.class);
+		startActivity(intent);
+		finish();
 	}
 }
