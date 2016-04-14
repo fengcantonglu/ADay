@@ -5,9 +5,12 @@ import java.net.MalformedURLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.can.aday.data.Music;
+import com.can.aday.data.User;
 import com.can.aday.tools.HttpPost;
 import com.can.aday.tools.HttpPost.OnSendListener;
 import com.can.aday.utils.CacheTools;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -136,14 +139,23 @@ public class LoginAndRegisteredActivity extends Activity {
 					public void end(String result) {
 						dialog.dismiss();
 						Log.i("LoginandRegister", result);
-						
+
 						try {
 							JSONObject jo = new JSONObject(result);
 
 							if (jo.getInt("status") == 1) {
-
+								AdayApplication app = (AdayApplication) getApplication();
+								String token = jo.getString("token");
+								User user = User.userJSONObject(jo.getJSONObject("user"));
+								Music mc = Music.musicJSONObject(jo.getJSONObject("data1"));
+								Log.i("id", mc.getId() + "");
+								Log.i("musicname", mc.getMusicname() + "");
+								Log.i("singer", mc.getSinger() + "");
+								Log.i("musicpath", mc.getMusicpath() + "");
 								intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 								startActivity(intent);
+								app.setCurrentUser(user);
+								app.setToken(token);
 								finish();
 								CacheTools.cachedPageGuide(acc, pass, getApplicationContext());
 							} else {

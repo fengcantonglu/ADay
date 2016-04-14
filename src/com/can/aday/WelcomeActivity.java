@@ -3,9 +3,16 @@ package com.can.aday;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.can.aday.data.User;
+import com.can.aday.tools.HttpPost;
+import com.can.aday.tools.HttpPost.OnSendListener;
 import com.can.aday.utils.CacheTools;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +25,7 @@ import android.widget.RelativeLayout;
 
 public class WelcomeActivity extends Activity {
 	private boolean isLogin;
+	private int isLoginSuccessed;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,23 +41,47 @@ public class WelcomeActivity extends Activity {
 			layout.addView(mView);
 			setContentView(layout);
 			isLogin = CacheTools.getLoginState(this);
-			new Handler().postDelayed(new Runnable() {
+			if (isLogin)
+				loginInbackgroud();
+			mHandler.postDelayed(new Runnable() {
 				public void run() {
-					isShowWelcome();
+					mHandler.sendEmptyMessage(1);
 				}
 			}, 3000);
 		}
 	}
+
+	@SuppressLint("HandlerLeak")
+	Handler mHandler = new Handler() {
+		int count;
+
+		public void handleMessage(android.os.Message msg) {
+			count++;
+			if (count == 3)
+				isLoginSuccessed = -1;
+			isShowWelcome();
+		};
+	};
 
 	/**
 	 * 执行进入登陆界面或者首页
 	 */
 	public void isShowWelcome() {
 		Intent intent = new Intent();
-		if (!isLogin)
+		if (!isLogin || isLoginSuccessed == -1)
 			intent.setClass(WelcomeActivity.this, LoginAndRegisteredActivity.class);
-		else
+		else {
+			if (isLoginSuccessed == 0) {
+				mHandler.postDelayed(new Runnable() {
+
+					public void run() {
+						mHandler.sendEmptyMessage(1);
+					}
+				}, 600);
+				return;
+			}
 			intent.setClass(WelcomeActivity.this, MainActivity.class);
+		}
 		startActivity(intent);
 		overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 		finish();
@@ -74,6 +106,50 @@ public class WelcomeActivity extends Activity {
 		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
 		boolean isshare = sharedPreferences.getBoolean("welcome", false);
 		return !isshare;
+	}
+
+	private void loginInbackgroud() {
+		String[] ap = new String[2];
+		CacheTools.getAccountCache(getApplicationContext(), ap);
+		try {
+			HttpPost httpPost = HttpPost.parseUrl(AdayApplication.SERVICE_IP + "api/login");
+			httpPost.putString("user", ap[0]);
+			httpPost.putString("password", ap[1]);
+			httpPost.setOnSendListener(new OnSendListener() {
+
+				public void start() {
+
+				}
+
+				public void end(String result) {
+
+					Log.i("LoginandRegister", result);
+
+					try {
+						JSONObject jo = new JSONObject(result);
+
+						if (jo.getInt("status") == 1) {
+							AdayApplication app = (AdayApplication) getApplication();
+							String token = jo.getString("token");
+							User user = User.userJSONObject(jo.getJSONObject("user"));
+							app.setCurrentUser(user);
+							app.setToken(token);
+							isLoginSuccessed = 1;
+						} else {
+							isLoginSuccessed = -1;
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						isLoginSuccessed = -1;
+					}
+				}
+			});
+			httpPost.send();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
