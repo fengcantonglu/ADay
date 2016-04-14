@@ -1,11 +1,19 @@
 package com.can.aday;
 
+import java.net.MalformedURLException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.can.aday.tools.HttpPost;
+import com.can.aday.tools.HttpPost.OnSendListener;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -69,19 +77,55 @@ public class RegisterActivity extends Activity {
 	};
 
 	private void singIN() {
-		String acc = account.getText().toString();
-		String pass = password.getText().toString();
+		final String acc = account.getText().toString();
+		final String pass = password.getText().toString();
 		String passTwo = passwordTwo.getText().toString();
 		if (!TextUtils.isEmpty(acc)) {
 			if (!TextUtils.isEmpty(pass)) {
-				if (!TextUtils.isEmpty(passTwo) && passTwo.equals(pass)) {
-					Intent intent = getIntent();
-					intent.setClass(RegisterActivity.this, MainActivity.class);
-					startActivity(intent);
-					cachedPageGuide(acc, pass);
-					finish();
+				if (pass.equals(passTwo)) {
+					try {
+						HttpPost httpPost = HttpPost.parseUrl(AdayApplication.SERVICE_IP + "api/register");
+						httpPost.putString("username", acc);
+						httpPost.putString("password", pass);
+						httpPost.putString("repassword", passTwo);
+						httpPost.setOnSendListener(new OnSendListener() {
+							@Override
+							public void start() {
+
+							}
+
+							@Override
+							public void end(String result) {
+								Log.i("post", result);
+								try {
+									JSONObject jo = new JSONObject(result);
+									if (jo.getInt("status") == 1) {
+										Intent intent = getIntent();
+										intent.setClass(RegisterActivity.this, LoginAndRegisteredActivity.class);
+										intent.putExtra("acc", acc);
+										intent.putExtra("pass", pass);
+										startActivity(intent);
+										finish();
+									} else {
+										Toast.makeText(getApplicationContext(), jo.getString("message"),
+												Toast.LENGTH_SHORT).show();
+									}
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+							}
+						});
+						httpPost.send();
+
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				} else {
-					Toast.makeText(getApplicationContext(), "密码为空或两次密码输入不一致", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "两次密码输入不一致", Toast.LENGTH_SHORT).show();
 				}
 			} else {
 				Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
@@ -89,16 +133,5 @@ public class RegisterActivity extends Activity {
 		} else {
 			Toast.makeText(getApplicationContext(), "账号不能为空", Toast.LENGTH_SHORT).show();
 		}
-	}
-
-	/**
-	 * 缓存登录信息
-	 */
-	public void cachedPageGuide(String account, String password) {
-		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putString("account", account);
-		editor.putString("password", password);
-		editor.commit();
 	}
 }

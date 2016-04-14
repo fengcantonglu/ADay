@@ -288,6 +288,26 @@
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:typeface="serif" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@color/gray_line_background" />
+
+            <!-- 退出登录 -->
+
+            <TextView
+                android:id="@+id/menu_text_login_out"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/login_out"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:typeface="serif" />
         </LinearLayout>
 
         <View
