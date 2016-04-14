@@ -113,6 +113,11 @@ public class SlidingMenu extends HorizontalScrollView {
 		return super.onTouchEvent(ev);
 	}
 
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	/**
 	 * 打开菜单
 	 */

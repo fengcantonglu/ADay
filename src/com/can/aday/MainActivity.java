@@ -252,14 +252,17 @@ public class MainActivity extends FragmentActivity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.menu_title_bar_back_icon:
-				isMenu = true;
-				Log.i("MainActivity", "back");
-				setMenuState();
+				if (!isMenu) {
+					isMenu = true;
+					setMenuState();
+				}
 				break;
 			case R.id.menu_image_set_icon:
-				isMenu = false;
-				Log.i("MainActivity", "set");
-				setMenuState();
+				if (isMenu) {
+					isMenu = false;
+					Log.i("MainActivity", "set");
+					setMenuState();
+				}
 				break;
 			case R.id.title_left:
 				mMenu.toggle();

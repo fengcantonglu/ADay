@@ -44,8 +44,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" 
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
 
                     <TextView
                         android:id="@+id/content_text_frist"
@@ -80,9 +80,9 @@
 
             <RadioButton
                 android:id="@+id/music_default"
-                android:checked="true"
                 android:layout_width="0dp"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:checked="true" />
 
             <RadioButton
                 android:id="@+id/music_story"
@@ -154,13 +154,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="29dp" >
 
-            <ImageView
+            <SeekBar
                 android:id="@+id/progress_image"
+                style="@android:style/Widget.Holo.SeekBar"
                 android:layout_width="235dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:padding="6dp"
-                android:src="@drawable/progress_line" />
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:focusable="true"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" />
 
             <TextView
                 android:id="@+id/currut_time"
@@ -186,8 +190,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" >
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" >
 
             <ImageView
                 android:id="@+id/play_btn"
@@ -204,7 +208,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/play_btn"
-                android:padding="10dp"
+                android:padding="6dp"
                 android:src="@drawable/music_back" />
 
             <ImageView
@@ -213,7 +217,7 @@
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
                 android:layout_toRightOf="@id/play_btn"
-                android:padding="10dp"
+                android:padding="6dp"
                 android:src="@drawable/music_next" />
         </RelativeLayout>
     </LinearLayout>

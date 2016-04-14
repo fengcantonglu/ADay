@@ -178,17 +178,6 @@
                     android:orientation="horizontal"
                     android:padding="2dp" >
 
-                    <com.can.aday.view.MyImageView
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_marginRight="12dp"
-                        android:src="@drawable/user_header_1" />
-
-                    <com.can.aday.view.MyImageView
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_marginRight="12dp"
-                        android:src="@drawable/user_header_2" />
                 </LinearLayout>
             </LinearLayout>
 

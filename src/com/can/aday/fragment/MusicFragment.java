@@ -3,6 +3,11 @@ package com.can.aday.fragment;
 import com.can.aday.R;
 import com.can.aday.utils.FastBlur;
 
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,6 +19,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -190,6 +197,7 @@ public class MusicFragment extends AdayFragment {
 	String summary;// 简介
 	String[] lrc;
 	String[] details;
+	private int lastPosition;
 
 	ScrollView mContentScroll;
 
@@ -216,42 +224,125 @@ public class MusicFragment extends AdayFragment {
 				"有的人虽然家财万贯，可是在茫茫人海中却没有遇到自己真正深爱的女孩，因此单纯以钱来评价一个人是否幸福是错误的。一个男孩，在茫茫人海中幸运的遇到了真正深爱的女孩，和这个女孩彼此相爱、彼此依恋、彼此关心、彼此知心、一起生活，快乐的、健康的相守到百岁，这才是真正的幸福。",
 				"有一个心理测试：如果你深爱一个女孩，假如有两个选择，第一个选择：此生无缘遇到这个女孩，但是可以有百亿元的家产，第二个选择：此生能在茫茫人海中遇到这个深爱的女孩，但是一辈子只能和她过普通的生活，你会怎样选择？",
 				"生活中需要思考：和什么人，在什么环境，用什么生活用具，过什么生活，有什么情感。幸福这种情感需要幸福的生活作为支撑，而幸福的生活也需要三个支撑：和喜欢的人，在喜欢的环境中，拥有喜欢的生活用具。情感、人、环境、生活用具、生活这五个基本方面需要协调，这五个方面之间的不协调（缺少支撑）是造成不幸的重要原因。" };
-		contentLoad(0);
 	}
 
+	@SuppressLint("NewApi")
 	private void contentLoad(int i) {
+		if (lastPosition != 0) {
+			showContentAnimoution(i);
+		} else {
+			ObjectAnimator oa1 = ObjectAnimator.ofFloat(mContentScroll, "alpha", 0.3f, 1f);
+			oa1.setDuration(100);
+			switch (i) {
+			case 1:// 显示故事
+				showStory();
+				break;
+			case 2:// 显示歌词
+				showLrc();
+				break;
+			case 3:// 显示详情
+				showDetail();
+				break;
+			}
+			AnimatorSet as = new AnimatorSet();
+			as.playTogether(oa1);
+			as.start();
+
+		}
+		lastPosition = i;
+	}
+
+	@SuppressLint("NewApi")
+	private void showContentAnimoution(final int i) {
+		ObjectAnimator oa = ObjectAnimator.ofFloat(mContentScroll, "alpha", 1f, 0f);
+		ObjectAnimator oa1 = ObjectAnimator.ofFloat(mContentScroll, "alpha", 0f, 1f);
+		oa1.setStartDelay(150);
+		oa1.setDuration(300);
+		oa.setDuration(150);
+
+		oa.addListener(new AnimatorListener() {
+
+			@Override
+			public void onAnimationStart(Animator animation) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator animation) {
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				switch (i) {
+				case 1:// 显示故事
+
+					showStory();
+					break;
+				case 2:// 显示歌词
+					showLrc();
+					break;
+				case 3:// 显示详情
+					showDetail();
+					break;
+				}
+			}
+
+			public void onAnimationCancel(Animator animation) {
+
+			}
+		});
+		AnimatorSet as = new AnimatorSet();
+		as.playTogether(oa, oa1);
+		as.start();
+	}
+
+	/**
+	 * 显示故事内容
+	 */
+	private void showStory() {
 		StringBuilder sb = new StringBuilder();
-		switch (i) {
-		case 1:// 显示故事
-			try {
-				content_One.setText("\t\t" + summary + "\r\n");
-				for (String s : story) {
-					sb.append("\t\t" + s + "\r\n\r\n");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		try {
+			content_One.setText("\t\t" + summary + "\r\n");
+			for (String s : story) {
+				sb.append("\t\t" + s + "\r\n\r\n");
 			}
-			break;
-		case 2:// 显示歌词
-			try {
-				content_One.setText("\t\t" + summary + "\r\n");
-				for (String s : lrc) {
-					sb.append("\t\t" + s + "\r\n");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
+		content.setText(sb.toString());
+	}
+
+	/**
+	 * 显示歌词
+	 */
+	private void showLrc() {
+		StringBuilder sb = new StringBuilder();
+		try {
+			content_One.setText("\t\t" + summary + "\r\n");
+			for (String s : lrc) {
+				sb.append("\t\t" + s + "\r\n");
 			}
-			break;
-		case 3:// 显示详情
-			try {
-				content_One.setText("");
-				for (String s : details) {
-					sb.append("\t\t" + s + "\r\n\r\n");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
+		content.setText(sb.toString());
+	}
+
+	/**
+	 * 显示详情数据
+	 */
+	private void showDetail() {
+		StringBuilder sb = new StringBuilder();
+		try {
+			content_One.setText("");
+			for (String s : details) {
+				sb.append("\t\t" + s + "\r\n\r\n");
 			}
-			break;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
 		content.setText(sb.toString());
@@ -268,6 +359,9 @@ public class MusicFragment extends AdayFragment {
 			contentImage.setVisibility(View.VISIBLE);
 			textContentLayout.setVisibility(View.GONE);
 			mainLayout.setBackgroundDrawable(new BitmapDrawable(mainBlugBkg));
+			Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.image_scale);
+			contentImage.startAnimation(anim);
+			lastPosition = 0;
 		} else {
 			contentImage.setVisibility(View.GONE);
 			textContentLayout.setVisibility(View.VISIBLE);
@@ -291,12 +385,12 @@ public class MusicFragment extends AdayFragment {
 		mainBlugBkg = FastBlur.doBlur(mainBkg, 18, false);
 		fBkg.recycle();
 		bkg.recycle();
-		if(musicDefBtn.isChecked()){
+		if (musicDefBtn.isChecked()) {
 			mainLayout.setBackgroundDrawable(new BitmapDrawable(mainBlugBkg));
-		}else{
+		} else {
 			mainLayout.setBackgroundDrawable(new BitmapDrawable(mainBkg));
 		}
-		
+
 		functionLayout.setBackgroundDrawable(new BitmapDrawable(bottomBkg));
 	}
 
