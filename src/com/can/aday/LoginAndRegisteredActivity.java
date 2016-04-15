@@ -153,6 +153,7 @@ public class LoginAndRegisteredActivity extends Activity {
 								Log.i("musicname", mc.getMusicname() + "");
 								Log.i("singer", mc.getSinger() + "");
 								Log.i("musicpath", mc.getMusicpath() + "");
+								Log.i("story", mc.getStory());
 								intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 								startActivity(intent);
 								app.setCurrentUser(user);
