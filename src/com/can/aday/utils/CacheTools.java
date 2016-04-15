@@ -10,7 +10,7 @@ public class CacheTools {
 	 * 缓存登陆行用户名和密码且保存登陆状态为true
 	 */
 	public static void cachedPageGuide(String account, String password, Context context) {
-		SharedPreferences sharedPreferences = context.getSharedPreferences("test", Activity.MODE_PRIVATE);
+		SharedPreferences sharedPreferences = context.getSharedPreferences("test", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putString("account", account);
 		editor.putString("password", password);
@@ -25,7 +25,7 @@ public class CacheTools {
 	 * @param isLogin
 	 */
 	public static void loginStateSave(Context context, boolean isLogin) {
-		SharedPreferences sharedPreferences = context.getSharedPreferences("isLogin", Activity.MODE_PRIVATE);
+		SharedPreferences sharedPreferences = context.getSharedPreferences("isLogin", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putBoolean("isLogin", isLogin);
 		editor.commit();
@@ -38,7 +38,7 @@ public class CacheTools {
 	 * @return true 已登陆,false 未登录
 	 */
 	public static boolean getLoginState(Context context) {
-		SharedPreferences sharedPreferences = context.getSharedPreferences("isLogin", Activity.MODE_PRIVATE);
+		SharedPreferences sharedPreferences = context.getSharedPreferences("isLogin", Context.MODE_PRIVATE);
 		return sharedPreferences.getBoolean("isLogin", false);
 	}
 
@@ -56,7 +56,7 @@ public class CacheTools {
 	 */
 	public static void getAccountCache(Context context, String[] ap)
 			throws NullPointerException, ArrayIndexOutOfBoundsException {
-		SharedPreferences sharedPreferences = context.getSharedPreferences("test", Activity.MODE_PRIVATE);
+		SharedPreferences sharedPreferences = context.getSharedPreferences("test", Context.MODE_PRIVATE);
 		ap[0] = sharedPreferences.getString("account", "");
 		ap[1] = sharedPreferences.getString("password", "");
 	}

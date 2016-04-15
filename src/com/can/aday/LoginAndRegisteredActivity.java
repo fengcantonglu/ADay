@@ -95,6 +95,7 @@ public class LoginAndRegisteredActivity extends Activity {
 	 */
 	OnClickListener clickListener = new OnClickListener() {
 
+		@Override
 		public void onClick(View v) {
 			intent = new Intent();
 			switch (v.getId()) {

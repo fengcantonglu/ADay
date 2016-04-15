@@ -3,6 +3,7 @@ package com.can.aday.fragment;
 import com.can.aday.R;
 import com.can.aday.VideoClassifyActivity;
 import com.can.aday.VideoOrderActivity;
+import com.can.aday.VideoPlayActivity;
 import com.can.aday.tools.DensityUtil;
 import com.can.aday.utils.FastBlur;
 
@@ -69,7 +70,9 @@ public class VideoFragment extends AdayFragment {
 			case R.id.title_right_btn:// 左边标题栏点击效果
 				showImageBox();
 				break;
-
+			case R.id.video_play:
+				Intent intent=new Intent(getActivity(),VideoPlayActivity.class);
+				startActivity(intent);
 			default:
 				break;
 			}
@@ -102,6 +105,8 @@ public class VideoFragment extends AdayFragment {
 		nameText = (TextView) mView.findViewById(R.id.video_name);
 		timeText = (TextView) mView.findViewById(R.id.video_time);
 		storyText = (TextView) mView.findViewById(R.id.video_context);
+		
+		playBtn.setOnClickListener(click);
 	}
 
 	private void initView() {
@@ -182,11 +187,13 @@ public class VideoFragment extends AdayFragment {
 		startActivity(intent);
 	}
 
+	@Override
 	public void onShow() {
 		titleRight.setOnClickListener(click);
 		titleRightLayout.setVisibility(View.VISIBLE);
 	}
 
+	@Override
 	public void onDismiss() {
 		titleRightLayout.setVisibility(View.GONE);
 	}
@@ -221,6 +228,7 @@ public class VideoFragment extends AdayFragment {
 		View pupView = getActivity().getLayoutInflater().inflate(R.layout.video_fragment_layout, null);
 		OnClickListener l = new OnClickListener() {
 
+			@Override
 			public void onClick(View v) {
 				switch (v.getId()) {
 				case R.id.video_fragment_classify:

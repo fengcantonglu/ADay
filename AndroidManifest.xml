@@ -30,6 +30,10 @@
         </activity>
         <activity android:name="com.can.aday.VideoOrderActivity" >
         </activity>
+                  <!-- 设置横屏，全屏 -->
+        <activity android:name="com.can.aday.VideoPlayActivity" 
+            android:screenOrientation="landscape" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
         <!-- 评论界面 -->
         <activity android:name="com.can.aday.CommentActivity" >
         </activity>

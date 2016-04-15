@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import com.can.aday.utils.CacheTools;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 public class WelcomeActivity extends Activity {
 	private boolean isLogin;
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -34,6 +36,7 @@ public class WelcomeActivity extends Activity {
 			setContentView(layout);
 			isLogin = CacheTools.getLoginState(this);
 			new Handler().postDelayed(new Runnable() {
+				@Override
 				public void run() {
 					isShowWelcome();
 				}
@@ -59,7 +62,7 @@ public class WelcomeActivity extends Activity {
 	 * 第一次运行欢迎见面，将引导界面设置已读信息设置为true
 	 */
 	public void cachedPageGuide() {
-		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
+		SharedPreferences sharedPreferences = getSharedPreferences("test", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putBoolean("welcome", true);
 		editor.commit();
@@ -71,7 +74,7 @@ public class WelcomeActivity extends Activity {
 	 * @return
 	 */
 	public boolean isFristRun() {
-		SharedPreferences sharedPreferences = getSharedPreferences("test", Activity.MODE_PRIVATE);
+		SharedPreferences sharedPreferences = getSharedPreferences("test", Context.MODE_PRIVATE);
 		boolean isshare = sharedPreferences.getBoolean("welcome", false);
 		return !isshare;
 	}
