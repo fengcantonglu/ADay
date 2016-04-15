@@ -1,7 +1,14 @@
 package com.can.aday.fragment;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 import com.can.aday.R;
 import com.can.aday.utils.FastBlur;
+import com.can.aday.view.LRCView;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
@@ -12,7 +19,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +40,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MusicFragment extends AdayFragment {
@@ -93,11 +107,11 @@ public class MusicFragment extends AdayFragment {
 	/**
 	 * 播放音乐的进度条
 	 */
-	View musicProgres;
+	SeekBar musicProgres;
 	/**
 	 * 播放与暂停
 	 */
-	View playOrPause;
+	ImageView playOrPause;
 	/**
 	 * 上一曲播放
 	 */
@@ -142,6 +156,15 @@ public class MusicFragment extends AdayFragment {
 
 		}
 	};
+	/**
+	 * 音乐播放完成的监听
+	 */
+	private OnCompletionListener listener = new OnCompletionListener() {
+
+		public void onCompletion(MediaPlayer mp) {
+			playOrPause.setImageResource(R.drawable.music_play_icon_in);
+		}
+	};
 
 	public MusicFragment(View titleLayout) {
 		this.titleLayout = titleLayout;
@@ -179,10 +202,11 @@ public class MusicFragment extends AdayFragment {
 		musicDefBtn = (RadioButton) mView.findViewById(R.id.music_default);
 		currentTime = (TextView) mView.findViewById(R.id.currut_time);
 		musicTime = (TextView) mView.findViewById(R.id.music_time_length);
-		musicProgres = mView.findViewById(R.id.progress_image);
-		playOrPause = mView.findViewById(R.id.play_btn);
+		musicProgres = (SeekBar) mView.findViewById(R.id.progress_image);
+		playOrPause = (ImageView) mView.findViewById(R.id.play_btn);
 		backPlay = mView.findViewById(R.id.back_btn);
 		nextPlay = mView.findViewById(R.id.next_btn);
+		lrcView = (LRCView) mView.findViewById(R.id.music_lrc);
 	}
 
 	private void initView() {
@@ -312,23 +336,26 @@ public class MusicFragment extends AdayFragment {
 		}
 		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
 		content.setText(sb.toString());
+		lrcView.setVisibility(View.GONE);
+		mContentScroll.setVisibility(View.VISIBLE);
 	}
+
+	LRCView lrcView;
 
 	/**
 	 * 显示歌词
 	 */
 	private void showLrc() {
-		StringBuilder sb = new StringBuilder();
-		try {
-			content_One.setText("\t\t" + summary + "\r\n");
-			for (String s : lrc) {
-				sb.append("\t\t" + s + "\r\n");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
-		content.setText(sb.toString());
+		/*
+		 * StringBuilder sb = new StringBuilder(); try {
+		 * content_One.setText("\t\t" + summary + "\r\n"); for (String s : lrc)
+		 * { sb.append("\t\t" + s + "\r\n"); } } catch (Exception e) {
+		 * e.printStackTrace(); }
+		 * mContentScroll.fullScroll(ScrollView.FOCUS_UP);
+		 * content.setText(sb.toString());
+		 */
+		mContentScroll.setVisibility(View.GONE);
+		lrcView.setVisibility(View.VISIBLE);
 	}
 
 	/**
@@ -346,6 +373,8 @@ public class MusicFragment extends AdayFragment {
 		}
 		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
 		content.setText(sb.toString());
+		lrcView.setVisibility(View.GONE);
+		mContentScroll.setVisibility(View.VISIBLE);
 	}
 
 	/**
@@ -433,6 +462,96 @@ public class MusicFragment extends AdayFragment {
 	 * 播放与暂停
 	 */
 	public void playOrPause() {
-
+		if (lrcView.getPlayer() == null) {
+			start();
+		} else if (lrcView.getPlayer().isPlaying()) {
+			pause();
+		} else if (lrcView.getPlayer().getDuration() > 0) {
+			play();
+		} else {
+			start();
+		}
 	}
+
+	public void start() {
+		try {
+
+			new Thread() {
+				public void run() {
+					try {
+						downLrc();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				};
+			}.start();
+			
+			Uri uri = Uri.parse(
+					"http://hb.1000eb.com:88/file/%E6%B5%AE%E5%A4%B8%20-%20%E9%99%88%E5%A5%95%E8%BF%85.mp3?sid=f041614473be4ce2af69482037ca2517&id=206z&n=%E6%B5%AE%E5%A4%B8%20-%20%E9%99%88%E5%A5%95%E8%BF%85.mp3&t=tUKKVqFMVMI0HwGFEfQzfk6nrOZx9jCgAbD652ql4jvn1Y0DN4GqB9l%2Ff%2B8gFUX6KksJQXvwS1gkoTYo8hqGLQ%3D%3D&key=41D5FD35196D9FF09059399333B53754&e=FTCo%2BPlMRtbbzTLIr6B7%2BTvTKek1p8v1paeM2LjQLAg%3D&delay=0");
+			lrcView.setPlayMusic(uri);
+			lrcView.setOnCompletionListener(listener);
+			lrcView.bindPlayBtnAndTimeText(playOrPause, currentTime, musicTime);
+			lrcView.bindSeekBar(musicProgres);
+			lrcView.play();
+			if (lrcView.getPlayer().isPlaying())
+				playOrPause.setImageResource(R.drawable.music_pause_icon);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void play() {
+		lrcView.play();
+		if (lrcView.getPlayer().isPlaying()) {
+			playOrPause.setImageResource(R.drawable.music_pause_icon);
+		}
+	}
+
+	public void pause() {
+		lrcView.pause();
+		if (!lrcView.getPlayer().isPlaying()) {
+			playOrPause.setImageResource(R.drawable.music_play_icon_in);
+		}
+	}
+
+	private void downLrc() throws IOException {
+		File lrcF = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "Download"
+				+ File.separator + "fukua.lrc");
+
+		if (lrcF.exists()) {
+			Message msg = Message.obtain();
+			msg.obj = lrcF.getPath();
+			mhand.sendMessage(msg);
+			return;
+		}
+		FileOutputStream fos = new FileOutputStream(lrcF);
+		URL url = new URL(
+				"http://qukufile2.qianqian.com/data2/lrc/6d096f72de9bf6fae76be5738388c8b7/263506075/263506075.lrc");
+		InputStream in = url.openStream();
+		int len;
+		byte[] buf = new byte[1024];
+		while ((len = in.read(buf)) != -1) {
+			fos.write(buf, 0, len);
+		}
+		fos.flush();
+		fos.close();
+		in.close();
+		Message msg = Message.obtain();
+		msg.obj = lrcF.getPath();
+		mhand.sendMessage(msg);
+	}
+
+	Handler mhand = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			try {
+				lrcView.setLRCPath((String) msg.obj);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		};
+	};
 }
