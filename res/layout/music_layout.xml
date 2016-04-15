@@ -36,6 +36,13 @@
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
+            <com.can.aday.view.LRCView
+                android:id="@+id/music_lrc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="21dp"
+                android:visibility="gone" />
+
             <ScrollView
                 android:id="@+id/contentScroll"
                 android:layout_width="match_parent"
@@ -172,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/progress_image"
-                android:text="01:44"
+                android:text="00:00"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -182,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/progress_image"
-                android:text="04:35"
+                android:text="00:00"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -200,7 +207,12 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:src="@drawable/music_start" />
+                android:background="@drawable/music_play_out_cirl"
+                android:paddingBottom="15dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="14dp"
+                android:paddingTop="15dp"
+                android:src="@drawable/music_play_icon_in" />
 
             <ImageView
                 android:id="@+id/back_btn"
