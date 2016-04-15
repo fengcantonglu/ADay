@@ -108,6 +108,7 @@ public class MusicFragment extends AdayFragment {
 	View nextPlay;
 	private OnCheckedChangeListener change = new OnCheckedChangeListener() {
 
+		@Override
 		@SuppressWarnings("deprecation")
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			int j = 0;
@@ -288,6 +289,7 @@ public class MusicFragment extends AdayFragment {
 				}
 			}
 
+			@Override
 			public void onAnimationCancel(Animator animation) {
 
 			}
@@ -310,7 +312,7 @@ public class MusicFragment extends AdayFragment {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
+		mContentScroll.fullScroll(View.FOCUS_UP);
 		content.setText(sb.toString());
 	}
 
@@ -327,7 +329,7 @@ public class MusicFragment extends AdayFragment {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
+		mContentScroll.fullScroll(View.FOCUS_UP);
 		content.setText(sb.toString());
 	}
 
@@ -344,7 +346,7 @@ public class MusicFragment extends AdayFragment {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mContentScroll.fullScroll(ScrollView.FOCUS_UP);
+		mContentScroll.fullScroll(View.FOCUS_UP);
 		content.setText(sb.toString());
 	}
 
@@ -400,6 +402,7 @@ public class MusicFragment extends AdayFragment {
 		title.setText("Love Hurts");
 	}
 
+	@Override
 	public void onDismiss() {
 		title.setText("");
 		titleLayout.setBackgroundColor(0);

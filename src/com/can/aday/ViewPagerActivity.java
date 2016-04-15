@@ -33,6 +33,7 @@ public class ViewPagerActivity extends Activity {
 	View text;
 	TextView instructions;
 
+	@Override
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		setContentView(R.layout.activity_view_pager);
 		radioGroup = (RadioGroup) findViewById(R.id.welocm_radio_group);
@@ -53,10 +54,12 @@ public class ViewPagerActivity extends Activity {
 		this.mPoxy = activity;
 	}
 
+	@Override
 	public void setContentView(int layoutResID) {
 		mPoxy.setContentView(layoutResID);
 	};
 
+	@Override
 	public View findViewById(int id) {
 		return mPoxy.findViewById(id);
 	};
@@ -70,6 +73,7 @@ public class ViewPagerActivity extends Activity {
 	};
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
+		@Override
 		public void handleMessage(Message msg) {
 			if (mView.getCurrentItem() < pics.length) {
 				mView.setCurrentItem(mView.getCurrentItem() + 1);
@@ -78,6 +82,7 @@ public class ViewPagerActivity extends Activity {
 		};
 	};
 
+	@Override
 	public void startActivity(Intent intent) {
 		mPoxy.startActivity(intent);
 	};
@@ -99,6 +104,7 @@ public class ViewPagerActivity extends Activity {
 			}
 		};
 
+		@Override
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			for (int i = 0; i < radioButton.length; i++) {
 				if (radioButton[i].isChecked()) {
@@ -118,6 +124,7 @@ public class ViewPagerActivity extends Activity {
 
 	class PagerAdapter extends android.support.v4.view.PagerAdapter {
 
+		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
 			container.removeView(container.findViewById(1000 + position));
 
@@ -125,10 +132,12 @@ public class ViewPagerActivity extends Activity {
 
 		// 获得当前界面数
 
+		@Override
 		public int getCount() {
 			return pics.length;
 		}
 
+		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			View view = new View(mPoxy);
 			view.setBackgroundResource(pics[position]);
@@ -137,6 +146,7 @@ public class ViewPagerActivity extends Activity {
 			return view;
 		}
 
+		@Override
 		public boolean isViewFromObject(View arg0, Object arg1) {
 			return (arg0 == arg1);
 		}
@@ -147,14 +157,17 @@ public class ViewPagerActivity extends Activity {
 
 	private class MypageChangeListener implements OnPageChangeListener {
 
+		@Override
 		public void onPageScrollStateChanged(int position) {
 
 		}
 
+		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 
 		}
 
+		@Override
 		public void onPageSelected(int arg0) {
 			radioButton[arg0].setChecked(true);
 		}

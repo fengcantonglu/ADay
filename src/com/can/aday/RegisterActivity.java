@@ -32,6 +32,7 @@ public class RegisterActivity extends Activity {
 	TextView clause;// 服务条款
 	View confirm;// 登录按钮
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class RegisterActivity extends Activity {
 
 	OnClickListener clickListener = new OnClickListener() {
 
+		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.title_bar_back_icon:

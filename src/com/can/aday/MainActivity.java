@@ -146,6 +146,7 @@ public class MainActivity extends FragmentActivity {
 
 	private OnTouchListener onTouch = new OnTouchListener() {
 
+		@Override
 		@SuppressLint({ "ClickableViewAccessibility", "NewApi" })
 		public boolean onTouch(View v, MotionEvent event) {
 			if (!mMenu.isOpen) {
@@ -422,6 +423,7 @@ public class MainActivity extends FragmentActivity {
 	/**
 	 * 重写系统的finish方法
 	 */
+	@Override
 	public void finish() {
 		if (isDoFinish) {
 			super.finish();
