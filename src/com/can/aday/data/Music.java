@@ -9,7 +9,7 @@ public class Music {
 	private String singer;
 	private String musicpath;
 	private String story;
-	private String song_words;
+	private String song_words_path;
 	private String introduce;
 	private String backgroundpath;
 	private int addtime;
@@ -35,6 +35,14 @@ public class Music {
 		return singer;
 	}
 
+	public String getSong_words_path() {
+		return song_words_path;
+	}
+
+	public void setSong_words_path(String song_words_path) {
+		this.song_words_path = song_words_path;
+	}
+
 	public void setSinger(String singer) {
 		this.singer = singer;
 	}
@@ -53,14 +61,6 @@ public class Music {
 
 	public void setStory(String story) {
 		this.story = story;
-	}
-
-	public String getSong_words() {
-		return song_words;
-	}
-
-	public void setSong_words(String song_words) {
-		this.song_words = song_words;
 	}
 
 	public String getIntroduce() {
@@ -129,7 +129,7 @@ public class Music {
 			e.printStackTrace();
 		}
 		try {
-			mc.setSong_words(jo.getString("song_words"));
+			mc.setSong_words_path(jo.getString("song_words_path"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
