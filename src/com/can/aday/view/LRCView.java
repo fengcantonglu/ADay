@@ -192,6 +192,7 @@ public class LRCView extends View {
 		if (mPlayer == null) {
 			mPlayer = new MediaPlayer();
 			mPlayer.setOnCompletionListener(playComletion);
+			mPlayer.reset();
 		}
 		if (mPlayer.isPlaying()) {
 			mPlayer.stop();
@@ -208,6 +209,7 @@ public class LRCView extends View {
 		if (mPlayer == null) {
 			mPlayer = new MediaPlayer();
 			mPlayer.setOnCompletionListener(playComletion);
+			mPlayer.reset();
 		}
 		if (mPlayer.isPlaying()) {
 			mPlayer.stop();
@@ -395,12 +397,12 @@ public class LRCView extends View {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@SuppressLint("NewApi")
 	public void bindPlayBtnAndTimeText(View play, TextView currentT, TextView lengthT) {
-		if (lengthT != null) {
-			lengthT.setText(parseTimeToString(mPlayer.getDuration()));
-		}
 		musicTimeText = lengthT;
+		if (musicTimeText != null && mPlayer != null) {
+			musicTimeText.setText(parseTimeToString(mPlayer.getDuration()));
+		}
 		currentTimeText = currentT;
-		if (currentTimeText != null) {
+		if (currentTimeText != null&& mPlayer != null) {
 			currentTimeText.setText(parseTimeToString(mPlayer.getCurrentPosition()));
 		}
 	}

@@ -68,7 +68,7 @@ public class User {
 		this.imgpath = imgpath;
 	}
 
-	public static User userJSONObject(JSONObject jo) {
+	public static User parseJSONObject(JSONObject jo) {
 		User us = new User();
 		try {
 			us.setId(jo.getInt("id"));

@@ -1,5 +1,7 @@
 package com.can.aday.utils;
 
+import java.io.File;
+
 import com.can.aday.data.Music;
 
 import android.content.ContentValues;
@@ -7,8 +9,51 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 
-public class CacheTools {
+public final class CacheTools {
+
+	/**
+	 * 获得Aday的文件缓存路径
+	 * 
+	 * @return
+	 */
+	public static String getAdayFile() {
+		File file;
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			file = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "aday");
+		} else {
+			file = new File(Environment.getDataDirectory().getPath() + File.separator + "aday");
+		}
+		if (!file.exists())
+			file.mkdir();
+		return file.getPath();
+	}
+
+	/**
+	 * 获得音乐类缓存文件夹
+	 * 
+	 * @return
+	 */
+	public static String getMusicFile() {
+		File file = new File(getAdayFile() + File.separator + "music");
+		if (!file.exists())
+			file.mkdir();
+		return file.getPath();
+	}
+
+	/**
+	 * 获得歌词缓存文件夹
+	 * 
+	 * @return
+	 */
+	public static String getLRCFile() {
+		File file = new File(getMusicFile() + File.separator + "lrc");
+		if (!file.exists())
+			file.mkdir();
+		return file.getPath();
+
+	}
 
 	/**
 	 * 缓存登陆行用户名和密码且保存登陆状态为true
@@ -153,7 +198,10 @@ public class CacheTools {
 	 * @param data
 	 * @return
 	 */
-	public static void getMusicData(Context context, Music data) {
+	public static void getLocalOrSaveMusicData(Context context, Music data) {
+		if (data == null || data.getId() == 0) {
+			return;
+		}
 		SQLiteDatabase db = getDatabase(context);
 
 		Cursor c = db.query(AdaySqlHelper.MUSIC_TABLE, null, "musicid=?", new String[] { "" + data.getId() }, null,
@@ -183,11 +231,16 @@ public class CacheTools {
 	 * 在未连接网络的时候,执行此方法，完全获取本地缓存的最新的一条数据.若没有则返回null
 	 * 
 	 * @param context
+	 * @param index
+	 *            查询第几条，0代表第一条
 	 * @return
 	 */
-	public static Music getLocalMusicData(Context context) {
+	public static Music getLocalMusicData(Context context, int index) {
+		if (index < 0) {
+			index = 0;
+		}
 		SQLiteDatabase db = getDatabase(context);
-		Cursor c = db.query(AdaySqlHelper.MUSIC_TABLE, null, null, null, null, null, "musicid desc", "0,1");
+		Cursor c = db.query(AdaySqlHelper.MUSIC_TABLE, null, null, null, null, null, "musicid desc", index + ",1");
 		Music data = null;
 		if (c.moveToNext()) {
 			data = new Music();

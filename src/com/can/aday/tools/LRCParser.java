@@ -1,14 +1,17 @@
 package com.can.aday.tools;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.mozilla.universalchardet.UniversalDetector;
+
+import android.util.Log;
 
 /**
  * 此类用来解析LRC文件 将解析完整的LRC文件放入一个LrcInfo对象中 并且返回这个LrcInfo对象s author:java_mzd
@@ -24,9 +27,9 @@ public class LRCParser {
 	 * @throws FileNotFoundException
 	 */
 	private InputStream readLrcFile(String path) throws FileNotFoundException {
+
 		File f = new File(path);
 		InputStream ins = new FileInputStream(f);
-
 		return ins;
 	}
 
@@ -47,15 +50,32 @@ public class LRCParser {
 	 * @throws IOException
 	 */
 	private LRCInfo parser(InputStream inputStream, LRCInfo lrcinfo) throws IOException {
-		// 三层包装
-		InputStreamReader inr = new InputStreamReader(inputStream);
-		BufferedReader reader = new BufferedReader(inr);
-		// 一行一行的读，每读一行，解析一行
-		String line = null;
-		while ((line = reader.readLine()) != null) {
-			parserLine(line, lrcinfo);
-		}
 
+		UniversalDetector detector = new UniversalDetector(null);
+
+		byte buf[] = new byte[4096];
+		int len = 0;
+		ArrayList<Byte> buffer = new ArrayList<Byte>();
+		while ((len = inputStream.read(buf)) != -1 && !detector.isDone()) {
+			detector.handleData(buf, 0, len);
+			for (int i = 0; i < len; i++) {
+				buffer.add(buf[i]);
+			}
+		}
+		detector.dataEnd();
+		String encoding = detector.getDetectedCharset();
+		detector.reset();	
+		Log.i("UniversalDetector", "encoding:" + encoding);
+		byte[] d = new byte[buffer.size()];
+		for (int i = 0; i < d.length; i++) {
+			d[i] = buffer.get(i);
+		}
+		String data = new String(d, encoding);
+
+		for (String lin : data.split("\r\n")) {
+			parserLine(lin, lrcinfo);
+		}
+		inputStream.close();
 		return lrcinfo;
 	}
 
