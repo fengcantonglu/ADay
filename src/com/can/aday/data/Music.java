@@ -8,10 +8,14 @@ public class Music {
 	private String musicname;
 	private String singer;
 	private String musicpath;
+	private String musicLocalPath;
 	private String story;
 	private String song_words_path;
+	private String songWordsLocalPath;
 	private String introduce;
 	private String backgroundpath;
+	private String backgroundlocalpath;
+
 	private int addtime;
 	private int status;
 
@@ -79,6 +83,14 @@ public class Music {
 		this.backgroundpath = backgroundpath;
 	}
 
+	public String getBackgroundlocalpath() {
+		return backgroundlocalpath;
+	}
+
+	public void setBackgroundlocalpath(String backgroundlocalpath) {
+		this.backgroundlocalpath = backgroundlocalpath;
+	}
+
 	public int getAddtime() {
 		return addtime;
 	}
@@ -93,6 +105,22 @@ public class Music {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getMusicLocalPath() {
+		return musicLocalPath;
+	}
+
+	public void setMusicLocalPath(String musicLocalPath) {
+		this.musicLocalPath = musicLocalPath;
+	}
+
+	public String getSongWordsLocalPath() {
+		return songWordsLocalPath;
+	}
+
+	public void setSongWordsLocalPath(String songWordsLocalPath) {
+		this.songWordsLocalPath = songWordsLocalPath;
 	}
 
 	public static Music musicJSONObject(JSONObject jo) {
