@@ -5,8 +5,6 @@ import java.net.MalformedURLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.can.aday.data.Music;
-import com.can.aday.data.User;
 import com.can.aday.tools.HttpPost;
 import com.can.aday.tools.HttpPost.OnSendListener;
 import com.can.aday.utils.CacheTools;
@@ -146,16 +144,9 @@ public class LoginAndRegisteredActivity extends Activity {
 
 							if (jo.getInt("status") == 1) {
 								AdayApplication app = (AdayApplication) getApplication();
-								String token = jo.getString("token");
-								User user = User.userJSONObject(jo.getJSONObject("user"));
-								Music mc = Music.musicJSONObject(jo.getJSONObject("data1"));
-								JSONObject jj = jo.getJSONObject("data2");
-								String str = jj.getString("message");
-								Music mc1 = Music.musicJSONObject(jj.getJSONObject("music"));
+								app.loginDataExec(jo);
 								intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 								startActivity(intent);
-								app.setCurrentUser(user);
-								app.setToken(token);
 								finish();
 								CacheTools.cachedPageGuide(acc, pass, getApplicationContext());
 							} else {

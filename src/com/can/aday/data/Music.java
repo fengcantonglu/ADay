@@ -1,7 +1,20 @@
 package com.can.aday.data;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.can.aday.AdayApplication;
+import com.can.aday.utils.CacheTools;
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Message;
 
 public class Music {
 	private int id;
@@ -123,67 +136,218 @@ public class Music {
 		this.songWordsLocalPath = songWordsLocalPath;
 	}
 
-	public static Music musicJSONObject(JSONObject jo) {
+	/**
+	 * 执行缓存下载音乐和对应歌词;执行时会判断 musicLocalPath 和
+	 * songWordsLocalPath是否为空，不为空、且存在时,不会执行下载,直接调用DownloadEnd方法;
+	 */
+	@SuppressLint("HandlerLeak")
+	public void cacheMusicAndLrc(final OnCacheMusicListener listener) {
+		final long READ_BUFFER = 400 * 1024;
+		final Handler hand = new Handler() {
+
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case 1:
+					if (listener != null)
+						listener.musicCanRead(musicLocalPath);
+					break;
+				case 2:
+					if (listener != null)
+						listener.musicDownloadEnd(musicLocalPath, true);
+					break;
+				case 3:
+					if (listener != null)
+						listener.lrcDownloadEnd((String) msg.obj, true);
+					break;
+				case 4:
+					if (listener != null)
+						listener.musicDownloadEnd(musicLocalPath, false);
+					break;
+				case 5:
+					if (listener != null)
+						listener.lrcDownloadEnd(songWordsLocalPath, false);
+					break;
+				default:
+					break;
+				}
+			}
+		};
+		if (musicLocalPath == null || !new File(musicLocalPath).exists()) {
+			new Thread() {
+				public void run() {
+					try {
+						URL url;
+						if (musicpath.startsWith("http")) {
+							url = new URL(musicpath);
+						} else {
+							url = new URL(AdayApplication.SERVICE_IP + musicpath);
+						}
+						InputStream in = url.openStream();
+						File file = new File(CacheTools.getMusicFile(), musicname + ".mp3");
+						long readSize = file.length();
+						FileOutputStream fos = new FileOutputStream(file);
+						long lastSize = 0;
+						byte[] buf = new byte[1024 * 4];
+						int len = 0;
+						musicLocalPath = file.getPath();
+						while ((len = in.read(buf)) != -1) {
+							fos.write(buf, 0, len);
+							fos.flush();
+							readSize += len;
+							if (readSize - lastSize > READ_BUFFER) {
+
+								hand.sendEmptyMessage(1);
+							}
+
+						}
+						fos.close();
+						in.close();
+
+						hand.sendEmptyMessage(2);
+					} catch (MalformedURLException e) {
+
+						e.printStackTrace();
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+				};
+			}.start();
+		} else {
+
+			hand.sendEmptyMessage(4);
+		}
+
+		if (songWordsLocalPath == null || !new File(songWordsLocalPath).exists()) {
+			new Thread() {
+				public void run() {
+					try {
+						URL url;
+						if (song_words_path.startsWith("http")) {
+							url = new URL(song_words_path);
+						} else {
+							url = new URL(AdayApplication.SERVICE_IP + song_words_path);
+						}
+						InputStream in = url.openStream();
+						File file = new File(CacheTools.getLRCFile(), musicname + ".lrc");
+						FileOutputStream fos = new FileOutputStream(file);
+						byte[] buf = new byte[1024];
+						int len = 0;
+						Message msg = Message.obtain();
+						msg.obj = file.getPath();
+						msg.what = 3;
+						while ((len = in.read(buf)) != -1) {
+							fos.write(buf, 0, len);
+						}
+						fos.flush();
+						fos.close();
+						in.close();
+						songWordsLocalPath = file.getPath();
+						hand.sendMessage(msg);
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				};
+			}.start();
+		} else {
+			hand.sendEmptyMessage(5);
+		}
+
+	}
+
+	/**
+	 * 缓存背景图
+	 */
+	public void cacheBackGroudImage() {
+
+	}
+
+	/**
+	 * 音乐缓存监听
+	 * 
+	 * @author kk0927
+	 *
+	 */
+	public interface OnCacheMusicListener {
+		/**
+		 * 音乐缓存一定可播放的程度
+		 * 
+		 * @param path
+		 */
+		void musicCanRead(String path);
+
+		/**
+		 * 音乐下载完毕
+		 * 
+		 * @param path
+		 * @param isDownload
+		 *            是否执行了下载
+		 */
+		void musicDownloadEnd(String path, boolean isDownload);
+
+		/**
+		 * 歌词下载完成
+		 * 
+		 * @param isDownload
+		 *            是否执行了下载
+		 * @param path
+		 */
+		void lrcDownloadEnd(String path, boolean isDownload);
+	}
+
+	public static Music parseJSONObject(JSONObject jo) {
 		Music mc = new Music();
 		try {
 			mc.setId(jo.getInt("musicid"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
 		try {
 			mc.setMusicname(jo.getString("musicname"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			mc.setSinger(jo.getString("singer"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			mc.setMusicpath(jo.getString("musicpath"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			mc.setStory(jo.getString("story"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			mc.setSong_words_path(jo.getString("song_words_path"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			mc.setIntroduce(jo.getString("introduce"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			mc.setBackgroundpath(jo.getString("backgroundpath"));
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
 			mc.setAddtime(jo.getInt("addtime"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			mc.setStatus(jo.getInt("status"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return mc;

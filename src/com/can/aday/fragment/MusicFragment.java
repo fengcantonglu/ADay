@@ -1,13 +1,13 @@
 package com.can.aday.fragment;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
+import com.can.aday.AdayApplication;
 import com.can.aday.R;
+import com.can.aday.data.Music;
+import com.can.aday.data.Music.OnCacheMusicListener;
+import com.can.aday.utils.CacheTools;
 import com.can.aday.utils.FastBlur;
 import com.can.aday.view.LRCView;
 
@@ -16,7 +16,6 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -25,10 +24,6 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -122,6 +117,8 @@ public class MusicFragment extends AdayFragment {
 	 * 下一曲播放
 	 */
 	View nextPlay;
+
+	AdayApplication app;
 	private OnCheckedChangeListener change = new OnCheckedChangeListener() {
 
 		@Override
@@ -178,7 +175,7 @@ public class MusicFragment extends AdayFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		LinearLayout lay = new LinearLayout(getActivity());
-		Log.i(getTag(), "onCreateView");
+		app = (AdayApplication) getActivity().getApplication();
 		lay.setLayoutParams(new LayoutParams(-1, -1));
 		mView = inflater.inflate(R.layout.music_layout, lay);
 		findView();
@@ -236,21 +233,30 @@ public class MusicFragment extends AdayFragment {
 		Bitmap bkg = BitmapFactory.decodeResource(getResources(), R.drawable.music_backgroud_image);
 		setBackGroud(bkg);
 
-		musicName.setText("Nan Vernon");
+		musicName.setText(app.currentMusic.getMusicname());
 
-		story = new String[] {
-				"神话是人类最早的幻想性口头散文作品， 是人类历史发展童年时期的产物，文学的先河。神话产生的基础是远古时代生产力水平低下和人们为争取生存、提高生产能力而产生的认识自然、支配自然的积极要求。",
-				"神话产生于人类远古时代。作为民间文学的源头之一，有力的证明了劳动人民从来就是精神文明的创造者，也揭示了民间文学从一开始就与人民的生活和历史有着密切的联系。",
-				"神话作为民间文学的一种形式，是远古时代的人民所创造的反映自然界、人与自然的关系以及社会形态的具有高度幻想性的故事。" };
+		/*
+		 * story = new String[] {
+		 * "神话是人类最早的幻想性口头散文作品， 是人类历史发展童年时期的产物，文学的先河。神话产生的基础是远古时代生产力水平低下和人们为争取生存、提高生产能力而产生的认识自然、支配自然的积极要求。"
+		 * ,
+		 * "神话产生于人类远古时代。作为民间文学的源头之一，有力的证明了劳动人民从来就是精神文明的创造者，也揭示了民间文学从一开始就与人民的生活和历史有着密切的联系。",
+		 * "神话作为民间文学的一种形式，是远古时代的人民所创造的反映自然界、人与自然的关系以及社会形态的具有高度幻想性的故事。" };
+		 * summary =
+		 * "神话所反映的是原始人对客观世界的认识，是一种反映现实的观念形态，是产生在一定经济基础之上的上层建筑。只是由于神话反映客观世界是通过人类童年期自发的、幼稚的幻想的折光，因而呈现出独特的形态。";
+		 * 
+		 * 
+		 * details = new String[] {
+		 * "有的人虽然家财万贯，可是在茫茫人海中却没有遇到自己真正深爱的女孩，因此单纯以钱来评价一个人是否幸福是错误的。一个男孩，在茫茫人海中幸运的遇到了真正深爱的女孩，和这个女孩彼此相爱、彼此依恋、彼此关心、彼此知心、一起生活，快乐的、健康的相守到百岁，这才是真正的幸福。",
+		 * "有一个心理测试：如果你深爱一个女孩，假如有两个选择，第一个选择：此生无缘遇到这个女孩，但是可以有百亿元的家产，第二个选择：此生能在茫茫人海中遇到这个深爱的女孩，但是一辈子只能和她过普通的生活，你会怎样选择？",
+		 * "生活中需要思考：和什么人，在什么环境，用什么生活用具，过什么生活，有什么情感。幸福这种情感需要幸福的生活作为支撑，而幸福的生活也需要三个支撑：和喜欢的人，在喜欢的环境中，拥有喜欢的生活用具。情感、人、环境、生活用具、生活这五个基本方面需要协调，这五个方面之间的不协调（缺少支撑）是造成不幸的重要原因。"
+		 * };
+		 * 
+		 */
+		story = app.currentMusic.getStory().split("\r\n");
+
 		summary = "神话所反映的是原始人对客观世界的认识，是一种反映现实的观念形态，是产生在一定经济基础之上的上层建筑。只是由于神话反映客观世界是通过人类童年期自发的、幼稚的幻想的折光，因而呈现出独特的形态。";
 
-		lrc = new String[] { "我滴心像是今天滴天气突然阴了下去", "我搭一辆零路滴公共汽车随便他去哪里", "无所谓是让我见到漂亮还是让我恶心滴风景", "有所谓滴只是我自己", "",
-				"还有我可怕滴情绪", "天上滴星星如果不亮了要从何找原因", "", "我滴心儿就像是一块石头" };
-
-		details = new String[] {
-				"有的人虽然家财万贯，可是在茫茫人海中却没有遇到自己真正深爱的女孩，因此单纯以钱来评价一个人是否幸福是错误的。一个男孩，在茫茫人海中幸运的遇到了真正深爱的女孩，和这个女孩彼此相爱、彼此依恋、彼此关心、彼此知心、一起生活，快乐的、健康的相守到百岁，这才是真正的幸福。",
-				"有一个心理测试：如果你深爱一个女孩，假如有两个选择，第一个选择：此生无缘遇到这个女孩，但是可以有百亿元的家产，第二个选择：此生能在茫茫人海中遇到这个深爱的女孩，但是一辈子只能和她过普通的生活，你会怎样选择？",
-				"生活中需要思考：和什么人，在什么环境，用什么生活用具，过什么生活，有什么情感。幸福这种情感需要幸福的生活作为支撑，而幸福的生活也需要三个支撑：和喜欢的人，在喜欢的环境中，拥有喜欢的生活用具。情感、人、环境、生活用具、生活这五个基本方面需要协调，这五个方面之间的不协调（缺少支撑）是造成不幸的重要原因。" };
+		details = app.currentMusic.getIntroduce().split("\r\n");
 	}
 
 	@SuppressLint("NewApi")
@@ -478,34 +484,67 @@ public class MusicFragment extends AdayFragment {
 		}
 	}
 
-	public void start() {
-		try {
+	boolean isNext = true;
 
-			new Thread() {
-				public void run() {
-					try {
-						downLrc();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				};
-			}.start();
-			lrcView.setPlayMusic("");
-			lrcView.getPlayer().reset();
-			FileDescriptor fd = getResources().getAssets().openFd("fukua.mp3").getFileDescriptor();
-			lrcView.getPlayer().setDataSource(fd, 0, getResources().getAssets().openFd("fukua.mp3").getLength());
-			lrcView.getPlayer().prepare();
-			lrcView.setOnCompletionListener(listener);
-			lrcView.bindPlayBtnAndTimeText(playOrPause, currentTime, musicTime);
-			lrcView.bindSeekBar(musicProgres);
-			lrcView.play();
-			if (lrcView.getPlayer().isPlaying())
-				playOrPause.setImageResource(R.drawable.music_pause_icon);
+	public void start() {
+		OnCacheMusicListener cacheListener = new OnCacheMusicListener() {
+
+			public void musicDownloadEnd(String path, boolean isDown) {
+				if (isDown) {
+					Music data = new Music();
+					data.setId(app.currentMusic.getId());
+					data.setMusicLocalPath(path);
+					CacheTools.updateMusicData(getActivity(), data);
+				}
+
+			}
+
+			public void musicCanRead(String path) {
+
+			}
+
+			public void lrcDownloadEnd(String path, boolean isDown) {
+				if (isDown) {
+					Music data = new Music();
+					data.setId(app.currentMusic.getId());
+					data.setSongWordsLocalPath(path);
+					CacheTools.updateMusicData(getActivity(), data);
+				}
+				try {
+					lrcView.setLRCPath(path);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		app.currentMusic.cacheMusicAndLrc(cacheListener);
+		try {
+			if (app.currentMusic.getMusicLocalPath() == null
+					|| !new File(app.currentMusic.getMusicLocalPath()).exists()) {
+				lrcView.setPlayMusic(Uri.parse(app.currentMusic.getMusicpath()));
+
+			} else {
+				lrcView.setPlayMusic(app.currentMusic.getMusicLocalPath());
+
+			}
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		lrcView.setOnCompletionListener(listener);
+		lrcView.bindPlayBtnAndTimeText(playOrPause, currentTime, musicTime);
+		lrcView.bindSeekBar(musicProgres);
+		play();
 	}
 
 	public void play() {
@@ -521,45 +560,4 @@ public class MusicFragment extends AdayFragment {
 			playOrPause.setImageResource(R.drawable.music_play_icon_in);
 		}
 	}
-
-	private void downLrc() throws IOException {
-
-		File lrcF = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "Download"
-				+ File.separator + "fukua.lrc");
-
-		if (lrcF.exists()) {
-			Message msg = Message.obtain();
-			msg.obj = lrcF.getPath();
-			mhand.sendMessage(msg);
-			return;
-		}
-
-		FileOutputStream fos = new FileOutputStream(lrcF);
-		URL url = new URL(
-				"http://qukufile2.qianqian.com/data2/lrc/6d096f72de9bf6fae76be5738388c8b7/263506075/263506075.lrc");
-		InputStream in = url.openStream();
-		int len;
-		byte[] buf = new byte[1024];
-		while ((len = in.read(buf)) != -1) {
-			fos.write(buf, 0, len);
-		}
-		fos.flush();
-		fos.close();
-		in.close();
-		Message msg = Message.obtain();
-		msg.obj = lrcF.getPath();
-		mhand.sendMessage(msg);
-	}
-
-	Handler mhand = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-			try {
-				lrcView.setLRCPath((String) msg.obj);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		};
-	};
 }
