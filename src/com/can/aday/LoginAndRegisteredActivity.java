@@ -148,11 +148,9 @@ public class LoginAndRegisteredActivity extends Activity {
 								String token = jo.getString("token");
 								User user = User.userJSONObject(jo.getJSONObject("user"));
 								Music mc = Music.musicJSONObject(jo.getJSONObject("data1"));
-								Log.i("id", mc.getId() + "");
-								Log.i("musicname", mc.getMusicname() + "");
-								Log.i("singer", mc.getSinger() + "");
-								Log.i("musicpath", mc.getMusicpath() + "");
-								Log.i("story", mc.getStory());
+								JSONObject jj = jo.getJSONObject("data2");
+								String str = jj.getString("message");
+								Music mc1 = Music.musicJSONObject(jj.getJSONObject("music"));
 								intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 								startActivity(intent);
 								app.setCurrentUser(user);
