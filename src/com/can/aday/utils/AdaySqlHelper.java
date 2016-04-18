@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class AdaySqlHelper extends SQLiteOpenHelper {
 
-	private static final String DB_NAME = "aday";
-	private static final int VERSION = 1;
-	private static final String TABLE_NAME = "music";
+	public static final String DB_NAME = "aday";
+	public static final int VERSION = 1;
+	public static final String MUSIC_TABLE = "music";
 
 	public AdaySqlHelper(Context context) {
 		super(context, DB_NAME, null, VERSION);
@@ -22,10 +22,10 @@ public class AdaySqlHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		if (db != null) {
-			String sql = "Create table " + TABLE_NAME + " (musicid INTENGER PRIMARY KEY,"
-					+ "musicname VERCHAR(50) NOT NULL," + "singer VERCHAR(50) ," + " musicpath VERCHAR(100) NOT NULL,"
-					+ "story TEXT," + "song_words_path VERCHAR(100)," + "introduce TEXT,"
-					+ "backgroundpath VERCHAR(100)," + "addtime INTENGER," + "status INTENGER ); ";
+			String sql = "Create table " + MUSIC_TABLE + " (musicid INTENGER PRIMARY KEY,"
+					+ "musicname VERCHAR(50) NOT NULL," + "singer VERCHAR(50) ," + " musicpath VERCHAR(300) NOT NULL,"
+					+ "story TEXT," +"music_local_path VARCHAR(300),"+ "song_words_path VERCHAR(300)," +"song_words_local_path VERCHAR(300),"+ "introduce TEXT,"
+					+ "backgroundpath VERCHAR(300)," + "addtime INTENGER," + "backgroundlocalpath VERCHAR(300)); ";
 			db.execSQL(sql);
 		}
 	}
@@ -35,7 +35,7 @@ public class AdaySqlHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		String sql = " DROP TABLE IF EXSTS " + TABLE_NAME;
+		String sql = " DROP TABLE IF EXSTS " + MUSIC_TABLE;
 		db.execSQL(sql);
 		onCreate(db);
 	};
@@ -43,7 +43,7 @@ public class AdaySqlHelper extends SQLiteOpenHelper {
 	public void inputData() {
 		SQLiteDatabase databass = getDatabase();
 		Music mc = new Music();
-		String sql = "insert into " + AdaySqlHelper.TABLE_NAME + " values(?,?,?,?,?);";
+		String sql = "insert into " + AdaySqlHelper.MUSIC_TABLE + " values(?,?,?,?,?);";
 		databass.execSQL(sql, new Object[] { mc.getId(), mc.getMusicname(), "", "", "", "", "", "", 1, 1 });
 	}
 
