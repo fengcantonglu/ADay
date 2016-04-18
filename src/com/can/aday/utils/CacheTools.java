@@ -1,6 +1,5 @@
 package com.can.aday.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
