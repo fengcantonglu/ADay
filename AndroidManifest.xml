@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
@@ -30,10 +31,12 @@
         </activity>
         <activity android:name="com.can.aday.VideoOrderActivity" >
         </activity>
-                  <!-- 设置横屏，全屏 -->
-        <activity android:name="com.can.aday.VideoPlayActivity" 
-            android:screenOrientation="landscape" 
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+        <!-- 设置横屏，全屏 -->
+        <activity
+            android:name="com.can.aday.VideoPlayActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
         <!-- 评论界面 -->
         <activity android:name="com.can.aday.CommentActivity" >
         </activity>

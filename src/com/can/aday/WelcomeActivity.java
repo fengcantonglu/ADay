@@ -60,8 +60,8 @@ public class WelcomeActivity extends Activity {
 
 		public void handleMessage(android.os.Message msg) {
 			count++;
-			if (count == 3)
-				isLoginSuccessed = -1;
+			if (count == 5)
+				isLoginSuccessed = -2;
 			isShowWelcome();
 		};
 	};
@@ -73,10 +73,15 @@ public class WelcomeActivity extends Activity {
 		Intent intent = new Intent();
 		if (!isLogin || isLoginSuccessed == -1)
 			intent.setClass(WelcomeActivity.this, LoginAndRegisteredActivity.class);
-		else {
+		else if (isLoginSuccessed == -2) {// 离线浏览模式
+			com.can.aday.AdayApplication app = (com.can.aday.AdayApplication) getApplication();
+			app.isOnline = false;
+			app.currentMusic = CacheTools.getLocalMusicData(getApplicationContext(), -1);
+			Log.w("Welcome", "与服务器链接超时,正在处于离线模式浏览");
+			intent.setClass(WelcomeActivity.this, MainActivity.class);
+		} else {
 			if (isLoginSuccessed == 0) {
 				mHandler.postDelayed(new Runnable() {
-
 					public void run() {
 						mHandler.sendEmptyMessage(1);
 					}
@@ -112,6 +117,12 @@ public class WelcomeActivity extends Activity {
 	}
 
 	private void loginInbackgroud() {
+		final AdayApplication app = (AdayApplication) getApplication();
+
+		if (!app.checkNetWork()) {
+			isLoginSuccessed = -2;
+			return;
+		}
 		String[] ap = new String[2];
 		CacheTools.getAccountCache(getApplicationContext(), ap);
 		try {
@@ -132,7 +143,7 @@ public class WelcomeActivity extends Activity {
 						JSONObject jo = new JSONObject(result);
 
 						if (jo.getInt("status") == 1) {
-							AdayApplication app = (AdayApplication) getApplication();
+
 							app.loginDataExec(jo);
 							isLoginSuccessed = 1;
 						} else {
