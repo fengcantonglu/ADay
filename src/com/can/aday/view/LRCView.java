@@ -92,6 +92,15 @@ public class LRCView extends View {
 	// >>>>>>>>>>
 	public void setLRC(LRCInfo lrc) {
 		mLrc = lrc;
+		Set<Integer> key = mLrc.getInfos().keySet();
+
+		for (int k : key) {
+			currentTime = k;
+			break;
+		}
+		currentIndex = 0;
+		invalidate();
+
 	}
 
 	public float getTextSize() {
@@ -189,37 +198,40 @@ public class LRCView extends View {
 
 	public void setPlayMusic(String path)
 			throws IllegalArgumentException, SecurityException, IllegalStateException, IOException {
-		if (mPlayer == null) {
-			mPlayer = new MediaPlayer();
-			mPlayer.setOnCompletionListener(playComletion);
-			mPlayer.reset();
-		}
-		if (mPlayer.isPlaying()) {
-			mPlayer.stop();
-			mPlayer.reset();
-		}
+		intiMediaPlay();
 		mPlayer.setDataSource(path);
 		mPlayer.prepare();
-		if (musicTimeText != null)
-			musicTimeText.setText(parseTimeToString(mPlayer.getDuration()));
+		intiOtherView();
 	}
 
 	public void setPlayMusic(Uri uri)
 			throws IllegalArgumentException, SecurityException, IllegalStateException, IOException {
+		intiMediaPlay();
+		mPlayer.setDataSource(getContext(), uri);
+		mPlayer.prepare();
+		intiOtherView();
+	}
+
+	private void intiMediaPlay() {
 		if (mPlayer == null) {
 			mPlayer = new MediaPlayer();
 			mPlayer.setOnCompletionListener(playComletion);
-			mPlayer.reset();
-		}
-		if (mPlayer.isPlaying()) {
+
+		} else
 			mPlayer.stop();
-			mPlayer.reset();
-		}
-		mPlayer.setDataSource(getContext(), uri);
-		mPlayer.prepare();
+		mPlayer.reset();
+	}
+
+	private void intiOtherView() {
+
 		if (musicTimeText != null)
 			musicTimeText.setText(parseTimeToString(mPlayer.getDuration()));
-
+		if (mSeekBar != null) {
+			mSeekBar.setProgress(mPlayer.getCurrentPosition());
+		}
+		if (currentTimeText != null) {
+			currentTimeText.setText("00:00");
+		}
 	}
 
 	public void setLRCPath(String path) throws IOException {
@@ -331,6 +343,8 @@ public class LRCView extends View {
 	private OnSeekBarChangeListener l = new OnSeekBarChangeListener() {
 
 		public void onStopTrackingTouch(SeekBar seekBar) {
+			if (mPlayer == null)
+				return;
 			mPlayer.seekTo(seekBar.getProgress());
 			if (!mPlayer.isPlaying()) {
 				setCurrentTime(seekBar.getProgress());
@@ -402,7 +416,7 @@ public class LRCView extends View {
 			musicTimeText.setText(parseTimeToString(mPlayer.getDuration()));
 		}
 		currentTimeText = currentT;
-		if (currentTimeText != null&& mPlayer != null) {
+		if (currentTimeText != null && mPlayer != null) {
 			currentTimeText.setText(parseTimeToString(mPlayer.getCurrentPosition()));
 		}
 	}

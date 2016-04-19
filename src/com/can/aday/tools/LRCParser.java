@@ -64,15 +64,15 @@ public class LRCParser {
 		}
 		detector.dataEnd();
 		String encoding = detector.getDetectedCharset();
-		detector.reset();	
+		detector.reset();
 		Log.i("UniversalDetector", "encoding:" + encoding);
 		byte[] d = new byte[buffer.size()];
 		for (int i = 0; i < d.length; i++) {
 			d[i] = buffer.get(i);
 		}
 		String data = new String(d, encoding);
-
-		for (String lin : data.split("\r\n")) {
+		String lrcs[] = data.split("[[\r\n][\n]]");
+		for (String lin : lrcs) {
 			parserLine(lin, lrcinfo);
 		}
 		inputStream.close();

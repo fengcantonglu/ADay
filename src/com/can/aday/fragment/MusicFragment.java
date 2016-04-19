@@ -120,21 +120,24 @@ public class MusicFragment extends AdayFragment {
 	View nextPlay;
 
 	AdayApplication app;
+
+	private int whitchPager;
+
 	private OnCheckedChangeListener change = new OnCheckedChangeListener() {
 
 		@Override
 		@SuppressWarnings("deprecation")
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
-			int j = 0;
+			whitchPager = 0;
 			for (int i = 0; i < musicBtn.length; i++) {
 				if (musicBtn[i].isChecked()) {
 					musicBtn[i].setTextColor(getResources().getColor(R.color.main_text_color));
-					j += (i + 1);
+					whitchPager += (i + 1);
 				} else {
 					musicBtn[i].setTextColor(getResources().getColor(R.color.music_other_text_color));
 				}
 			}
-			showWhichContent(j);
+			showWhichContent(whitchPager);
 		}
 	};
 	private OnClickListener click = new OnClickListener() {
@@ -215,6 +218,7 @@ public class MusicFragment extends AdayFragment {
 		playOrPause.setOnClickListener(click);
 		backPlay.setOnClickListener(click);
 		nextPlay.setOnClickListener(click);
+		initLrcView();
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>数据板块
@@ -233,8 +237,8 @@ public class MusicFragment extends AdayFragment {
 		// 背景图
 		Bitmap bkg = BitmapFactory.decodeResource(getResources(), R.drawable.music_backgroud_image);
 		setBackGroud(bkg);
-
-		musicName.setText(app.currentMusic.getMusicname());
+		title.setText(app.currentMusic.getMusicname());
+		musicName.setText(app.currentMusic.getSinger());
 
 		/*
 		 * story = new String[] {
@@ -255,10 +259,12 @@ public class MusicFragment extends AdayFragment {
 		 */
 		story = app.currentMusic.getStory().split("\r\n");
 
-		Log.i("Story", "length="+story.length);
+		Log.i("Story", "length=" + story.length);
 		summary = "神话所反映的是原始人对客观世界的认识，是一种反映现实的观念形态，是产生在一定经济基础之上的上层建筑。只是由于神话反映客观世界是通过人类童年期自发的、幼稚的幻想的折光，因而呈现出独特的形态。";
 
 		details = app.currentMusic.getIntroduce().split("\r\n");
+		showWhichContent(whitchPager);
+		cacheMusic();
 	}
 
 	@SuppressLint("NewApi")
@@ -437,8 +443,7 @@ public class MusicFragment extends AdayFragment {
 
 	@Override
 	public void onShow() {
-
-		title.setText("Love Hurts");
+		title.setText(app.currentMusic.getMusicname());
 	}
 
 	@Override
@@ -458,17 +463,55 @@ public class MusicFragment extends AdayFragment {
 	}
 
 	/**
+	 * 用于上下一曲计数
+	 */
+	int musicCount;
+
+	/**
 	 * 播放上一曲
 	 */
 	public void playOnSong() {
+		boolean isPlaying = false;
+		if (lrcView.getPlayer() != null) {
+			isPlaying = lrcView.getPlayer().isPlaying();
+		}
+		Music m = CacheTools.getLocalMusicData(getActivity(), ++musicCount);
+		if (m != null) {
+			app.currentMusic = m;
+			loadData();
+			prepareNewMusic();
+			if (isPlaying) {
+				play();
+			}
 
+		} else {
+			--musicCount;
+		}
+		Log.i("PlayOnSong", "go to on Song" + m + " " + musicCount);
 	}
 
 	/**
 	 * 播放下一曲
 	 */
 	public void playDownSong() {
+		boolean isPlaying = false;
+		if (lrcView.getPlayer() != null) {
+			isPlaying = lrcView.getPlayer().isPlaying();
+		}
+		int i = --musicCount;
 
+		if (i >= 0) {
+			Music m = CacheTools.getLocalMusicData(getActivity(), i);
+			app.currentMusic = m;
+			loadData();
+			prepareNewMusic();
+			if (isPlaying) {
+				play();
+			}
+		} else {
+			musicCount = 0;
+		}
+		Log.i("PlayDownSong", "go to down Song  " + musicCount);
 	}
 
 	/**
@@ -477,18 +520,42 @@ public class MusicFragment extends AdayFragment {
 	public void playOrPause() {
 		if (lrcView.getPlayer() == null) {
 			start();
+			Log.i("Music", "start");
 		} else if (lrcView.getPlayer().isPlaying()) {
 			pause();
+			Log.i("Music", "pause");
 		} else if (lrcView.getPlayer().getDuration() > 0) {
 			play();
+			Log.i("Music", "play");
 		} else {
 			start();
+			Log.i("Music", "start2");
 		}
 	}
 
-	boolean isNext = true;
-
 	public void start() {
+		prepareNewMusic();
+		play();
+	}
+
+	public void play() {
+		lrcView.play();
+		if (lrcView.getPlayer().isPlaying()) {
+			playOrPause.setImageResource(R.drawable.music_pause_icon);
+		}
+	}
+
+	public void pause() {
+		lrcView.pause();
+		if (!lrcView.getPlayer().isPlaying()) {
+			playOrPause.setImageResource(R.drawable.music_play_icon_in);
+		}
+	}
+
+	/**
+	 * 缓存音乐
+	 */
+	public void cacheMusic() {
 		OnCacheMusicListener cacheListener = new OnCacheMusicListener() {
 
 			public void musicDownloadEnd(String path, boolean isDown) {
@@ -521,6 +588,21 @@ public class MusicFragment extends AdayFragment {
 		};
 
 		app.currentMusic.cacheMusicAndLrc(cacheListener);
+	}
+
+	/**
+	 * lrcView绑定相关控件
+	 */
+	private void initLrcView() {
+		lrcView.setOnCompletionListener(listener);
+		lrcView.bindPlayBtnAndTimeText(playOrPause, currentTime, musicTime);
+		lrcView.bindSeekBar(musicProgres);
+	}
+
+	/**
+	 * 准备播放新的音乐
+	 */
+	private void prepareNewMusic() {
 		try {
 			if (app.currentMusic.getMusicLocalPath() == null
 					|| !new File(app.currentMusic.getMusicLocalPath()).exists()) {
@@ -549,24 +631,6 @@ public class MusicFragment extends AdayFragment {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		lrcView.setOnCompletionListener(listener);
-		lrcView.bindPlayBtnAndTimeText(playOrPause, currentTime, musicTime);
-		lrcView.bindSeekBar(musicProgres);
-		play();
-	}
-
-	public void play() {
-		lrcView.play();
-		if (lrcView.getPlayer().isPlaying()) {
-			playOrPause.setImageResource(R.drawable.music_pause_icon);
-		}
-	}
-
-	public void pause() {
-		lrcView.pause();
-		if (!lrcView.getPlayer().isPlaying()) {
-			playOrPause.setImageResource(R.drawable.music_play_icon_in);
 		}
 	}
 }

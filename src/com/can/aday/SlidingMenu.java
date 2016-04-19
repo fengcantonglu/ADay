@@ -25,7 +25,7 @@ public class SlidingMenu extends HorizontalScrollView {
 	/**
 	 * 菜单的宽度
 	 */
-	private int mMenuWidth;
+	  int mMenuWidth;
 	private int mHalfMenuWidth;
 
 	public boolean isOpen;

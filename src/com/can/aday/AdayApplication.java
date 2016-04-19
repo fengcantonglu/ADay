@@ -66,7 +66,7 @@ public class AdayApplication extends Application {
 			e1.printStackTrace();
 		}
 		try {
-			Music lastMusic = Music.parseJSONObject(jo.getJSONObject("lastmusic"));
+			Music lastMusic = Music.parseJSONObject(jo.getJSONObject("premusic"));
 			CacheTools.getLocalOrSaveMusicData(getApplicationContext(), lastMusic);
 
 		} catch (JSONException e) {

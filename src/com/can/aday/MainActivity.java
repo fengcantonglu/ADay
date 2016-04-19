@@ -444,7 +444,7 @@ public class MainActivity extends FragmentActivity {
 						touchFinishTime = time;
 					}
 				}
-				return; 
+				return;
 			}
 		}
 		long time = System.currentTimeMillis();
@@ -458,9 +458,10 @@ public class MainActivity extends FragmentActivity {
 
 	private void loginOut() {
 		CacheTools.loginStateSave(this, false);
-		Intent intent=getIntent();
+		Intent intent = getIntent();
 		intent.setClass(this, LoginAndRegisteredActivity.class);
 		startActivity(intent);
+		overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 		finish();
 	}
 }

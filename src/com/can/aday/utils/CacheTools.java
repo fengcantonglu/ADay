@@ -236,9 +236,7 @@ public final class CacheTools {
 	 * @return
 	 */
 	public static Music getLocalMusicData(Context context, int index) {
-		if (index < 0) {
-			index = 0;
-		}
+
 		SQLiteDatabase db = getDatabase(context);
 		Cursor c = db.query(AdaySqlHelper.MUSIC_TABLE, null, null, null, null, null, "musicid desc", index + ",1");
 		Music data = null;
