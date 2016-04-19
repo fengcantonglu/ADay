@@ -522,7 +522,13 @@ public class MusicFragment extends AdayFragment {
 		try {
 			if (app.currentMusic.getMusicLocalPath() == null
 					|| !new File(app.currentMusic.getMusicLocalPath()).exists()) {
-				lrcView.setPlayMusic(Uri.parse(app.currentMusic.getMusicpath()));
+				String uri;
+				if (app.currentMusic.getMusicpath().startsWith("http")) {
+					uri = app.currentMusic.getMusicLocalPath();
+				} else {
+					uri = AdayApplication.SERVICE_IP + app.currentMusic.getMusicLocalPath();
+				}
+				lrcView.setPlayMusic(Uri.parse(uri));
 
 			} else {
 				lrcView.setPlayMusic(app.currentMusic.getMusicLocalPath());
