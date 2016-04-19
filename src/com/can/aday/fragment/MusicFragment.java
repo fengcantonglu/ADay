@@ -24,6 +24,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -254,6 +255,7 @@ public class MusicFragment extends AdayFragment {
 		 */
 		story = app.currentMusic.getStory().split("\r\n");
 
+		Log.i("Story", "length="+story.length);
 		summary = "神话所反映的是原始人对客观世界的认识，是一种反映现实的观念形态，是产生在一定经济基础之上的上层建筑。只是由于神话反映客观世界是通过人类童年期自发的、幼稚的幻想的折光，因而呈现出独特的形态。";
 
 		details = app.currentMusic.getIntroduce().split("\r\n");
@@ -524,10 +526,11 @@ public class MusicFragment extends AdayFragment {
 					|| !new File(app.currentMusic.getMusicLocalPath()).exists()) {
 				String uri;
 				if (app.currentMusic.getMusicpath().startsWith("http")) {
-					uri = app.currentMusic.getMusicLocalPath();
+					uri = app.currentMusic.getMusicpath();
 				} else {
-					uri = AdayApplication.SERVICE_IP + app.currentMusic.getMusicLocalPath();
+					uri = AdayApplication.SERVICE_IP + app.currentMusic.getMusicpath();
 				}
+				Log.i("MusicUri", uri);
 				lrcView.setPlayMusic(Uri.parse(uri));
 
 			} else {

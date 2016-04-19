@@ -91,10 +91,9 @@ public class AdayApplication extends Application {
 		NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
 		if (networkInfo != null && networkInfo.length > 0) {
 			for (int i = 0; i < networkInfo.length; i++) {
-				System.out.println(i + "===状态===" + networkInfo[i].getState());
-				System.out.println(i + "===类型===" + networkInfo[i].getTypeName());
 				// 判断当前网络状态是否为连接状态
 				if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED) {
+					System.out.println(i + "===类型===" + networkInfo[i].getTypeName());
 					return true;
 				}
 			}
