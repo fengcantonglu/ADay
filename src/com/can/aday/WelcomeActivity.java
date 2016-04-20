@@ -76,7 +76,7 @@ public class WelcomeActivity extends Activity {
 		else if (isLoginSuccessed == -2) {// 离线浏览模式
 			com.can.aday.AdayApplication app = (com.can.aday.AdayApplication) getApplication();
 			app.isOnline = false;
-			app.currentMusic = CacheTools.getLocalMusicData(getApplicationContext(), -1);
+			app.currentMusic = CacheTools.getLocalMusicData(getApplicationContext(), 0);
 			Log.w("Welcome", "与服务器链接超时,正在处于离线模式浏览");
 			intent.setClass(WelcomeActivity.this, MainActivity.class);
 		} else {
