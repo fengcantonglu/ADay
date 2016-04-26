@@ -110,7 +110,7 @@ public class VideoPlayActivity extends BaseActivity {
 
 	private static final int handKey = 123;
 
-	/** 视频路径 这是视频本地路径，资源的话你们自己去找，文件夹有创建，做缓存时的时候用*/
+	/** 视频路径 这是视频本地路径，资源的话你们自己去找，文件夹有创建，做缓存时的时候用 */
 	private String Path = Environment.getExternalStorageDirectory() + "/wywVideo/";
 
 	@Override
@@ -147,6 +147,7 @@ public class VideoPlayActivity extends BaseActivity {
 
 		buttom_relative = (RelativeLayout) findViewById(R.id.video_relative_buttom);
 
+		setVideo();
 		widgetListener();
 	}
 
@@ -242,7 +243,7 @@ public class VideoPlayActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				
+
 			}
 		});
 	}
@@ -256,6 +257,7 @@ public class VideoPlayActivity extends BaseActivity {
 			handler.sendMessage(message);
 		}
 	};
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (mGestureDetector.onTouchEvent(event))
@@ -302,6 +304,7 @@ public class VideoPlayActivity extends BaseActivity {
 		img_center_speed.setVisibility(View.GONE);
 		view.setVisibility(View.GONE);
 	}
+
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -324,7 +327,7 @@ public class VideoPlayActivity extends BaseActivity {
 	 * @param position
 	 */
 	private void setVideo() {
-		Uri uri=Uri.parse("http://192.168.15.222/Public/image/VTS.mp4");
+		Uri uri = Uri.parse("http://192.168.15.222/Public/image/VTS.mp4");
 		video_VideoView.setVideoURI(uri);
 		video_VideoView.requestFocus();
 	}
@@ -367,7 +370,7 @@ public class VideoPlayActivity extends BaseActivity {
 	 * @param num
 	 */
 	private void setVoiceNum(float num) {
-		evens++;//这里为什么要用个双数执行呢，因为手势滑动的太快音量只有15，控制了下音量增减速度，不然稍微滑动一下就到了最高或者最低这是我们用户不喜欢看到的。
+		evens++;// 这里为什么要用个双数执行呢，因为手势滑动的太快音量只有15，控制了下音量增减速度，不然稍微滑动一下就到了最高或者最低这是我们用户不喜欢看到的。
 		mVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
 		if (mVolume < 0) {
