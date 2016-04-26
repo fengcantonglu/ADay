@@ -23,12 +23,6 @@ import android.widget.TextView;
 
 /**
  * 视频播放界面
- * 
- * @author WangYuWen
- * @version 1.0
- * @date 2015年3月5日
- * @Copyright: Copyright (c) 2014 Shenzhen Utoow Technology Co., Ltd. All rights
- *             reserved.
  */
 public class VideoPlayActivity extends BaseActivity {
 	/** 上一首 */
@@ -274,14 +268,6 @@ public class VideoPlayActivity extends BaseActivity {
 
 	/**
 	 * 手势结束
-	 *
-	 * @version 1.0
-	 * @createTime 2015年3月5日,上午11:36:43
-	 * @updateTime 2015年3月5日,上午11:36:43
-	 * @createAuthor WangYuWen
-	 * @updateAuthor WangYuWen
-	 * @updateInfo (此处输入修改内容,若无修改可不写.)
-	 *
 	 */
 	private void endGesture() {
 		if (!isVideo && !isVoice && !isBright) {
@@ -316,15 +302,6 @@ public class VideoPlayActivity extends BaseActivity {
 
 	/**
 	 * 设置Video该播放视频的准备和视频的背景图片
-	 *
-	 * @version 1.0
-	 * @createTime 2015年3月12日,下午2:17:55
-	 * @updateTime 2015年3月12日,下午2:17:55
-	 * @createAuthor WangYuWen
-	 * @updateAuthor WangYuWen
-	 * @updateInfo (此处输入修改内容,若无修改可不写.)
-	 *
-	 * @param position
 	 */
 	private void setVideo() {
 		Uri uri = Uri.parse("http://192.168.15.222/Public/image/VTS.mp4");
@@ -359,14 +336,7 @@ public class VideoPlayActivity extends BaseActivity {
 
 	/**
 	 * 调节音量
-	 *
-	 * @version 1.0
-	 * @createTime 2015年3月5日,上午11:16:35
-	 * @updateTime 2015年3月5日,上午11:16:35
-	 * @createAuthor WangYuWen
-	 * @updateAuthor WangYuWen
-	 * @updateInfo (此处输入修改内容,若无修改可不写.)
-	 *
+	 * 
 	 * @param num
 	 */
 	private void setVoiceNum(float num) {
@@ -403,14 +373,7 @@ public class VideoPlayActivity extends BaseActivity {
 
 	/**
 	 * 调节视频进度
-	 *
-	 * @version 1.0
-	 * @createTime 2015年3月5日,下午4:48:07
-	 * @updateTime 2015年3月5日,下午4:48:07
-	 * @createAuthor WangYuWen
-	 * @updateAuthor WangYuWen
-	 * @updateInfo (此处输入修改内容,若无修改可不写.)
-	 *
+	 * 
 	 * @param distanceX
 	 */
 	private void onVideoSpeed(float distanceX) {
@@ -438,14 +401,7 @@ public class VideoPlayActivity extends BaseActivity {
 
 	/**
 	 * 将进度长度转变为进度时间
-	 *
-	 * @version 1.0
-	 * @createTime 2015年3月5日,下午4:25:05
-	 * @updateTime 2015年3月5日,下午4:25:05
-	 * @createAuthor WangYuWen
-	 * @updateAuthor WangYuWen
-	 * @updateInfo (此处输入修改内容,若无修改可不写.)
-	 *
+	 * 
 	 * @param length
 	 * @return
 	 */
@@ -461,14 +417,7 @@ public class VideoPlayActivity extends BaseActivity {
 
 	/**
 	 * 调节亮度
-	 *
-	 * @version 1.0
-	 * @createTime 2015年3月5日,上午11:16:44
-	 * @updateTime 2015年3月5日,上午11:16:44
-	 * @createAuthor WangYuWen
-	 * @updateAuthor WangYuWen
-	 * @updateInfo (此处输入修改内容,若无修改可不写.)
-	 *
+	 * 
 	 * @param percent
 	 */
 	private void onBrightnessSlide(float percent) {
