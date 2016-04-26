@@ -137,17 +137,38 @@ public class LoginAndRegisteredActivity extends Activity {
 					@Override
 					public void end(String result) {
 						dialog.dismiss();
-						Log.i("LoginandRegister", result);
 
 						try {
-							JSONObject jo = new JSONObject(result);
+							final JSONObject jo = new JSONObject(result);
 
 							if (jo.getInt("status") == 1) {
-								AdayApplication app = (AdayApplication) getApplication();
-								app.loginDataExec(jo);
-								intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
-								startActivity(intent);
-								finish();
+								final AdayApplication app = (AdayApplication) getApplication();
+								try {
+
+									HttpPost post = HttpPost.parseUrl(AdayApplication.SERVICE_BOOK + "article/index");
+									post.setOnSendListener(new OnSendListener() {
+										public void start() {
+
+										}
+
+										public void end(String result) {
+											Log.i("AdayApplication", "" + result);
+											try {							
+												app.loginDataExec(jo,new JSONObject(result));
+												intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
+												startActivity(intent);
+												finish();
+											} catch (JSONException e) {
+
+												e.printStackTrace();
+											}
+										}
+									});
+									post.send();
+								} catch (MalformedURLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								CacheTools.cachedPageGuide(acc, pass, getApplicationContext());
 							} else {
 								Toast.makeText(getApplicationContext(), jo.getString("message"), Toast.LENGTH_SHORT)

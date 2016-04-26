@@ -3,6 +3,7 @@ package com.can.aday;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.can.aday.data.Book;
 import com.can.aday.data.Music;
 import com.can.aday.data.User;
 import com.can.aday.utils.CacheTools;
@@ -14,6 +15,7 @@ import android.util.Log;
 
 public class AdayApplication extends Application {
 	public static final String SERVICE_IP = "http://192.168.15.238:88/";
+	public static final String SERVICE_BOOK = "http://192.168.15.253:1002/";
 	private User currentUser;
 	private String token;
 	public boolean isOnline = true;// 是否与服务器保持连接
@@ -22,6 +24,11 @@ public class AdayApplication extends Application {
 	 * 当前显示的音乐数据
 	 */
 	public Music currentMusic;
+
+	/**
+	 * 当前显示的读物数据
+	 */
+	public Book currentBook;
 
 	public String getToken() {
 		return token;
@@ -50,7 +57,7 @@ public class AdayApplication extends Application {
 	 * @param jo
 	 *            登陆成功过后,的json数据
 	 */
-	public void loginDataExec(JSONObject jo) {
+	public void loginDataExec(JSONObject jo, JSONObject bookJo) {
 		try {
 			Log.i("LoginResult", jo.toString());
 			token = jo.getString("token");// parse
@@ -75,6 +82,14 @@ public class AdayApplication extends Application {
 		try {
 			Music nextMusic = Music.parseJSONObject(jo.getJSONObject("nextmusic"));
 			CacheTools.getLocalOrSaveMusicData(getApplicationContext(), nextMusic);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		Book b;
+		try {
+			b = Book.parseJSONObject(bookJo.getJSONObject("article"));
+			CacheTools.getBookDataOrSave(getApplicationContext(), b);
+			currentBook = b;
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

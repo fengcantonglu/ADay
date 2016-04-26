@@ -1,7 +1,9 @@
 package com.can.aday.utils;
 
 import java.io.File;
+import java.security.MessageDigest;
 
+import com.can.aday.data.Book;
 import com.can.aday.data.Music;
 
 import android.content.ContentValues;
@@ -37,6 +39,18 @@ public final class CacheTools {
 	 */
 	public static String getMusicFile() {
 		File file = new File(getAdayFile() + File.separator + "music");
+		if (!file.exists())
+			file.mkdir();
+		return file.getPath();
+	}
+
+	/**
+	 * 获得图片缓存文件夹
+	 * 
+	 * @return
+	 */
+	public static String getImageFile() {
+		File file = new File(getAdayFile() + File.separator + "image");
 		if (!file.exists())
 			file.mkdir();
 		return file.getPath();
@@ -260,6 +274,79 @@ public final class CacheTools {
 		return data;
 	}
 
+	public static void cacheBookData(Context context, Book data) {
+		SQLiteDatabase db = getDatabase(context);
+		ContentValues cv = new ContentValues();
+		cv.put("title", data.getTitle());
+		cv.put("id", data.getId());
+		cv.put("articleimg", data.getArticleimg());
+		cv.put("content", data.getContentToString());
+		cv.put("author", data.getAuthor());
+		cv.put("introduction", data.getIntroduction());
+		cv.put("articleimg_local_path", data.getArticleimg_local_path());
+		cv.put("authordescrip", data.getAuthordescrip());
+		cv.put("addtime", data.getAddtime());
+		db.insert(AdaySqlHelper.BOOK_TABLE, null, cv);
+		db.close();
+	}
+
+	public static void getBookDataOrSave(Context context, Book data) {
+
+		if (data == null || data.getId() == 0) {
+			return;
+		}
+		SQLiteDatabase db = getDatabase(context);
+
+		Cursor c = db.query(AdaySqlHelper.BOOK_TABLE, null, "id=?", new String[] { "" + data.getId() }, null, null,
+				null);
+		if (c.moveToNext()) {
+			data.setArticleimg_local_path(c.getString(c.getColumnIndex("articleimg_local_path")));
+		} else {
+			ContentValues cv = new ContentValues();
+			cv.put("title", data.getTitle());
+			cv.put("id", data.getId());
+			cv.put("articleimg", data.getArticleimg());
+			cv.put("content", data.getContentToString());
+			cv.put("author", data.getAuthor());
+			cv.put("introduction", data.getIntroduction());
+			cv.put("authordescrip", data.getAuthordescrip());
+			cv.put("addtime", data.getAddtime());
+			db.insert(AdaySqlHelper.BOOK_TABLE, null, cv);
+		}
+		c.close();
+		db.close();
+	}
+
+	/**
+	 * 在未连接网络的时候,执行此方法，完全获取本地缓存的最新的一条数据.若没有则返回null
+	 * 
+	 * @param context
+	 * @param index
+	 *            查询第几条，0代表第一条
+	 * @return
+	 */
+	public static Book getLocalBookData(Context context, int index) {
+
+		SQLiteDatabase db = getDatabase(context);
+		Cursor c = db.query(AdaySqlHelper.BOOK_TABLE, null, null, null, null, null, "musicid desc", index + ",1");
+		Book data = null;
+		if (c.moveToNext()) {
+			data = new Book();
+			data.setId(c.getInt(c.getColumnIndex("id")));
+			data.setAddtime(c.getInt(c.getColumnIndex("addtime")));
+			data.setTitle(c.getString(c.getColumnIndex("title")));
+			data.setArticleimg(c.getString(c.getColumnIndex("articleimg")));
+			data.setArticleimg_local_path(c.getString(c.getColumnIndex("articleimg_local_path")));
+			data.setAuthor(c.getString(c.getColumnIndex("author")));
+			data.setAuthordescrip(c.getString(c.getColumnIndex("authordescrip")));
+			data.parseStringToStage(c.getString(c.getColumnIndex("content")));
+			data.setIntroduction(c.getString(c.getColumnIndex("introduction")));
+		}
+		c.close();
+		db.close();
+		return data;
+	}
+
 	/**
 	 * 获得数据库对象
 	 * 
@@ -270,4 +357,32 @@ public final class CacheTools {
 		AdaySqlHelper helper = new AdaySqlHelper(context);
 		return helper.getWritableDatabase();
 	}
+
+	/**
+	 * MD5加密字符串
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public final static String MD5(String s) {
+		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+		try {
+			byte[] strTemp = s.getBytes();
+			MessageDigest mdTemp = MessageDigest.getInstance("MD5");
+			mdTemp.update(strTemp);
+			byte[] md = mdTemp.digest();
+			int j = md.length;
+			char str[] = new char[j * 2];
+			int k = 0;
+			for (int i = 0; i < j; i++) {
+				byte byte0 = md[i];
+				str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+				str[k++] = hexDigits[byte0 & 0xf];
+			}
+			return new String(str);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }

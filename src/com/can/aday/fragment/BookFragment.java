@@ -1,5 +1,6 @@
 package com.can.aday.fragment;
 
+import com.can.aday.AdayApplication;
 import com.can.aday.BookActivity;
 import com.can.aday.R;
 
@@ -55,6 +56,8 @@ public class BookFragment extends AdayFragment {
 	TextView commentCount;
 
 	Intent intent;
+	
+	AdayApplication app;
 	private OnClickListener click = new OnClickListener() {
 
 		@Override
@@ -78,6 +81,7 @@ public class BookFragment extends AdayFragment {
 		LinearLayout lay = new LinearLayout(getActivity());
 		lay.setLayoutParams(new LayoutParams(-1, -1));
 		mView = inflater.inflate(R.layout.book_layout, lay);
+		app=(AdayApplication) getActivity().getApplication();
 		intent = getActivity().getIntent();
 		findView();
 		initView();
@@ -108,17 +112,25 @@ public class BookFragment extends AdayFragment {
 	 * 加载数据
 	 */
 	private void loadData() {
-		String content = "大师与我,位置各自不同。伯格曼宛如神灵黑泽明和阿巴斯是师长，小津则像纯真的母亲温和的仁慈永照心间；戈达尔和特吕弗如童年伙伴，布列松是那若即若离谱素庄重的情人。";
+/*		String content = "大师与我,位置各自不同。伯格曼宛如神灵黑泽明和阿巴斯是师长，小津则像纯真的母亲温和的仁慈永照心间；戈达尔和特吕弗如童年伙伴，布列松是那若即若离谱素庄重的情人。";
 		String read = "2.1W";
 		int like = 234;
 		int com = 456;
-		contentImage.setBackgroundResource(R.drawable.book_flower_image);
-		dateImage.setImageResource(R.drawable.date_image);
+	
 		artTitle.setText("时间的观察者和雕刻者");
 		artAuthor.setText("郑立");
 		artContent.setText("\t\t" + content);
 		readerCount.setText("阅读数 " + read);
 		likeCount.setText("" + like);
-		commentCount.setText("" + com);
+		commentCount.setText("" + com);*/
+		artTitle.setText(app.currentBook.getTitle());
+		artAuthor.setText(app.currentBook.getAuthor());
+		artContent.setText("\t\t"+app.currentBook.getIntroduction());
+		
+		//******************
+		readerCount.setText("阅读数 " + 100);
+		contentImage.setBackgroundResource(R.drawable.book_flower_image);
+		dateImage.setImageResource(R.drawable.date_image);
+		
 	}
 }

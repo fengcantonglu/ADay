@@ -11,6 +11,7 @@ public class AdaySqlHelper extends SQLiteOpenHelper {
 	public static final String DB_NAME = "aday";
 	public static final int VERSION = 1;
 	public static final String MUSIC_TABLE = "music";
+	public static final String BOOK_TABLE = "book";
 
 	public AdaySqlHelper(Context context) {
 		super(context, DB_NAME, null, VERSION);
@@ -24,8 +25,14 @@ public class AdaySqlHelper extends SQLiteOpenHelper {
 		if (db != null) {
 			String sql = "Create table " + MUSIC_TABLE + " (musicid INTENGER PRIMARY KEY,"
 					+ "musicname VERCHAR(50) NOT NULL," + "singer VERCHAR(50) ," + " musicpath VERCHAR(300) NOT NULL,"
-					+ "story TEXT," +"music_local_path VARCHAR(300),"+ "song_words_path VERCHAR(300)," +"song_words_local_path VERCHAR(300),"+ "introduce TEXT,"
-					+ "backgroundpath VERCHAR(300)," + "addtime INTENGER," + "backgroundlocalpath VERCHAR(300)); ";
+					+ "story TEXT," + "music_local_path VARCHAR(300)," + "song_words_path VERCHAR(300),"
+					+ "song_words_local_path VERCHAR(300)," + "introduce TEXT," + "backgroundpath VERCHAR(300),"
+					+ "addtime INTENGER," + "backgroundlocalpath VERCHAR(300)); ";
+			db.execSQL(sql);
+			sql = "Create table " + BOOK_TABLE + " (id INTENGER PRIMARY KEY," + "title VERCHAR(50) NOT NULL,"
+					+ "introduction VERCHAR(150) ," + " articleimg VERCHAR(300)," + "content TEXT,"
+					+ "articleimg_local_path VARCHAR(300)," + "author VERCHAR(50)," + "authordescrip VERCHAR(300),"
+					+ "addtime INTENGER );";
 			db.execSQL(sql);
 		}
 	}

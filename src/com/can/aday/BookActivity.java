@@ -1,5 +1,6 @@
 package com.can.aday;
 
+import com.can.aday.data.Book.Stage;
 import com.can.aday.tools.DensityUtil;
 import com.can.aday.view.BookMusicView;
 import com.can.aday.view.BookView;
@@ -109,6 +110,8 @@ public class BookActivity extends Activity {
 
 	Intent intent;
 
+	AdayApplication app;
+
 	private OnClickListener click = new OnClickListener() {
 
 		@Override
@@ -132,6 +135,7 @@ public class BookActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_book);
+		app = (AdayApplication) getApplication();
 		intent = getIntent();
 		initTitleView();
 		findView();
@@ -181,6 +185,58 @@ public class BookActivity extends Activity {
 	}
 
 	private void loadData() {
+		artTitle.setText(app.currentBook.getTitle());
+		artAthor.setText(app.currentBook.getAuthor());
+		athorDetail.setText("\t\t" + app.currentBook.getAuthordescrip());
+
+		// >>>>>>>
+		loadBookLikeData();
+		loadBookData();
+		setCommentData();
+	}
+
+	/**
+	 * 普通读物杂志加载模块
+	 */
+	public void loadBookData() {
+		progressLayout.setVisibility(View.GONE);
+		playOrPause.setVisibility(View.GONE);
+		BookView bv;
+
+		for (Stage mS : app.currentBook.getContent()) {
+			bv = new BookView(this);
+			if (mS.img != null && mS.img.startsWith("http")) {
+				bv.setData(new String[] { mS.mContent }, mS.motto, mS.img);
+			} else if (mS.img != null) {
+				bv.setData(new String[] { mS.mContent }, mS.motto, AdayApplication.SERVICE_BOOK + mS.img);
+			} else {
+				bv.setData(new String[] { mS.mContent }, mS.motto, mS.img);
+			}
+			contentLayout.addView(bv.getView(),-2,-2);
+		}
+
+		/*
+		 * bv = new BookView(this); bv.setData( new String[] {
+		 * "好女人的爱情字典里容不得沙子，所以好女人的爱情世界里一般不会和金钱权势搭上关系。许多的“好”男人以为凭金钱和权势就能打动好女人的芳心，结果总是事与愿违，因为好女人最反感最看不起这种世俗的铜臭味，好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……"
+		 * }, "在对待女人的态度上，好男人通常表现的清高，清高的男人总是射不中春天里的美。",
+		 * BitmapFactory.decodeResource(getResources(),
+		 * R.drawable.content_image_1)); contentLayout.addView(bv.getView()); bv
+		 * = new BookView(this); bv.setData( new String[] {
+		 * "好女人的爱情字典里容不得沙子，所以好女人的爱情世界里一般不会和金钱权势搭上关系。许多的“好”男人以为凭金钱和权势就能打动好女人的芳心，结果总是事与愿违，因为好女人最反感最看不起这种世俗的铜臭味，好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……"
+		 * }, null, BitmapFactory.decodeResource(getResources(),
+		 * R.drawable.content_image_2)); contentLayout.addView(bv.getView());
+		 * 
+		 * bv = new BookView(this); bv.setData( new String[] {
+		 * "好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……"
+		 * }, null, (String) null);
+		 */
+
+	}
+
+	/**
+	 * 加载点赞数据
+	 */
+	public void loadBookLikeData() {
 		LayoutParams params = new LayoutParams(DensityUtil.dip2px(this, 45), DensityUtil.dip2px(this, 45));
 		params.setMargins(0, 0, DensityUtil.dip2px(this, 11.5f), 0);
 
@@ -199,38 +255,6 @@ public class BookActivity extends Activity {
 		v = new ImageView(this);
 		v.setImageResource(R.drawable.user_header_5);
 		likeLayout.addView(v, params);
-
-		// >>>>>>>
-		loadBookData();
-		setCommentData();
-	}
-
-	/**
-	 * 普通读物杂志加载模块
-	 */
-	public void loadBookData() {
-		progressLayout.setVisibility(View.GONE);
-		playOrPause.setVisibility(View.GONE);
-		BookView bv = new BookView(this);
-		bv.setData(
-				new String[] {
-						"好女人的爱情字典里容不得沙子，所以好女人的爱情世界里一般不会和金钱权势搭上关系。许多的“好”男人以为凭金钱和权势就能打动好女人的芳心，结果总是事与愿违，因为好女人最反感最看不起这种世俗的铜臭味，好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……" },
-				"在对待女人的态度上，好男人通常表现的清高，清高的男人总是射不中春天里的美。",
-				BitmapFactory.decodeResource(getResources(), R.drawable.content_image_1));
-		contentLayout.addView(bv.getView());
-		bv = new BookView(this);
-		bv.setData(
-				new String[] {
-						"好女人的爱情字典里容不得沙子，所以好女人的爱情世界里一般不会和金钱权势搭上关系。许多的“好”男人以为凭金钱和权势就能打动好女人的芳心，结果总是事与愿违，因为好女人最反感最看不起这种世俗的铜臭味，好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……" },
-				null, BitmapFactory.decodeResource(getResources(), R.drawable.content_image_2));
-		contentLayout.addView(bv.getView());
-
-		bv = new BookView(this);
-		bv.setData(
-				new String[] {
-						"好女人认为他们简直就是弱智；好女人清高、淡泊、如平静的西湖，渴望杨柳在平湖里有一个深情的摇曳，她马上就会泛起朵朵的涟漪；好女人的爱情是需要患难与共的感觉，好女人相信贫穷的爱情与艰涩的眼泪，好女人渴望有一位勇士敢跳进自己平湖里溅一声清脆，这是她苦苦等了一万年才迎来的邂逅……" },
-				null, null);
-		contentLayout.addView(bv.getView());
 	}
 
 	/**
@@ -277,7 +301,7 @@ public class BookActivity extends Activity {
 			else
 				v.setImageResource(R.drawable.comment_user_header_3);
 			name.setText("大傻哥");
-			likeCount.setText("" + 134+i);
+			likeCount.setText("" + 134 + i);
 			comTime.setText("3分钟前");
 			content.setText("一栏，就可以找到Windows保存的用户凭据了。单击小箭头就可以展开或合起用户凭据信息。");
 

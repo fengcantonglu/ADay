@@ -77,6 +77,7 @@ public class WelcomeActivity extends Activity {
 			com.can.aday.AdayApplication app = (com.can.aday.AdayApplication) getApplication();
 			app.isOnline = false;
 			app.currentMusic = CacheTools.getLocalMusicData(getApplicationContext(), 0);
+			app.currentBook = CacheTools.getLocalBookData(getApplicationContext(), 0);
 			Log.w("Welcome", "与服务器链接超时,正在处于离线模式浏览");
 			intent.setClass(WelcomeActivity.this, MainActivity.class);
 		} else {
@@ -136,16 +137,36 @@ public class WelcomeActivity extends Activity {
 				}
 
 				public void end(String result) {
-
-					Log.i("LoginandRegister", result);
-
 					try {
-						JSONObject jo = new JSONObject(result);
+						final JSONObject jo = new JSONObject(result);
 
 						if (jo.getInt("status") == 1) {
+							try {
 
-							app.loginDataExec(jo);
-							isLoginSuccessed = 1;
+								HttpPost post = HttpPost.parseUrl(AdayApplication.SERVICE_BOOK + "article/index");
+								post.setOnSendListener(new OnSendListener() {
+									public void start() {
+
+									}
+
+									public void end(String result) {
+										Log.i("AdayApplication", "" + result);
+										try {
+											app.loginDataExec(jo, new JSONObject(result));
+
+											isLoginSuccessed = 1;
+										} catch (JSONException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+								});
+								post.send();
+							} catch (MalformedURLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
 						} else {
 							isLoginSuccessed = -1;
 						}

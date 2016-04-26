@@ -42,11 +42,13 @@
             android:background="#A69582" />
     </LinearLayout>
 
-    <ImageView
+    <com.can.aday.view.MatchWidthImageView
         android:id="@+id/book_content_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@drawable/content_image_1" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:contentDescription="@drawable/content_image_1"
+        android:scaleType="fitXY" />
 
 </LinearLayout>
