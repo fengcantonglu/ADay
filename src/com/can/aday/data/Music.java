@@ -145,6 +145,7 @@ public class Music {
 		final long READ_BUFFER = 400 * 1024;
 		final Handler hand = new Handler() {
 
+			@Override
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
 				case 1:
@@ -174,6 +175,7 @@ public class Music {
 		};
 		if (musicLocalPath == null || !new File(musicLocalPath).exists()) {
 			new Thread() {
+				@Override
 				public void run() {
 					try {
 						URL url;
@@ -220,6 +222,7 @@ public class Music {
 
 		if (songWordsLocalPath == null || !new File(songWordsLocalPath).exists()) {
 			new Thread() {
+				@Override
 				public void run() {
 					try {
 						URL url;

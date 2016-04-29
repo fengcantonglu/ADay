@@ -165,6 +165,7 @@ public class MusicFragment extends AdayFragment {
 	 */
 	private OnCompletionListener listener = new OnCompletionListener() {
 
+		@Override
 		public void onCompletion(MediaPlayer mp) {
 			playOrPause.setImageResource(R.drawable.music_play_icon_in);
 		}
@@ -558,6 +559,7 @@ public class MusicFragment extends AdayFragment {
 	public void cacheMusic() {
 		OnCacheMusicListener cacheListener = new OnCacheMusicListener() {
 
+			@Override
 			public void musicDownloadEnd(String path, boolean isDown) {
 				if (isDown) {
 					Music data = new Music();
@@ -568,10 +570,12 @@ public class MusicFragment extends AdayFragment {
 
 			}
 
+			@Override
 			public void musicCanRead(String path) {
 
 			}
 
+			@Override
 			public void lrcDownloadEnd(String path, boolean isDown) {
 				if (isDown) {
 					Music data = new Music();
