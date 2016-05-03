@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.util.Log;
 
 public final class CacheTools {
 
@@ -139,7 +140,7 @@ public final class CacheTools {
 		cv.put("story", data.getStory());
 		cv.put("singer", data.getSinger());
 		cv.put("introduce", data.getIntroduce());
-		cv.put("song_words_path", data.getSong_words_path());
+		cv.put("songWords", data.getSongWords());
 		cv.put("backgroundpath", data.getBackgroundpath());
 		cv.put("addtime", data.getAddtime());
 
@@ -179,8 +180,8 @@ public final class CacheTools {
 		if (data.getMusicLocalPath() != null) {
 			cv.put("music_local_path", data.getMusicLocalPath());
 		}
-		if (data.getSong_words_path() != null) {
-			cv.put("song_words_path", data.getSong_words_path());
+		if (data.getSongWords() != null) {
+			cv.put("songWords", data.getSongWords());
 		}
 		if (data.getSongWordsLocalPath() != null) {
 			cv.put("song_words_local_path", data.getSongWordsLocalPath());
@@ -224,6 +225,7 @@ public final class CacheTools {
 			data.setMusicLocalPath(c.getString(c.getColumnIndex("music_local_path")));
 			data.setSongWordsLocalPath(c.getString(c.getColumnIndex("song_words_local_path")));
 			data.setBackgroundlocalpath(c.getString(c.getColumnIndex("backgroundlocalpath")));
+			Log.i("CacheTools", "load Music");
 		} else {
 			ContentValues cv = new ContentValues();
 			cv.put("musicname", data.getMusicname());
@@ -232,10 +234,11 @@ public final class CacheTools {
 			cv.put("story", data.getStory());
 			cv.put("singer", data.getSinger());
 			cv.put("introduce", data.getIntroduce());
-			cv.put("song_words_path", data.getSong_words_path());
+			cv.put("songWords", data.getSongWords());
 			cv.put("backgroundpath", data.getBackgroundpath());
 			cv.put("addtime", data.getAddtime());
 			db.insert(AdaySqlHelper.MUSIC_TABLE, null, cv);
+			Log.i("CacheTools", "Save Music");
 		}
 		c.close();
 		db.close();
@@ -261,7 +264,7 @@ public final class CacheTools {
 			data.setMusicname(c.getString(c.getColumnIndex("musicname")));
 			data.setMusicpath(c.getString(c.getColumnIndex("musicpath")));
 			data.setMusicLocalPath(c.getString(c.getColumnIndex("music_local_path")));
-			data.setSong_words_path(c.getString(c.getColumnIndex("song_words_path")));
+			data.setSongWords(c.getString(c.getColumnIndex("songWords")));
 			data.setSongWordsLocalPath(c.getString(c.getColumnIndex("song_words_local_path")));
 			data.setBackgroundpath(c.getString(c.getColumnIndex("backgroundpath")));
 			data.setBackgroundlocalpath(c.getString(c.getColumnIndex("backgroundlocalpath")));
@@ -285,7 +288,7 @@ public final class CacheTools {
 		cv.put("introduction", data.getIntroduction());
 		cv.put("articleimg_local_path", data.getArticleimg_local_path());
 		cv.put("authordescrip", data.getAuthordescrip());
-		cv.put("addtime", data.getAddtime());
+		// cv.put("addtime", data.getAddtime());
 		db.insert(AdaySqlHelper.BOOK_TABLE, null, cv);
 		db.close();
 	}
@@ -310,7 +313,7 @@ public final class CacheTools {
 			cv.put("author", data.getAuthor());
 			cv.put("introduction", data.getIntroduction());
 			cv.put("authordescrip", data.getAuthordescrip());
-			cv.put("addtime", data.getAddtime());
+			// cv.put("addtime", data.getAddtime());
 			db.insert(AdaySqlHelper.BOOK_TABLE, null, cv);
 		}
 		c.close();
@@ -333,7 +336,7 @@ public final class CacheTools {
 		if (c.moveToNext()) {
 			data = new Book();
 			data.setId(c.getInt(c.getColumnIndex("id")));
-			data.setAddtime(c.getInt(c.getColumnIndex("addtime")));
+			// data.setAddtime(c.getInt(c.getColumnIndex("addtime")));
 			data.setTitle(c.getString(c.getColumnIndex("title")));
 			data.setArticleimg(c.getString(c.getColumnIndex("articleimg")));
 			data.setArticleimg_local_path(c.getString(c.getColumnIndex("articleimg_local_path")));

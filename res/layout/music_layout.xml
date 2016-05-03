@@ -200,26 +200,34 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp" >
 
-            <ImageView
-                android:id="@+id/play_btn"
+            <RelativeLayout
+                android:id="@+id/play_btn1"
                 android:layout_width="53dp"
                 android:layout_height="53dp"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/music_play_out_cirl"
-                android:paddingBottom="15dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="14dp"
-                android:paddingTop="15dp"
-                android:src="@drawable/music_play_icon_in" />
+                android:layout_marginRight="30dp" >
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="53dp"
+                    android:src="@drawable/music_play_out_cirl" />
+
+                <ImageView
+                    android:id="@+id/play_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:padding="10dp"
+                    android:src="@drawable/music_play_icon_in" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/back_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/play_btn"
+                android:layout_toLeftOf="@id/play_btn1"
                 android:padding="6dp"
                 android:src="@drawable/music_back" />
 
@@ -228,7 +236,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/play_btn"
+                android:layout_toRightOf="@id/play_btn1"
                 android:padding="6dp"
                 android:src="@drawable/music_next" />
         </RelativeLayout>

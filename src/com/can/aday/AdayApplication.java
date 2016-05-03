@@ -14,7 +14,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 public class AdayApplication extends Application {
-	public static final String SERVICE_IP = "http://192.168.15.238:88/";
+	public static final String SERVICE_IP = "http://cloud.bmob.cn/7d49339e79332815/";
 	public static final String SERVICE_BOOK = "http://192.168.15.253:1002/";
 	private User currentUser;
 	private String token;
@@ -57,37 +57,23 @@ public class AdayApplication extends Application {
 	 * @param jo
 	 *            登陆成功过后,的json数据
 	 */
-	public void loginDataExec(JSONObject jo, JSONObject bookJo) {
+	public void loginDataExec(JSONObject jo) {
 		try {
 			Log.i("LoginResult", jo.toString());
-			token = jo.getString("token");// parse
 			currentUser = User.parseJSONObject(jo.getJSONObject("user"));
 
 		} catch (JSONException e) {
 
 		}
 		try {
-			currentMusic = Music.parseJSONObject(jo.getJSONObject("currentmusic"));
+			currentMusic = Music.parseJSONObject(jo.getJSONObject("music"));
 			CacheTools.getLocalOrSaveMusicData(getApplicationContext(), currentMusic);
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
-		try {
-			Music lastMusic = Music.parseJSONObject(jo.getJSONObject("premusic"));
-			CacheTools.getLocalOrSaveMusicData(getApplicationContext(), lastMusic);
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		try {
-			Music nextMusic = Music.parseJSONObject(jo.getJSONObject("nextmusic"));
-			CacheTools.getLocalOrSaveMusicData(getApplicationContext(), nextMusic);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
 		Book b;
 		try {
-			b = Book.parseJSONObject(bookJo.getJSONObject("article"));
+			b = Book.parseJSONObject(jo.getJSONObject("book"));
 			CacheTools.getBookDataOrSave(getApplicationContext(), b);
 			currentBook = b;
 		} catch (JSONException e) {

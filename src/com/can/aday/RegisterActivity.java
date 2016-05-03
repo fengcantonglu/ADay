@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.can.aday.tools.HttpGet;
 import com.can.aday.tools.HttpPost;
 import com.can.aday.tools.HttpPost.OnSendListener;
 
@@ -85,46 +86,50 @@ public class RegisterActivity extends Activity {
 		if (!TextUtils.isEmpty(acc)) {
 			if (!TextUtils.isEmpty(pass)) {
 				if (pass.equals(passTwo)) {
-					try {
-						HttpPost httpPost = HttpPost.parseUrl(AdayApplication.SERVICE_IP + "api/register");
-						httpPost.putString("username", acc);
-						httpPost.putString("password", pass);
-						httpPost.putString("repassword", passTwo);
-						httpPost.setOnSendListener(new OnSendListener() {
-							@Override
-							public void start() {
+					/*
+					 * HttpPost httpPost =
+					 * HttpPost.parseUrl(AdayApplication.SERVICE_IP +
+					 * "api/register"); httpPost.putString("username", acc);
+					 * httpPost.putString("password", pass);
+					 * httpPost.putString("repassword", passTwo);
+					 * httpPost.setOnSendListener(new OnSendListener() {
+					 */
+					HttpGet httpGet = HttpGet.parseUrl(AdayApplication.SERVICE_IP + "register");
+					httpGet.putString("username", acc);
+					httpGet.putString("password", pass);
 
-							}
+					httpGet.setOnSendListener(new OnSendListener() {
+						@Override
+						public void start() {
 
-							@Override
-							public void end(String result) {
-								Log.i("post", result);
-								try {
-									JSONObject jo = new JSONObject(result);
-									if (jo.getInt("status") == 1) {
-										Intent intent = getIntent();
-										intent.setClass(RegisterActivity.this, LoginAndRegisteredActivity.class);
-										intent.putExtra("acc", acc);
-										intent.putExtra("pass", pass);
-										startActivity(intent);
-										finish();
-									} else {
-										Toast.makeText(getApplicationContext(), jo.getString("message"),
-												Toast.LENGTH_SHORT).show();
-									}
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+						}
+
+						@Override
+						public void end(String result) {
+							Log.i("post", result);
+							JSONObject jo = null;
+							try {
+								jo = new JSONObject(result);
+								if (jo.getString("objectId") != null || jo.getString("objectId") != "") {
+									Intent intent = getIntent();
+									intent.setClass(RegisterActivity.this, LoginAndRegisteredActivity.class);
+									intent.putExtra("acc", acc);
+									intent.putExtra("pass", pass);
+									startActivity(intent);
+									finish();
+								} else {
+									Toast.makeText(getApplicationContext(), jo.getInt("code") + "", Toast.LENGTH_SHORT)
+											.show();
 								}
-
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+									Toast.makeText(getApplicationContext(), "账号已存在", Toast.LENGTH_SHORT)
+											.show();
 							}
-						});
-						httpPost.send();
-
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						}
+					});
+					// httpPost.send();
+					httpGet.send();
 
 				} else {
 					Toast.makeText(getApplicationContext(), "两次密码输入不一致", Toast.LENGTH_SHORT).show();

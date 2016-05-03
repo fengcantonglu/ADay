@@ -18,18 +18,45 @@ import android.os.Message;
 
 public class Music {
 	private int id;
+	private String objectId;
 	private String musicname;
 	private String singer;
 	private String musicpath;
 	private String musicLocalPath;
 	private String story;
-	private String song_words_path;
+	private String songWords;
 	private String songWordsLocalPath;
 	private String introduce;
+	private String introduction;
 	private String backgroundpath;
 	private String backgroundlocalpath;
-
+	private int likeNumber;
 	private int addtime;
+
+	public String getSongWords() {
+		return songWords;
+	}
+
+	public void setSongWords(String songWords) {
+		this.songWords = songWords;
+	}
+
+	public String getIntroduction() {
+		return introduction;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+
+	public int getLikeNumber() {
+		return likeNumber;
+	}
+
+	public void setLikeNumber(int likeNumber) {
+		this.likeNumber = likeNumber;
+	}
+
 	private int status;
 
 	public int getId() {
@@ -50,14 +77,6 @@ public class Music {
 
 	public String getSinger() {
 		return singer;
-	}
-
-	public String getSong_words_path() {
-		return song_words_path;
-	}
-
-	public void setSong_words_path(String song_words_path) {
-		this.song_words_path = song_words_path;
 	}
 
 	public void setSinger(String singer) {
@@ -226,10 +245,10 @@ public class Music {
 				public void run() {
 					try {
 						URL url;
-						if (song_words_path.startsWith("http")) {
-							url = new URL(song_words_path);
+						if (songWords.startsWith("http")) {
+							url = new URL(songWords);
 						} else {
-							url = new URL(AdayApplication.SERVICE_IP + song_words_path);
+							url = new URL(AdayApplication.SERVICE_IP + songWords);
 						}
 						InputStream in = url.openStream();
 						File file = new File(CacheTools.getLRCFile(), musicname + ".lrc");
@@ -303,7 +322,8 @@ public class Music {
 	public static Music parseJSONObject(JSONObject jo) {
 		Music mc = new Music();
 		try {
-			mc.setId(jo.getInt("musicid"));
+			mc.setId(jo.getInt("id"));
+			mc.objectId=jo.getString("objectId");
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
@@ -319,7 +339,7 @@ public class Music {
 			e.printStackTrace();
 		}
 		try {
-			mc.setMusicpath(jo.getString("musicpath"));
+			mc.setMusicpath(jo.getJSONObject("musicpath").getString("url"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -329,7 +349,7 @@ public class Music {
 			e.printStackTrace();
 		}
 		try {
-			mc.setSong_words_path(jo.getString("song_words_path"));
+			mc.setSongWords(jo.getJSONObject("songWords").getString("url"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -353,6 +373,26 @@ public class Music {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		try {
+			mc.setIntroduction(jo.getString("introduction"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			mc.setLikeNumber(jo.getInt("likeNumber"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return mc;
+	}
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 }

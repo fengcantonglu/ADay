@@ -2,6 +2,7 @@ package com.can.aday;
 
 import com.can.aday.data.Book.Stage;
 import com.can.aday.tools.DensityUtil;
+import com.can.aday.tools.HttpGet;
 import com.can.aday.view.BookMusicView;
 import com.can.aday.view.BookView;
 
@@ -10,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -124,11 +126,17 @@ public class BookActivity extends Activity {
 			case R.id.title_left:
 				finish();
 				break;
+			case R.id.function_collection:
+				collect();
+				
+				break;
 			default:
 				break;
 			}
 
 		}
+
+		
 	};
 
 	@Override
@@ -181,7 +189,7 @@ public class BookActivity extends Activity {
 	private void initView() {
 		moreComment.setOnClickListener(click);
 		toReturn.setOnClickListener(click);
-
+		collection.setOnClickListener(click);
 	}
 
 	private void loadData() {
@@ -309,4 +317,14 @@ public class BookActivity extends Activity {
 
 	}
 
+	/**
+	 * 收藏
+	 */
+	private void collect() {
+		HttpGet httpGet = HttpGet.parseUrl(AdayApplication.SERVICE_IP + "collect");
+		httpGet.putString("table", "Book");
+		httpGet.putString("artId", app.currentBook.getObjectId());
+		httpGet.putString("uid", app.getCurrentUser().getObjectId());
+		httpGet.send();
+	}
 }

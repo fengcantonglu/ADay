@@ -4,21 +4,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User {
-	private int id;
+	private String objectId;
 	private String username;
-	private String usertel;
-	private int createtime;
-	private int logintime;
-	private int logincount;
-	private String imgpath;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	private String createdAt;
+	private String updatedAt;
+	private String icon_path;
+	private String sessionToken;
 
 	public String getUsername() {
 		return username;
@@ -28,83 +19,78 @@ public class User {
 		this.username = username;
 	}
 
-	public String getUsertel() {
-		return usertel;
+	public String getObjectId() {
+		return objectId;
 	}
 
-	public void setUsertel(String usertel) {
-		this.usertel = usertel;
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 
-	public int getCreatetime() {
-		return createtime;
+	public String getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreatetime(int createtime) {
-		this.createtime = createtime;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public int getLogintime() {
-		return logintime;
+	public String getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setLogintime(int logintime) {
-		this.logintime = logintime;
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
-	public int getLogincount() {
-		return logincount;
+	public String getIcon_path() {
+		return icon_path;
 	}
 
-	public void setLogincount(int logincount) {
-		this.logincount = logincount;
+	public void setIcon_path(String icon_path) {
+		this.icon_path = icon_path;
 	}
 
-	public String getImgpath() {
-		return imgpath;
+	public String getSessionToken() {
+		return sessionToken;
 	}
 
-	public void setImgpath(String imgpath) {
-		this.imgpath = imgpath;
+	public void setSessionToken(String sessionToken) {
+		this.sessionToken = sessionToken;
 	}
 
 	public static User parseJSONObject(JSONObject jo) {
 		User us = new User();
 		try {
-			us.setId(jo.getInt("id"));
+			us.setObjectId(jo.getString("objectId"));
 			us.setUsername(jo.getString("username"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
+		try {
+			us.setSessionToken(jo.getString("sessionToken"));
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
-			us.setUsertel(jo.getString("usertel"));
+			us.setCreatedAt(jo.getString("createdAt"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			us.setCreatetime(jo.getInt("createtime"));
+			us.setUpdatedAt(jo.getString("updatedAt"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		try {
-			us.setLogintime(jo.getInt("logintime"));
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			us.setLogincount(jo.getInt("logincount"));
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			us.setImgpath(jo.getString("imgpath"));
+			us.setIcon_path(jo.getString("icon_path"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
