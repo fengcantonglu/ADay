@@ -25,7 +25,7 @@ public class AdaySqlHelper extends SQLiteOpenHelper {
 		if (db != null) {
 			String sql = "Create table " + MUSIC_TABLE + " (musicid INTENGER PRIMARY KEY,"
 					+ "musicname VERCHAR(50) NOT NULL," + "singer VERCHAR(50) ," + " musicpath VERCHAR(300) NOT NULL,"
-					+ "story TEXT," + "music_local_path VARCHAR(300)," + "song_words_path VERCHAR(300),"
+					+ "story TEXT," + "music_local_path VARCHAR(300)," + "songWords VERCHAR(300),"
 					+ "song_words_local_path VERCHAR(300)," + "introduce TEXT," + "backgroundpath VERCHAR(300),"
 					+ "addtime INTENGER," + "backgroundlocalpath VERCHAR(300)); ";
 			db.execSQL(sql);

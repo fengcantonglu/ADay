@@ -237,7 +237,6 @@ public class MusicFragment extends AdayFragment {
 		// 背景图
 		Bitmap bkg = BitmapFactory.decodeResource(getResources(), R.drawable.music_backgroud_image);
 		setBackGroud(bkg);
-		title.setText(app.currentMusic.getMusicname());
 		musicName.setText(app.currentMusic.getSinger());
 
 		/*

@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.util.Log;
 
 public final class CacheTools {
 
@@ -139,7 +140,7 @@ public final class CacheTools {
 		cv.put("story", data.getStory());
 		cv.put("singer", data.getSinger());
 		cv.put("introduce", data.getIntroduce());
-		cv.put("song_words_path", data.getSongWords());
+		cv.put("songWords", data.getSongWords());
 		cv.put("backgroundpath", data.getBackgroundpath());
 		cv.put("addtime", data.getAddtime());
 
@@ -180,7 +181,7 @@ public final class CacheTools {
 			cv.put("music_local_path", data.getMusicLocalPath());
 		}
 		if (data.getSongWords() != null) {
-			cv.put("song_words_path", data.getSongWords());
+			cv.put("songWords", data.getSongWords());
 		}
 		if (data.getSongWordsLocalPath() != null) {
 			cv.put("song_words_local_path", data.getSongWordsLocalPath());
@@ -224,6 +225,7 @@ public final class CacheTools {
 			data.setMusicLocalPath(c.getString(c.getColumnIndex("music_local_path")));
 			data.setSongWordsLocalPath(c.getString(c.getColumnIndex("song_words_local_path")));
 			data.setBackgroundlocalpath(c.getString(c.getColumnIndex("backgroundlocalpath")));
+			Log.i("CacheTools", "load Music");
 		} else {
 			ContentValues cv = new ContentValues();
 			cv.put("musicname", data.getMusicname());
@@ -232,10 +234,11 @@ public final class CacheTools {
 			cv.put("story", data.getStory());
 			cv.put("singer", data.getSinger());
 			cv.put("introduce", data.getIntroduce());
-			cv.put("song_words_path", data.getSongWords());
+			cv.put("songWords", data.getSongWords());
 			cv.put("backgroundpath", data.getBackgroundpath());
 			cv.put("addtime", data.getAddtime());
 			db.insert(AdaySqlHelper.MUSIC_TABLE, null, cv);
+			Log.i("CacheTools", "Save Music");
 		}
 		c.close();
 		db.close();
@@ -261,7 +264,7 @@ public final class CacheTools {
 			data.setMusicname(c.getString(c.getColumnIndex("musicname")));
 			data.setMusicpath(c.getString(c.getColumnIndex("musicpath")));
 			data.setMusicLocalPath(c.getString(c.getColumnIndex("music_local_path")));
-			data.setSongWords(c.getString(c.getColumnIndex("getSongWords")));
+			data.setSongWords(c.getString(c.getColumnIndex("songWords")));
 			data.setSongWordsLocalPath(c.getString(c.getColumnIndex("song_words_local_path")));
 			data.setBackgroundpath(c.getString(c.getColumnIndex("backgroundpath")));
 			data.setBackgroundlocalpath(c.getString(c.getColumnIndex("backgroundlocalpath")));
@@ -328,7 +331,7 @@ public final class CacheTools {
 	public static Book getLocalBookData(Context context, int index) {
 
 		SQLiteDatabase db = getDatabase(context);
-		Cursor c = db.query(AdaySqlHelper.BOOK_TABLE, null, null, null, null, null, "musicid desc", index + ",1");
+		Cursor c = db.query(AdaySqlHelper.BOOK_TABLE, null, null, null, null, null, "id desc", index + ",1");
 		Book data = null;
 		if (c.moveToNext()) {
 			data = new Book();

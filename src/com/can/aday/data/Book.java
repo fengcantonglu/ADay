@@ -49,13 +49,13 @@ public class Book {
 	 * 作者生平
 	 */
 	String authordescrip;
-	
+
 	/**
 	 * 
 	 * 非音乐类型文章为null
 	 */
 	String music;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -129,9 +129,9 @@ public class Book {
 	public static Book parseJSONObject(JSONObject jo) {
 		Book book = null;
 		try {
-			int id = jo.getInt("id");		
+			int id = jo.getInt("id");
 			book = new Book();
-			book.objectId=jo.getString("objectId");
+			book.objectId = jo.getString("objectId");
 			book.id = id;
 		} catch (JSONException e) {
 			return null;
@@ -181,7 +181,7 @@ public class Book {
 			e.printStackTrace();
 		}
 		try {
-			book.music=jo.getJSONObject("music").getString("url");
+			book.music = jo.getJSONObject("music").getString("url");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -234,9 +234,9 @@ public class Book {
 				if (mSt.mContent != null)
 					sb.append(mSt.mContent);
 				if (mSt.motto != null)
-					sb.append("&lt;motto+:" + mSt.motto + "+/&gt;");
+					sb.append("<motto:" + mSt.motto + "></motto>");
 				if (mSt.img != null)
-					sb.append("&lt;img+:" + mSt.img + "+/&gt;");
+					sb.append("<img:" + mSt.img + "></img>");
 				sb.append("\r\n");
 			}
 			return sb.toString();
@@ -253,8 +253,8 @@ public class Book {
 	public void parseStringToStage(String artContent) {
 		if (!TextUtils.isEmpty(artContent)) {
 			String stageStr[] = artContent.split("[[\r\n][\n]]");
-			Pattern patternMotto = Pattern.compile("&lt;motto+:.+/&gt;");
-			Pattern patternImg = Pattern.compile("&lt;img+:.+/&gt;");
+			Pattern patternMotto = Pattern.compile("<motto:.+></motto>");
+			Pattern patternImg = Pattern.compile("<img:.+></img>");
 			content = new Stage[stageStr.length];
 			int i = 0;
 			for (String stages : stageStr) {
@@ -267,25 +267,15 @@ public class Book {
 				if (bl) {
 					String motto = matcherMotto.group();
 					data.mContent = data.mContent.replace(motto, "");
-					Matcher mBug = Pattern.compile("/&gt;&lt;img:.+").matcher(motto);
-					if (mBug.find()) {
-						String mImg = mBug.group();
-						motto = motto.replace(mImg, "");
-					}
-					data.motto = motto.replace("&lt;motto:", "").replace("/&gt;", "");
+					data.motto = motto.replace("<motto:", "").replace("></motto>", "");
 				}
 
 				boolean bl1 = matcherImg.find();
 				if (bl1) {
 					String img = matcherImg.group();
 					data.mContent = data.mContent.replace(img, "");
-					Matcher mBug = Pattern.compile("/&gt;&lt;motto:.+").matcher(img);
-					if (mBug.find()) {
-						String mMot = mBug.group();
-						img = img.replace(mMot, "");
-					}
-					data.img = img.replace("&lt;img:", "").replace("/&gt;", "");
-					;
+					data.img = img.replace("<img:", "").replace("></img>", "");
+
 				}
 
 				content[i] = data;

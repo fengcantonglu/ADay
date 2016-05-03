@@ -14,7 +14,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Looper;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class BookView {
 	 * @param url
 	 *            {@value=null}}
 	 */
+	@SuppressLint("HandlerLeak")
 	public void setData(String[] content, String authorSay, final String url) {
 
 		if (content != null) {
@@ -87,13 +89,20 @@ public class BookView {
 			achorSay.setText("\t\t" + authorSay);
 		}
 		if (!TextUtils.isEmpty(url)) {
+			final Handler han = new Handler() {
+				public void handleMessage(android.os.Message msg) {
+					contentImage.setImageBitmap((Bitmap) msg.obj);
+				};
+			};
 			new Thread() {
 				public void run() {
 					final File file = new File(
 							CacheTools.getImageFile() + File.separator + CacheTools.MD5(url) + ".png");
 					if (file.exists()) {
 						final Bitmap bit = BitmapFactory.decodeFile(file.getPath());
-						contentImage.setImageBitmap(bit);
+						Message msg = Message.obtain();
+						msg.obj = bit;
+						han.sendMessage(msg);
 					} else {
 						final URL u;
 						try {
@@ -110,9 +119,9 @@ public class BookView {
 								fos.close();
 								in.close();
 								Bitmap bit = BitmapFactory.decodeFile(file.getPath());
-								Looper.prepare();
-								contentImage.setImageBitmap(bit);
-								Looper.loop();
+								Message msg = Message.obtain();
+								msg.obj = bit;
+								han.sendMessage(msg);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
@@ -130,7 +139,6 @@ public class BookView {
 
 	}
 
-	
 	public View getView() {
 		return mView;
 	}
