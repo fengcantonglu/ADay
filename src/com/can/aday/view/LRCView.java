@@ -147,6 +147,7 @@ public class LRCView extends View {
 	Paint p1 = new Paint();
 	Paint p2 = new Paint();
 
+	@Override
 	protected void onDraw(Canvas canvas) {
 		if (super.getVisibility() == View.GONE) {
 			return;
@@ -271,13 +272,16 @@ public class LRCView extends View {
 	};
 	private AnimatorListener aListener = new AnimatorListener() {
 
+		@Override
 		public void onAnimationStart(Animator animation) {
 
 		}
 
+		@Override
 		public void onAnimationRepeat(Animator animation) {
 		}
 
+		@Override
 		public void onAnimationEnd(Animator anim) {
 			animation = (ValueAnimator) anim;
 			if (!isCancelAnim) {
@@ -287,6 +291,7 @@ public class LRCView extends View {
 			}
 		}
 
+		@Override
 		public void onAnimationCancel(Animator anima) {
 
 		}
@@ -327,12 +332,14 @@ public class LRCView extends View {
 	}
 
 	Runnable mRun = new Runnable() {
+		@Override
 		public void run() {
 			mHandler.sendEmptyMessage(mPlayer.getCurrentPosition());
 		}
 	};
 	@SuppressLint("HandlerLeak")
 	Handler mHandler = new Handler() {
+		@Override
 		public void handleMessage(android.os.Message msg) {
 			if (mPlayer.isPlaying()) {
 				setCurrentTime(msg.what);
@@ -342,6 +349,7 @@ public class LRCView extends View {
 	};
 	private OnSeekBarChangeListener l = new OnSeekBarChangeListener() {
 
+		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			if (mPlayer == null)
 				return;
@@ -352,10 +360,12 @@ public class LRCView extends View {
 			isChanging = false;
 		}
 
+		@Override
 		public void onStartTrackingTouch(SeekBar seekBar) {
 			isChanging = true;
 		}
 
+		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
 		}
@@ -474,6 +484,7 @@ public class LRCView extends View {
 				isDoMove = false;
 				new Thread() {
 
+					@Override
 					public void run() {
 						try {
 							sleep(2000);

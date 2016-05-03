@@ -19,6 +19,7 @@ public class FullVideoView extends VideoView {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		int width = getDefaultSize(0, widthMeasureSpec);
 		int height = getDefaultSize(0, heightMeasureSpec);

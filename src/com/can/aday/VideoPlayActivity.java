@@ -293,6 +293,7 @@ public class VideoPlayActivity extends BaseActivity {
 
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
+		@Override
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == handKey) {
 				setVideo();

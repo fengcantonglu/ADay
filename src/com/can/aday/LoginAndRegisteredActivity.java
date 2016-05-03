@@ -159,10 +159,12 @@ public class LoginAndRegisteredActivity extends Activity {
 
 									HttpPost post = HttpPost.parseUrl(AdayApplication.SERVICE_BOOK + "article/index");
 									post.setOnSendListener(new OnSendListener() {
+										@Override
 										public void start() {
 
 										}
 
+										@Override
 										public void end(String result) {
 											Log.i("AdayApplication", "" + result);
 											try {

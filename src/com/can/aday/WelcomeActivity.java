@@ -47,6 +47,7 @@ public class WelcomeActivity extends Activity {
 			if (isLogin)
 				loginInbackgroud();
 			mHandler.postDelayed(new Runnable() {
+				@Override
 				public void run() {
 					mHandler.sendEmptyMessage(1);
 				}
@@ -58,6 +59,7 @@ public class WelcomeActivity extends Activity {
 	Handler mHandler = new Handler() {
 		int count;
 
+		@Override
 		public void handleMessage(android.os.Message msg) {
 			count++;
 			if (count == 5)
@@ -89,6 +91,7 @@ public class WelcomeActivity extends Activity {
 		} else {
 			if (isLoginSuccessed == 0) {
 				mHandler.postDelayed(new Runnable() {
+					@Override
 					public void run() {
 						mHandler.sendEmptyMessage(1);
 					}
@@ -138,10 +141,12 @@ public class WelcomeActivity extends Activity {
 			httpPost.putString("password", ap[1]);
 			httpPost.setOnSendListener(new OnSendListener() {
 
+				@Override
 				public void start() {
 
 				}
 
+				@Override
 				public void end(String result) {
 					try {
 						final JSONObject jo = new JSONObject(result);
@@ -151,10 +156,12 @@ public class WelcomeActivity extends Activity {
 
 								HttpPost post = HttpPost.parseUrl(AdayApplication.SERVICE_BOOK + "article/index");
 								post.setOnSendListener(new OnSendListener() {
+									@Override
 									public void start() {
 
 									}
 
+									@Override
 									public void end(String result) {
 										Log.i("AdayApplication", "" + result);
 										try {

@@ -88,6 +88,7 @@ public class BookView {
 		}
 		if (!TextUtils.isEmpty(url)) {
 			new Thread() {
+				@Override
 				public void run() {
 					final File file = new File(
 							CacheTools.getImageFile() + File.separator + CacheTools.MD5(url) + ".png");
