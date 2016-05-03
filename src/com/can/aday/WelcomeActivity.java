@@ -78,8 +78,14 @@ public class WelcomeActivity extends Activity {
 			app.isOnline = false;
 			app.currentMusic = CacheTools.getLocalMusicData(getApplicationContext(), 0);
 			app.currentBook = CacheTools.getLocalBookData(getApplicationContext(), 0);
-			Log.w("Welcome", "与服务器链接超时,正在处于离线模式浏览");
-			intent.setClass(WelcomeActivity.this, MainActivity.class);
+			if(app.currentBook==null||app.currentMusic==null){
+				Log.w("Welcome", "与服务器链接超时,");
+				intent.setClass(WelcomeActivity.this, LoginAndRegisteredActivity.class);
+			}else{
+				Log.w("Welcome", "与服务器链接超时,正在处于离线模式浏览");
+				intent.setClass(WelcomeActivity.this, MainActivity.class);
+			}
+	
 		} else {
 			if (isLoginSuccessed == 0) {
 				mHandler.postDelayed(new Runnable() {

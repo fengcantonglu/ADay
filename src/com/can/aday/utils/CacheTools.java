@@ -328,7 +328,7 @@ public final class CacheTools {
 	public static Book getLocalBookData(Context context, int index) {
 
 		SQLiteDatabase db = getDatabase(context);
-		Cursor c = db.query(AdaySqlHelper.BOOK_TABLE, null, null, null, null, null, "musicid desc", index + ",1");
+		Cursor c = db.query(AdaySqlHelper.BOOK_TABLE, null, null, null, null, null, "id desc", index + ",1");
 		Book data = null;
 		if (c.moveToNext()) {
 			data = new Book();

@@ -21,7 +21,6 @@ public class MatchWidthImageView extends ImageView {
 
 	public MatchWidthImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-
 	}
 
 	public MatchWidthImageView(Context context, AttributeSet attrs, int defStyleAttr) {

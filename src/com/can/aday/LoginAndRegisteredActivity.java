@@ -12,6 +12,8 @@ import com.can.aday.utils.CacheTools;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -128,14 +130,24 @@ public class LoginAndRegisteredActivity extends Activity {
 				httpPost.putString("password", pass);
 				httpPost.setOnSendListener(new OnSendListener() {
 					ProgressDialog dialog = new ProgressDialog(LoginAndRegisteredActivity.this);
+					boolean bl;
 
 					@Override
 					public void start() {
+						dialog.setCanceledOnTouchOutside(false);
+						dialog.setOnCancelListener(new OnCancelListener() {
+							public void onCancel(DialogInterface dialog) {
+								bl = true;
+
+							}
+						});
 						dialog.show();
 					}
 
 					@Override
 					public void end(String result) {
+						if (bl)
+							return;
 						dialog.dismiss();
 
 						try {
@@ -153,8 +165,8 @@ public class LoginAndRegisteredActivity extends Activity {
 
 										public void end(String result) {
 											Log.i("AdayApplication", "" + result);
-											try {							
-												app.loginDataExec(jo,new JSONObject(result));
+											try {
+												app.loginDataExec(jo, new JSONObject(result));
 												intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
 												startActivity(intent);
 												finish();
@@ -175,8 +187,8 @@ public class LoginAndRegisteredActivity extends Activity {
 										.show();
 							}
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
+							Toast.makeText(getApplicationContext(), "服务器异常", Toast.LENGTH_SHORT).show();
 						}
 
 					}

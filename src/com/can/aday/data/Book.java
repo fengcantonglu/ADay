@@ -238,9 +238,9 @@ public class Book {
 				if (mSt.mContent != null)
 					sb.append(mSt.mContent);
 				if (mSt.motto != null)
-					sb.append("&lt;motto+:" + mSt.motto + "+/&gt;");
+					sb.append("&lt;motto:" + mSt.motto + "/&gt;");
 				if (mSt.img != null)
-					sb.append("&lt;img+:" + mSt.img + "+/&gt;");
+					sb.append("&lt;img:" + mSt.img + "/&gt;");
 				sb.append("\r\n");
 			}
 			return sb.toString();
