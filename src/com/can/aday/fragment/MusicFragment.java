@@ -260,7 +260,7 @@ public class MusicFragment extends AdayFragment {
 		story = app.currentMusic.getStory().split("\r\n");
 
 		Log.i("Story", "length=" + story.length);
-		summary = "神话所反映的是原始人对客观世界的认识，是一种反映现实的观念形态，是产生在一定经济基础之上的上层建筑。只是由于神话反映客观世界是通过人类童年期自发的、幼稚的幻想的折光，因而呈现出独特的形态。";
+		summary = app.currentMusic.getIntroduction();
 
 		details = app.currentMusic.getIntroduce().split("\r\n");
 		showWhichContent(whitchPager);

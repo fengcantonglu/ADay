@@ -12,6 +12,7 @@ import android.util.Log;
 public class Book {
 	int id;
 
+	String objectId;
 	String title;
 	/**
 	 * 文章内容,包含插图和座右铭
@@ -30,15 +31,16 @@ public class Book {
 	 * 文章标题图本地路径
 	 */
 	String articleimg_local_path;
-	/**
-	 * 发布者id
-	 */
-	int touristid;
+
 	/**
 	 * 发布时间
 	 */
-	int addtime;
-	int clickid;
+	String createdAt;
+
+	/**
+	 * 修改时间
+	 */
+	String updatedAt;
 	/**
 	 * 作者
 	 */
@@ -47,9 +49,13 @@ public class Book {
 	 * 作者生平
 	 */
 	String authordescrip;
-	int upid;
-	int dowid;
-
+	
+	/**
+	 * 
+	 * 非音乐类型文章为null
+	 */
+	String music;
+	
 	public int getId() {
 		return id;
 	}
@@ -98,30 +104,6 @@ public class Book {
 		this.articleimg_local_path = articleimg_local_path;
 	}
 
-	public int getTouristid() {
-		return touristid;
-	}
-
-	public void setTouristid(int touristid) {
-		this.touristid = touristid;
-	}
-
-	public int getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(int addtime) {
-		this.addtime = addtime;
-	}
-
-	public int getClickid() {
-		return clickid;
-	}
-
-	public void setClickid(int clickid) {
-		this.clickid = clickid;
-	}
-
 	public String getAuthor() {
 		return author;
 	}
@@ -138,22 +120,6 @@ public class Book {
 		this.authordescrip = authordescrip;
 	}
 
-	public int getUpid() {
-		return upid;
-	}
-
-	public void setUpid(int upid) {
-		this.upid = upid;
-	}
-
-	public int getDowid() {
-		return dowid;
-	}
-
-	public void setDowid(int dowid) {
-		this.dowid = dowid;
-	}
-
 	public class Stage {
 		public String mContent;
 		public String motto;
@@ -163,8 +129,9 @@ public class Book {
 	public static Book parseJSONObject(JSONObject jo) {
 		Book book = null;
 		try {
-			int id = jo.getInt("id");
+			int id = jo.getInt("id");		
 			book = new Book();
+			book.objectId=jo.getString("objectId");
 			book.id = id;
 		} catch (JSONException e) {
 			return null;
@@ -180,20 +147,16 @@ public class Book {
 			e.printStackTrace();
 		}
 		try {
-			book.articleimg = jo.getString("articleimg");
+			book.articleimg = jo.getJSONObject("articleimg").getString("url");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		try {
-			book.touristid = jo.getInt("touristid");
+			book.createdAt = jo.getString("createdAt");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		try {
-			book.addtime = jo.getInt("addtime");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+
 		try {
 			book.author = jo.getString("author");
 		} catch (JSONException e) {
@@ -205,12 +168,7 @@ public class Book {
 			e.printStackTrace();
 		}
 		try {
-			book.upid = jo.getInt("upid");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		try {
-			book.dowid = jo.getInt("dowid");
+			book.updatedAt = jo.getString("updatedAt");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -222,8 +180,46 @@ public class Book {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			book.music=jo.getJSONObject("music").getString("url");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return book;
+	}
+
+	public String getMusic() {
+		return music;
+	}
+
+	public void setMusic(String music) {
+		this.music = music;
+	}
+
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public String getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	/**

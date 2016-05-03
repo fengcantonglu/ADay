@@ -3,12 +3,11 @@ package com.can.aday;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.can.aday.tools.HttpPost;
+import com.can.aday.tools.HttpGet;
 import com.can.aday.tools.HttpPost.OnSendListener;
 import com.can.aday.utils.CacheTools;
 
@@ -126,62 +125,30 @@ public class WelcomeActivity extends Activity {
 		}
 		String[] ap = new String[2];
 		CacheTools.getAccountCache(getApplicationContext(), ap);
-		try {
-			HttpPost httpPost = HttpPost.parseUrl(AdayApplication.SERVICE_IP + "api/login");
-			httpPost.putString("user", ap[0]);
-			httpPost.putString("password", ap[1]);
-			httpPost.setOnSendListener(new OnSendListener() {
+		HttpGet httpGet = HttpGet.parseUrl(AdayApplication.SERVICE_IP + "login");
+		httpGet.putString("username", ap[0]);
+		httpGet.putString("password", ap[1]);
+		httpGet.setOnSendListener(new OnSendListener() {
 
-				public void start() {
+			public void start() {
 
+			}
+
+			public void end(String result) {
+				try {
+					JSONObject jo = new JSONObject(result);
+
+					app.loginDataExec(jo);
+					isLoginSuccessed = 1;
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					isLoginSuccessed = -1;
 				}
-
-				public void end(String result) {
-					try {
-						final JSONObject jo = new JSONObject(result);
-
-						if (jo.getInt("status") == 1) {
-							try {
-
-								HttpPost post = HttpPost.parseUrl(AdayApplication.SERVICE_BOOK + "article/index");
-								post.setOnSendListener(new OnSendListener() {
-									public void start() {
-
-									}
-
-									public void end(String result) {
-										Log.i("AdayApplication", "" + result);
-										try {
-											app.loginDataExec(jo, new JSONObject(result));
-
-											isLoginSuccessed = 1;
-										} catch (JSONException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-									}
-								});
-								post.send();
-							} catch (MalformedURLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-						} else {
-							isLoginSuccessed = -1;
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						isLoginSuccessed = -1;
-					}
-				}
-			});
-			httpPost.send();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			}
+		});
+		httpGet.send();
 	}
 
 	/**

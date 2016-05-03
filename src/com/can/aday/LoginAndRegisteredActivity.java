@@ -1,11 +1,9 @@
 package com.can.aday;
 
-import java.net.MalformedURLException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.can.aday.tools.HttpPost;
+import com.can.aday.tools.HttpGet;
 import com.can.aday.tools.HttpPost.OnSendListener;
 import com.can.aday.utils.CacheTools;
 
@@ -122,70 +120,39 @@ public class LoginAndRegisteredActivity extends Activity {
 		final String acc = account.getText().toString();
 		final String pass = password.getText().toString();
 		if (!TextUtils.isEmpty(acc) && !TextUtils.isEmpty(pass)) {
-			try {
-				HttpPost httpPost = HttpPost.parseUrl(AdayApplication.SERVICE_IP + "api/login");
-				httpPost.putString("user", acc);
-				httpPost.putString("password", pass);
-				httpPost.setOnSendListener(new OnSendListener() {
-					ProgressDialog dialog = new ProgressDialog(LoginAndRegisteredActivity.this);
+			HttpGet httpGet = HttpGet.parseUrl(AdayApplication.SERVICE_IP + "login");
+			httpGet.putString("username", acc);
+			httpGet.putString("password", pass);
+			httpGet.setOnSendListener(new OnSendListener() {
+				ProgressDialog dialog = new ProgressDialog(LoginAndRegisteredActivity.this);
 
-					@Override
-					public void start() {
-						dialog.show();
+				@Override
+				public void start() {
+					dialog.show();
+				}
+
+				@Override
+				public void end(String result) {
+					dialog.dismiss();
+					Log.i("result", result);
+					try {
+						final JSONObject jo = new JSONObject(result);
+
+						final AdayApplication app = (AdayApplication) getApplication();
+						app.loginDataExec(jo);
+						intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
+						startActivity(intent);
+						CacheTools.cachedPageGuide(acc, pass, getApplicationContext());
+						finish();
+
+					} catch (JSONException e) {
+						Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+						e.printStackTrace();
 					}
 
-					@Override
-					public void end(String result) {
-						dialog.dismiss();
-
-						try {
-							final JSONObject jo = new JSONObject(result);
-
-							if (jo.getInt("status") == 1) {
-								final AdayApplication app = (AdayApplication) getApplication();
-								try {
-
-									HttpPost post = HttpPost.parseUrl(AdayApplication.SERVICE_BOOK + "article/index");
-									post.setOnSendListener(new OnSendListener() {
-										public void start() {
-
-										}
-
-										public void end(String result) {
-											Log.i("AdayApplication", "" + result);
-											try {							
-												app.loginDataExec(jo,new JSONObject(result));
-												intent.setClass(LoginAndRegisteredActivity.this, MainActivity.class);
-												startActivity(intent);
-												finish();
-											} catch (JSONException e) {
-
-												e.printStackTrace();
-											}
-										}
-									});
-									post.send();
-								} catch (MalformedURLException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								CacheTools.cachedPageGuide(acc, pass, getApplicationContext());
-							} else {
-								Toast.makeText(getApplicationContext(), jo.getString("message"), Toast.LENGTH_SHORT)
-										.show();
-							}
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-					}
-				});
-				httpPost.send();
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				}
+			});
+			httpGet.send();
 		} else {
 			Toast.makeText(getApplicationContext(), "账号或密码为空", Toast.LENGTH_SHORT).show();
 		}
